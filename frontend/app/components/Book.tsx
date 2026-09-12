@@ -33,11 +33,11 @@ interface Spread {
 export function Book({ locale, current }: { locale: Locale; current: CurrentPsalm | null }) {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const { cover, psalms } = psalmsByLocale[locale];
+  const { cover } = psalmsByLocale[locale];
 
   const [flippedCount, setFlippedCount] = useState(() => (current ? FIXED_OPEN_TARGET : 0));
   const [spread, setSpread] = useState<Spread | null>(() =>
-    current ? { target: FIXED_OPEN_TARGET, num: current.num, verse: current.verse } : null,
+      current ? { target: FIXED_OPEN_TARGET, num: current.num, verse: current.verse } : null,
   );
   // Previous spread kept mounted during a flip so the old psalm page is organically covered, not blanked.
   const [prevSpread, setPrevSpread] = useState<Spread | null>(null);
@@ -187,30 +187,6 @@ export function Book({ locale, current }: { locale: Locale; current: CurrentPsal
   }, [current?.num, current?.verse]);
 
   useEffect(() => {
-    const verses = bookRef.current?.querySelector<HTMLElement>(".psalm .verses");
-    if (!verses) return;
-
-    function fit() {
-      if (!verses) return;
-      let size = 14.5;
-      verses.style.fontSize = size + "px";
-      // Floor low enough that the longest psalms still fit once the async audio
-      // control has claimed its vertical space.
-      while (verses.scrollHeight > verses.clientHeight + 1 && size > 7) {
-        size -= 0.5;
-        verses.style.fontSize = size + "px";
-      }
-    }
-
-    fit();
-    // The <audio> control mounts asynchronously (see PsalmAudio) and shrinks the
-    // available height, so re-fit whenever the container is resized.
-    const observer = new ResizeObserver(fit);
-    observer.observe(verses);
-    return () => observer.disconnect();
-  }, [spread]);
-
-  useEffect(() => {
     function layout() {
       const stageEl = stageRef.current;
       if (!stageEl) return;
@@ -236,40 +212,28 @@ export function Book({ locale, current }: { locale: Locale; current: CurrentPsal
   }
 
   function psalmFaces(s: Spread) {
-    const psalm = psalms[s.num];
     return {
       front: (
-        <div className="psalm">
-          <h1 className="psalm-title">Psalm {toRomanNumeral(s.num)}</h1>
-          {s.num === 7 && <p className="psalm-label">KOŃCZĄCY</p>}
-          <PsalmAudio locale={locale} num={s.num} onVerseChange={setPlayingVerse} />
-          <ol className="verses">
-            {Object.entries(psalm.verses).map(([vn, text]) => (
-              <li
-                key={vn}
-                className={vn === s.verse ? `verse marked${highlightOn ? " on" : ""}` : "verse"}
-                data-playing={playingVerse === vn}
-              >
-                <span className="vn">
-                  {s.num}:{vn}
-                </span>{" "}
-                <span className="vt">{text}</span>
-              </li>
-            ))}
-          </ol>
-        </div>
+          <PsalmPage
+              locale={locale}
+              num={s.num}
+              verse={s.verse}
+              highlightOn={highlightOn}
+              playingVerse={playingVerse}
+              onVerseChange={setPlayingVerse}
+          />
       ),
       back: (
-        <div className="num-page">
-          <div className="blot" aria-hidden="true" />
-          <div className="numeral">{toRomanNumeral(s.num)}</div>
-          <p className="misery">
-            {t("misery")}{" "}
-            <b>
-              {s.num}:{s.verse}
-            </b>
-          </p>
-        </div>
+          <div className="num-page">
+            <div className="blot" aria-hidden="true" />
+            <div className="numeral">{toRomanNumeral(s.num)}</div>
+            <p className="misery">
+              {t("misery")}{" "}
+              <b>
+                {s.num}:{s.verse}
+              </b>
+            </p>
+          </div>
       ),
     };
   }
@@ -295,87 +259,166 @@ export function Book({ locale, current }: { locale: Locale; current: CurrentPsal
   }
 
   return (
-    <div className="viewport">
-      <div className="stage" ref={stageRef}>
-        <div className={`book${flippedCount === 0 ? " closed" : ""}`} ref={bookRef}>
-          <div className="shadow" aria-hidden="true" />
-          <div className="board" aria-hidden="true" />
-          <div className="spine" aria-hidden="true" />
-          {Array.from({ length: NLEAVES }, (_, i) => {
-            const faces = i === 0 ? null : paperFaces(i);
-            return (
-              <div
-                key={i}
-                ref={(el) => {
-                  leafRefs.current[i] = el;
-                }}
-                className={leafClassName(i)}
-                style={{ zIndex: leafZIndex(i) }}
-                onClick={i === 0 && flippedCount === 0 && !rolling ? () => roll() : undefined}
-                role={i === 0 && flippedCount === 0 ? "button" : undefined}
-                tabIndex={i === 0 && flippedCount === 0 ? 0 : undefined}
-              >
-                {i === 0 ? (
-                  <>
-                    <div className="face front">
-                      <div className="cover-front">
-                        <h1 className="cover-title">{cover.title}</h1>
-                        <p className="cover-sub">{cover.subtitle}</p>
-                        <div className="cover-skull" aria-hidden="true" />
-                        <p className="cover-by">{cover.author}</p>
-                      </div>
-                    </div>
-                    <div className="face back">
-                      <div className="cover-back">
-                        <div className="cover-mark" aria-hidden="true" />
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    <div className="face front">{faces!.front}</div>
-                    <div className="face back">{faces!.back}</div>
-                  </>
-                )}
-              </div>
-            );
-          })}
+      <div className="viewport">
+        <div className="stage" ref={stageRef}>
+          <div className={`book${flippedCount === 0 ? " closed" : ""}`} ref={bookRef}>
+            <div className="shadow" aria-hidden="true" />
+            <div className="board" aria-hidden="true" />
+            <div className="spine" aria-hidden="true" />
+            {Array.from({ length: NLEAVES }, (_, i) => {
+              const faces = i === 0 ? null : paperFaces(i);
+              return (
+                  <div
+                      key={i}
+                      ref={(el) => {
+                        leafRefs.current[i] = el;
+                      }}
+                      className={leafClassName(i)}
+                      style={{ zIndex: leafZIndex(i) }}
+                      onClick={i === 0 && flippedCount === 0 && !rolling ? () => roll() : undefined}
+                      role={i === 0 && flippedCount === 0 ? "button" : undefined}
+                      tabIndex={i === 0 && flippedCount === 0 ? 0 : undefined}
+                  >
+                    {i === 0 ? (
+                        <>
+                          <div className="face front">
+                            <div className="cover-front">
+                              <h1 className="cover-title">{cover.title}</h1>
+                              <p className="cover-sub">{cover.subtitle}</p>
+                              <div className="cover-skull" aria-hidden="true" />
+                              <p className="cover-by">{cover.author}</p>
+                            </div>
+                          </div>
+                          <div className="face back">
+                            <div className="cover-back">
+                              <div className="cover-mark" aria-hidden="true" />
+                            </div>
+                          </div>
+                        </>
+                    ) : (
+                        <>
+                          <div className="face front">{faces!.front}</div>
+                          <div className="face back">{faces!.back}</div>
+                        </>
+                    )}
+                  </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
 
-      <div className="controls">
-        {current?.num !== 7 && (
-          <TornButton onPress={() => roll()} isDisabled={rolling}>
-            {flippedCount === 0 ? t("openBook") : t("rollAgain")}
-          </TornButton>
-        )}
-        {flippedCount > 0 && (
-          <TornButton quiet onPress={closeAndGoHome} isDisabled={rolling}>
-            {t("closeBook")}
-          </TornButton>
-        )}
-        {flippedCount === 0 && (
-          <TornButton quiet onPress={handleReset} isDisabled={rolling}>
-            {t("reset")}
-          </TornButton>
+        <div className="controls">
+          {current?.num !== 7 && (
+              <TornButton onPress={() => roll()} isDisabled={rolling}>
+                {flippedCount === 0 ? t("openBook") : t("rollAgain")}
+              </TornButton>
+          )}
+          {flippedCount > 0 && (
+              <TornButton quiet onPress={closeAndGoHome} isDisabled={rolling}>
+                {t("closeBook")}
+              </TornButton>
+          )}
+          {flippedCount === 0 && (
+              <TornButton quiet onPress={handleReset} isDisabled={rolling}>
+                {t("reset")}
+              </TornButton>
+          )}
+        </div>
+
+        {error && (
+            <p className="cover-error" role="alert">
+              {error}
+            </p>
         )}
       </div>
+  );
+}
 
-      {error && (
-        <p className="cover-error" role="alert">
-          {error}
-        </p>
-      )}
-    </div>
+interface PsalmPageProps {
+  locale: Locale;
+  num: number;
+  verse: string;
+  highlightOn: boolean;
+  playingVerse: string | null;
+  onVerseChange: (verse: string | null) => void;
+}
+
+function PsalmPage({ locale, num, verse, highlightOn, playingVerse, onVerseChange }: PsalmPageProps) {
+  const versesRef = useRef<HTMLOListElement | null>(null);
+  const psalm = psalmsByLocale[locale].psalms[num];
+
+  useEffect(() => {
+    const verses = versesRef.current;
+    if (!verses) return;
+
+    let frame = 0;
+
+    const fit = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const min = 5.5;
+        const max = 14.5;
+        let low = min;
+        let high = max;
+
+        verses.style.fontSize = `${max}px`;
+        if (verses.scrollHeight <= verses.clientHeight + 1) return;
+
+        for (let i = 0; i < 9; i++) {
+          const size = (low + high) / 2;
+          verses.style.fontSize = `${size}px`;
+
+          if (verses.scrollHeight <= verses.clientHeight + 1) {
+            low = size;
+          } else {
+            high = size;
+          }
+        }
+
+        verses.style.fontSize = `${low}px`;
+      });
+    };
+
+    const observer = new ResizeObserver(fit);
+    observer.observe(verses);
+    void document.fonts.ready.then(fit);
+    fit();
+
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
+  }, [locale, num]);
+
+  return (
+      <div className="psalm">
+        <h1 className="psalm-title">Psalm {toRomanNumeral(num)}</h1>
+        {num === 7 && <p className="psalm-label">KOŃCZĄCY</p>}
+        <PsalmAudio locale={locale} num={num} onVerseChange={onVerseChange} />
+        <ol ref={versesRef} className="verses">
+          {Object.entries(psalm.verses).map(([vn, text]) => (
+              <li
+                  key={vn}
+                  className={vn === verse ? `verse marked${highlightOn ? " on" : ""}` : "verse"}
+                  data-playing={playingVerse === vn}
+              >
+            <span className="vn">
+              {num}:{vn}
+            </span>{" "}
+                <span className="vt">{text}</span>
+              </li>
+          ))}
+        </ol>
+      </div>
   );
 }
 
 /** Renders nothing until narration + cues exist for this psalm/locale (see ticket 01). */
 function PsalmAudio({
-  locale,
-  num,
-  onVerseChange,
-}: {
+                      locale,
+                      num,
+                      onVerseChange,
+                    }: {
   locale: Locale;
   num: number;
   onVerseChange: (verse: string | null) => void;
@@ -385,9 +428,9 @@ function PsalmAudio({
   useEffect(() => {
     let cancelled = false;
     fetch(cuesSrc(locale, num))
-      .then((res) => (res.ok ? (res.json() as Promise<AudioCue[]>) : null))
-      .then((loaded) => !cancelled && setCues(loaded))
-      .catch(() => !cancelled && setCues(null));
+        .then((res) => (res.ok ? (res.json() as Promise<AudioCue[]>) : null))
+        .then((loaded) => !cancelled && setCues(loaded))
+        .catch(() => !cancelled && setCues(null));
     return () => {
       cancelled = true;
     };
@@ -395,41 +438,41 @@ function PsalmAudio({
 
   if (!cues) return null;
   return (
-    <audio
-      controls
-      src={audioSrc(locale, num)}
-      onTimeUpdate={(e) => onVerseChange(findCurrentVerse(cues, e.currentTarget.currentTime))}
-    />
+      <audio
+          controls
+          src={audioSrc(locale, num)}
+          onTimeUpdate={(e) => onVerseChange(findCurrentVerse(cues, e.currentTarget.currentTime))}
+      />
   );
 }
 
 function FillerFace({
-  folio,
-  side,
-  cover,
-}: {
+                      folio,
+                      side,
+                      cover,
+                    }: {
   folio: number;
   side: "front" | "back";
   cover: { title: string };
 }) {
   const f = renderFiller(folio, side);
   return (
-    <div className="filler" aria-hidden="true">
-      <h2 className="filler-heading">{f.heading}</h2>
-      <p className="filler-rubric">{f.rubric}</p>
-      <div className="filler-script">
-        {f.paragraphs.map((p, idx) => (
-          <p className="filler-paragraph" key={idx}>
-            {p}
-          </p>
-        ))}
+      <div className="filler" aria-hidden="true">
+        <h2 className="filler-heading">{f.heading}</h2>
+        <p className="filler-rubric">{f.rubric}</p>
+        <div className="filler-script">
+          {f.paragraphs.map((p, idx) => (
+              <p className="filler-paragraph" key={idx}>
+                {p}
+              </p>
+          ))}
+        </div>
+        <p className="filler-note">{f.note}</p>
+        <div className="filler-blot" />
+        <div className="filler-folio">
+          <span>{f.folioLabel}</span>
+          <span>{cover.title}</span>
+        </div>
       </div>
-      <p className="filler-note">{f.note}</p>
-      <div className="filler-blot" />
-      <div className="filler-folio">
-        <span>{f.folioLabel}</span>
-        <span>{cover.title}</span>
-      </div>
-    </div>
   );
 }
