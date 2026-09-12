@@ -9,6 +9,7 @@ steps:
         from_secret: npmrc_content
     commands:
       - |
+        apk add --no-cache python3 make g++
         set -e
 
         cleanup() {
