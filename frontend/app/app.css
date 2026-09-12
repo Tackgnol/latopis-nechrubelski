@@ -220,7 +220,7 @@ a {
 }
 
 .leaf.flipped {
-  transform: rotateY(-180deg);
+  transform: translateX(-100%);
 }
 
 .face {
@@ -232,12 +232,12 @@ a {
 }
 
 .face.back {
-  transform: rotateY(180deg);
+  transform: none;
+  visibility: hidden;
 }
 
-.book.flipping .face.back {
-  transform: rotateY(180deg) scaleX(-1);
-}
+.leaf.flipped .face.front { visibility: hidden; }
+.leaf.flipped .face.back { visibility: visible; }
 
 /* paper */
 .paper .face {
