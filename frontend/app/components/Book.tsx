@@ -39,6 +39,8 @@ export function Book({ locale, current }: { locale: Locale; current: CurrentPsal
   const [spread, setSpread] = useState<Spread | null>(() =>
     current ? { target: FIXED_OPEN_TARGET, num: current.num, verse: current.verse } : null,
   );
+  // Previous spread kept mounted during a flip so the old psalm page is organically covered, not blanked.
+  const [prevSpread, setPrevSpread] = useState<Spread | null>(null);
   const [highlightOn, setHighlightOn] = useState(false);
   const [rolling, setRolling] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -107,11 +109,13 @@ export function Book({ locale, current }: { locale: Locale; current: CurrentPsal
         from = 0;
         target = Math.min(k, MAX_TARGET);
       }
+      setPrevSpread(spread);
       setSpread({ target, num, verse });
       await new Promise(requestAnimationFrame);
       await flipForward(from, target);
       flippedCountRef.current = target;
       setFlippedCount(target);
+      setPrevSpread(null);
       setHighlightOn(false);
       requestAnimationFrame(() => setHighlightOn(true));
     } finally {
@@ -218,52 +222,58 @@ export function Book({ locale, current }: { locale: Locale; current: CurrentPsal
     return flipped ? 100 + i : NLEAVES - i;
   }
 
+  function psalmFaces(s: Spread) {
+    const psalm = psalms[s.num];
+    return {
+      front: (
+        <div className="psalm">
+          <h1 className="psalm-title">Psalm {toRomanNumeral(s.num)}</h1>
+          {s.num === 7 && <p className="psalm-label">KOŃCZĄCY</p>}
+          <PsalmAudio locale={locale} num={s.num} onVerseChange={setPlayingVerse} />
+          <ol className="verses">
+            {Object.entries(psalm.verses).map(([vn, text]) => (
+              <li
+                key={vn}
+                className={vn === s.verse ? `verse marked${highlightOn ? " on" : ""}` : "verse"}
+                data-playing={playingVerse === vn}
+              >
+                <span className="vn">
+                  {s.num}:{vn}
+                </span>{" "}
+                <span className="vt">{text}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      ),
+      back: (
+        <div className="num-page">
+          <div className="blot" aria-hidden="true" />
+          <div className="numeral">{toRomanNumeral(s.num)}</div>
+          <p className="misery">
+            {t("misery")}{" "}
+            <b>
+              {s.num}:{s.verse}
+            </b>
+          </p>
+        </div>
+      ),
+    };
+  }
+
   function paperFaces(i: number) {
-    const isFront = spread && i === spread.target;
-    const isBack = spread && i === spread.target - 1;
-    if (isFront && spread) {
-      const psalm = psalms[spread.num];
-      return {
-        front: (
-          <div className="psalm">
-            <h1 className="psalm-title">Psalm {toRomanNumeral(spread.num)}</h1>
-            {spread.num === 7 && <p className="psalm-label">KOŃCZĄCY</p>}
-            <PsalmAudio locale={locale} num={spread.num} onVerseChange={setPlayingVerse} />
-            <ol className="verses">
-              {Object.entries(psalm.verses).map(([vn, text]) => (
-                <li
-                  key={vn}
-                  className={vn === spread.verse ? `verse marked${highlightOn ? " on" : ""}` : "verse"}
-                  data-playing={playingVerse === vn}
-                >
-                  <span className="vn">
-                    {spread.num}:{vn}
-                  </span>{" "}
-                  <span className="vt">{text}</span>
-                </li>
-              ))}
-            </ol>
-          </div>
-        ),
-        back: <FillerFace folio={i} side="back" cover={cover} />,
-      };
+    // Keep the previous psalm mounted on its own leaf so the flip organically covers it.
+    if (prevSpread && i === prevSpread.target) {
+      return { front: psalmFaces(prevSpread).front, back: <FillerFace folio={i} side="back" cover={cover} /> };
     }
-    if (isBack && spread) {
-      return {
-        front: <FillerFace folio={i} side="front" cover={cover} />,
-        back: (
-          <div className="num-page">
-            <div className="blot" aria-hidden="true" />
-            <div className="numeral">{toRomanNumeral(spread.num)}</div>
-            <p className="misery">
-              {t("misery")}{" "}
-              <b>
-                {spread.num}:{spread.verse}
-              </b>
-            </p>
-          </div>
-        ),
-      };
+    if (prevSpread && i === prevSpread.target - 1) {
+      return { front: <FillerFace folio={i} side="front" cover={cover} />, back: psalmFaces(prevSpread).back };
+    }
+    if (spread && i === spread.target) {
+      return { front: psalmFaces(spread).front, back: <FillerFace folio={i} side="back" cover={cover} /> };
+    }
+    if (spread && i === spread.target - 1) {
+      return { front: <FillerFace folio={i} side="front" cover={cover} />, back: psalmFaces(spread).back };
     }
     return {
       front: <FillerFace folio={i} side="front" cover={cover} />,
