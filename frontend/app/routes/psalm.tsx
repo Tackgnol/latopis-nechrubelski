@@ -53,25 +53,39 @@ export default function PsalmPage() {
   const [playingVerse, setPlayingVerse] = useState<string | null>(null);
 
   return (
-    <main>
-      <h1>
-        Psalm {toRomanNumeral(num)} — {psalm.label}
-      </h1>
-      <PsalmAudio locale={locale} num={num} onVerseChange={setPlayingVerse} />
-      <ol>
-        {Object.entries(psalm.verses).map(([verseNum, text]) => (
-          <li
-            key={verseNum}
-            id={`verse-${verseNum}`}
-            aria-current={revealedVerse === verseNum ? "true" : undefined}
-            data-revealed={revealedVerse === verseNum}
-            data-playing={playingVerse === verseNum}
-          >
-            {text}
-          </li>
-        ))}
-      </ol>
-      <Link to={`/${locale}`}>{t("backToCover")}</Link>
-    </main>
+    <div className="page-shell">
+      <div className="book-spread">
+        <div className="book-page num-page">
+          <div className="numeral">{toRomanNumeral(num)}</div>
+          <p className="misery">
+            {t("misery")} <b>{num}:1</b>
+          </p>
+        </div>
+        <main className="book-page">
+          <div className="psalm">
+            <h1 className="psalm-title">{psalm.label}</h1>
+            <PsalmAudio locale={locale} num={num} onVerseChange={setPlayingVerse} />
+            <ol className="verses">
+              {Object.entries(psalm.verses).map(([verseNum, text]) => (
+                <li
+                  key={verseNum}
+                  id={`verse-${verseNum}`}
+                  className="verse"
+                  aria-current={revealedVerse === verseNum ? "true" : undefined}
+                  data-revealed={revealedVerse === verseNum}
+                  data-playing={playingVerse === verseNum}
+                >
+                  <span className="vn">{num}:{verseNum}</span>
+                  <span className="vt">{text}</span>
+                </li>
+              ))}
+            </ol>
+            <Link className="psalm-back" to={`/${locale}`}>
+              {t("backToCover")}
+            </Link>
+          </div>
+        </main>
+      </div>
+    </div>
   );
 }

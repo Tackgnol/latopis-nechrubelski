@@ -7,6 +7,7 @@ export interface CommonResource {
   backToCover: string;
   allRevealed: string;
   rollFailed: string;
+  misery: string;
 }
 
 export const pl: CommonResource = {
@@ -18,4 +19,5 @@ export const pl: CommonResource = {
   backToCover: "Powrót do okładki",
   allRevealed: "Wszystkie Psalmy I–VI zostały odsłonięte.",
   rollFailed: "Rzut się nie powiódł — czy backend działa?",
+  misery: "Nieszczęście",
 };

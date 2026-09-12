@@ -1,0 +1,454 @@
+/* Ported from PoC.html's MÖRK BORG design system. The PoC's decorative alpha-mask
+   art (skull, ink blots, corner stains) isn't wired in yet — see --img-* variables
+   below, currently unset. Everything else (palette, type, torn-paper buttons, the
+   book/page layout, verse-highlight wipe) is CSS-only and fully ported. */
+
+:root {
+  --yellow: #ffe600;
+  --black: #000;
+  --pink: #ff2f92;
+  --bone: #ede6d1;
+
+  --display: "Pirata One", "Old English Text MT", Georgia, serif;
+  --grot: "Anton", Impact, "Arial Narrow Bold", sans-serif;
+  --book: "IM Fell English", Georgia, "Times New Roman", serif;
+
+  /* art: alpha masks, recoloured in CSS. Not yet wired in — ask for asset locations. */
+  --img-skull: none;
+  --img-blot: none;
+
+  --grain: url("data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.7 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--yellow);
+  color: var(--black);
+  font-family: var(--book);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+}
+
+/* ---------- backdrop ---------- */
+.ghost {
+  position: fixed;
+  left: -3vw;
+  top: 4vh;
+  font-family: var(--grot);
+  font-size: 27vw;
+  line-height: 1;
+  color: var(--black);
+  opacity: 0.055;
+  transform: rotate(-7deg);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  background-image: var(--grain);
+  opacity: 0.28;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 40;
+}
+
+/* ---------- page shell ---------- */
+.page-shell {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px 16px;
+}
+
+/* ---------- cover ---------- */
+.cover {
+  position: relative;
+  z-index: 1;
+  width: min(680px, 100%);
+  background: var(--black);
+  color: var(--bone);
+  padding: 32px 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 18px 18px 0 rgba(0, 0, 0, 0.4);
+}
+
+.cover-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 52px;
+  line-height: 0.9;
+  margin: 0;
+  color: var(--pink);
+  transform: rotate(-2.4deg);
+  transform-origin: left top;
+}
+
+.cover-sub {
+  font-style: italic;
+  font-size: 19px;
+  margin: 14px 0 0 2px;
+  color: var(--bone);
+  opacity: 0.85;
+}
+
+.cover-by {
+  margin: 18px 0 0;
+  font-size: 13px;
+  line-height: 1.35;
+  color: var(--bone);
+  opacity: 0.6;
+}
+
+.cover-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 24px;
+}
+
+.cover-error {
+  color: var(--pink);
+  font-style: italic;
+}
+
+.cover-nav {
+  margin-top: 28px;
+  border-top: 2px solid var(--bone);
+  padding-top: 16px;
+}
+
+.cover-nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+}
+
+.cover-nav a {
+  font-family: var(--book);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--bone);
+  text-decoration: none;
+  border-bottom: 2px solid var(--pink);
+}
+
+.cover-nav a:hover {
+  color: var(--pink);
+}
+
+/* ---------- book spread (psalm page) ---------- */
+.book-spread {
+  position: relative;
+  z-index: 1;
+  width: min(900px, 100%);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--black);
+  padding: 8px;
+  gap: 8px;
+  box-shadow: 18px 18px 0 rgba(0, 0, 0, 0.4);
+}
+
+.book-page {
+  position: relative;
+  background: var(--bone);
+  overflow: hidden;
+  min-height: 460px;
+}
+
+.book-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--grain);
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.num-page {
+  padding: 24px;
+}
+
+.num-page .numeral {
+  font-family: var(--grot);
+  font-size: 160px;
+  line-height: 1;
+  color: var(--black);
+  text-shadow: 9px 9px 0 var(--pink);
+  transform: rotate(-7deg);
+  transform-origin: left top;
+  margin-top: 24px;
+}
+
+.num-page .misery {
+  position: absolute;
+  left: 32px;
+  bottom: 28px;
+  font-style: italic;
+  font-size: 17px;
+}
+
+.num-page .misery b {
+  font-style: normal;
+  font-family: var(--grot);
+  font-weight: 400;
+  font-size: 19px;
+  color: var(--pink);
+  letter-spacing: 0.03em;
+}
+
+.psalm {
+  position: relative;
+  height: 100%;
+  padding: 26px 26px 28px 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.psalm-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1;
+  margin: 0;
+  padding: 0 0 6px;
+  border-bottom: 7px solid var(--black);
+  letter-spacing: 0.01em;
+}
+
+.psalm-label {
+  font-family: var(--grot);
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin: 7px 0 0;
+  transform: rotate(-1.5deg);
+  transform-origin: left;
+}
+
+.verses {
+  flex: 1;
+  min-height: 0;
+  margin-top: 14px;
+  font-size: 15.5px;
+  line-height: 1.5;
+}
+
+.verse {
+  margin: 0 0 0.65em;
+  list-style: none;
+}
+
+.vn {
+  font-family: var(--grot);
+  color: var(--pink);
+  font-size: 0.96em;
+  letter-spacing: 0.03em;
+  margin-right: 0.45em;
+}
+
+.vt {
+  background-image: linear-gradient(var(--yellow), var(--yellow));
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  transition: background-size 0.55s cubic-bezier(0.3, 0, 0.2, 1);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.verse[data-revealed="true"] .vt,
+.verse[data-playing="true"] .vt {
+  background-size: 100% 100%;
+}
+
+.psalm-back {
+  margin-top: 20px;
+  font-family: var(--book);
+  font-style: italic;
+  font-size: 15px;
+  color: var(--black);
+  text-decoration: none;
+  border-bottom: 2px solid var(--black);
+  align-self: flex-start;
+}
+
+.psalm-back:hover {
+  color: var(--pink);
+  border-color: var(--pink);
+}
+
+@media (max-width: 640px) {
+  .book-spread {
+    grid-template-columns: 1fr;
+  }
+
+  .num-page {
+    min-height: 240px;
+  }
+
+  .num-page .numeral {
+    font-size: 100px;
+  }
+}
+
+/* ---------- torn-paper buttons ---------- */
+.btn {
+  --tear: polygon(
+    1% 6%,
+    9% 0%,
+    31% 5%,
+    52% 0%,
+    74% 4%,
+    91% 0%,
+    100% 7%,
+    99% 34%,
+    100% 63%,
+    98% 94%,
+    88% 100%,
+    66% 95%,
+    43% 100%,
+    22% 96%,
+    7% 100%,
+    0% 91%,
+    2% 58%,
+    0% 30%
+  );
+  --dry: polygon(0% 100%, 11% 100%, 24% 100%, 37% 100%, 51% 100%, 65% 100%, 79% 100%, 91% 100%, 100% 100%, 100% 101%, 0% 101%);
+  --wet: polygon(0% 6%, 11% -2%, 24% 4%, 37% -1%, 51% 5%, 65% -3%, 79% 3%, 91% -2%, 100% 4%, 100% 101%, 0% 101%);
+  --ink: var(--pink);
+  position: relative;
+  font-family: var(--grot);
+  font-size: 17px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  background: var(--black);
+  border: 0;
+  padding: 12px 22px;
+  cursor: pointer;
+  transform: rotate(-1.2deg);
+  clip-path: var(--tear);
+  transition: transform 0.12s;
+}
+
+.btn .label {
+  position: relative;
+  z-index: 3;
+  display: block;
+}
+
+.btn .flood {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  clip-path: var(--dry);
+  transition: clip-path 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.btn .flood .label {
+  color: var(--black);
+}
+
+.btn:hover .flood,
+.btn:focus-visible .flood {
+  clip-path: var(--wet);
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-image: var(--grain);
+  opacity: 0.3;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.btn:active {
+  transform: rotate(-1.2deg) scale(0.97) translateY(2px);
+}
+
+.btn.quiet {
+  --tear: polygon(
+    0% 8%,
+    13% 1%,
+    28% 6%,
+    47% 0%,
+    63% 5%,
+    82% 0%,
+    100% 6%,
+    98% 38%,
+    100% 66%,
+    99% 96%,
+    84% 100%,
+    62% 96%,
+    41% 100%,
+    19% 95%,
+    5% 100%,
+    1% 88%,
+    0% 56%,
+    2% 28%
+  );
+  --ink: var(--black);
+  background: none;
+  color: var(--black);
+  transform: rotate(0.9deg);
+  padding: 12px 20px;
+}
+
+.btn.quiet .flood .label {
+  color: var(--yellow);
+}
+
+.btn.quiet::after {
+  display: none;
+}
+
+.btn.quiet:active {
+  transform: rotate(0.9deg) scale(0.97) translateY(2px);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--black);
+  outline-offset: 4px;
+}
+
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vt,
+  .btn,
+  .btn .flood {
+    transition-duration: 0.01ms !important;
+  }
+}

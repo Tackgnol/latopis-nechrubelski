@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Link, redirect, useLoaderData, useNavigate, type LoaderFunctionArgs } from "react-router";
 import { useTranslation } from "react-i18next";
-import { Button } from "react-aria-components";
 import { psalmsByLocale, type Locale } from "~/content";
 import { toRomanNumeral } from "~/content/roman-numerals";
 import { apiPost } from "~/lib/api";
+import { TornButton } from "~/components/TornButton";
 
 export function loader({ params, request }: LoaderFunctionArgs) {
   const locale = params.locale as Locale;
@@ -66,31 +66,39 @@ export default function LocaleIndex() {
   }
 
   return (
-    <main>
-      <h1>{cover.title}</h1>
-      <p>{cover.subtitle}</p>
-      <p>{cover.author}</p>
+    <div className="page-shell">
+      <main className="cover">
+        <h1 className="cover-title">{cover.title}</h1>
+        <p className="cover-sub">{cover.subtitle}</p>
+        <p className="cover-by">{cover.author}</p>
 
-      <Button onPress={handleRoll} isDisabled={rolling}>
-        {t("roll")}
-      </Button>
-      <Button onPress={handleRevealEnd} isDisabled={rolling}>
-        {t("revealEnd")}
-      </Button>
-      <Button onPress={handleReset} isDisabled={rolling}>
-        {t("reset")}
-      </Button>
-      {error && <p role="alert">{error}</p>}
+        <div className="cover-controls">
+          <TornButton onPress={handleRoll} isDisabled={rolling}>
+            {t("roll")}
+          </TornButton>
+          <TornButton quiet onPress={handleRevealEnd} isDisabled={rolling}>
+            {t("revealEnd")}
+          </TornButton>
+          <TornButton quiet onPress={handleReset} isDisabled={rolling}>
+            {t("reset")}
+          </TornButton>
+        </div>
+        {error && (
+          <p className="cover-error" role="alert">
+            {error}
+          </p>
+        )}
 
-      <nav aria-label="Psalms">
-        <ul>
-          {psalmNumbers.map((n) => (
-            <li key={n}>
-              <Link to={`/${locale}/psalm/${n}`}>Psalm {toRomanNumeral(n)}</Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </main>
+        <nav className="cover-nav" aria-label="Psalms">
+          <ul>
+            {psalmNumbers.map((n) => (
+              <li key={n}>
+                <Link to={`/${locale}/psalm/${n}`}>Psalm {toRomanNumeral(n)}</Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </main>
+    </div>
   );
 }
