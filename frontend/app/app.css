@@ -340,7 +340,7 @@ a {
   position: absolute;
   left: 9%;
   top: 16%;
-  font-family: var(--grot);
+  font-family: var(--display);
   font-size: 190px;
   line-height: 1;
   color: var(--black);
