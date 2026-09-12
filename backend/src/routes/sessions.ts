@@ -1,0 +1,91 @@
+import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
+import {
+  getCurrentReadingSession,
+  getOrCreateReadingSession,
+  getReadingSessionByMonitorToken,
+  resetReadingSession,
+} from "../reading-sessions.js";
+import { revealedPsalmVerses } from "../roller.js";
+import { FINAL_PSALM, pickFromPool, remainingPsalms } from "../psalm-pool.js";
+
+async function ensureAuthUserId(
+  fastify: FastifyInstance,
+  request: FastifyRequest,
+  reply: FastifyReply,
+): Promise<string> {
+  if (request.appSession?.user) return request.appSession.user.id;
+  const response = await fastify.auth.api.signInAnonymous({
+    headers: new Headers(request.headers as any),
+    asResponse: true,
+  });
+  const setCookies = response.headers.getSetCookie?.() ?? [];
+  if (setCookies.length > 0) reply.header("set-cookie", setCookies);
+  const body = (await response.json()) as { user: { id: string } };
+  return body.user.id;
+}
+
+export default async function sessionRoutes(fastify: FastifyInstance) {
+  fastify.post("/api/sessions/roll", async (request, reply) => {
+    const authUserId = await ensureAuthUserId(fastify, request, reply);
+    const session = getOrCreateReadingSession(authUserId);
+    const revealed = await revealedPsalmVerses(session.rollerSessionId);
+    const remaining = remainingPsalms(revealed.map((r) => r.psalm));
+
+    if (remaining.length === 0) {
+      return reply.status(409).send({ error: "All of Psalms I-VI are already revealed." });
+    }
+
+    const psalmRoll = await fastify.roller.roll(`1d${remaining.length}`, {
+      sessionId: session.rollerSessionId,
+      actor: authUserId,
+      tags: ["psalm-pick"],
+    });
+    const psalm = pickFromPool(remaining, psalmRoll.total);
+    const verseRoll = await fastify.roller.roll("1d6", {
+      sessionId: session.rollerSessionId,
+      actor: authUserId,
+      tags: ["psalm-reveal"],
+      meta: { psalm },
+    });
+
+    return { psalm, verse: verseRoll.total };
+  });
+
+  fastify.post("/api/sessions/reveal-end", async (request, reply) => {
+    const authUserId = await ensureAuthUserId(fastify, request, reply);
+    const session = getOrCreateReadingSession(authUserId);
+    const revealed = await revealedPsalmVerses(session.rollerSessionId);
+
+    if (remainingPsalms(revealed.map((r) => r.psalm)).length > 0) {
+      return reply.status(409).send({ error: "Psalms I-VI must all be revealed first." });
+    }
+
+    await fastify.roller.roll("1d1", {
+      sessionId: session.rollerSessionId,
+      actor: authUserId,
+      tags: ["psalm-reveal"],
+      meta: { psalm: FINAL_PSALM, verse: FINAL_PSALM },
+    });
+
+    return { psalm: FINAL_PSALM, verse: FINAL_PSALM };
+  });
+
+  fastify.get("/api/sessions/me", async (request) => {
+    const authUserId = request.appSession?.user?.id;
+    const session = authUserId ? getCurrentReadingSession(authUserId) : null;
+    if (!session) return { started: false, revealed: [] };
+    return { started: true, monitorToken: session.monitorToken, revealed: await revealedPsalmVerses(session.rollerSessionId) };
+  });
+
+  fastify.post("/api/sessions/reset", async (request, reply) => {
+    const authUserId = await ensureAuthUserId(fastify, request, reply);
+    const session = resetReadingSession(authUserId);
+    return { monitorToken: session.monitorToken };
+  });
+
+  fastify.get<{ Params: { token: string } }>("/api/monitor/:token", async (request, reply) => {
+    const session = getReadingSessionByMonitorToken(request.params.token);
+    if (!session) return reply.status(404).send({ error: "Unknown monitor link." });
+    return { revealed: await revealedPsalmVerses(session.rollerSessionId) };
+  });
+}

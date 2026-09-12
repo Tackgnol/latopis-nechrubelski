@@ -1,43 +1,20 @@
-import { data, useLoaderData, type LoaderFunctionArgs } from "react-router";
+import { data, Link, useLoaderData, useLocation, type LoaderFunctionArgs } from "react-router";
 import { useTranslation } from "react-i18next";
-import { Button } from "react-aria-components";
 import { psalmsByLocale, type Locale } from "~/content";
 import { toRomanNumeral } from "~/content/roman-numerals";
-import { useState } from "react";
 
 export function loader({ params }: LoaderFunctionArgs) {
   const locale = params.locale as Locale;
   const num = Number(params.num);
   const psalm = psalmsByLocale[locale].psalms[num];
   if (!psalm) throw data("Psalm not found", { status: 404 });
-  return { num, psalm };
+  return { locale, num, psalm };
 }
 
 export default function PsalmPage() {
-  const { num, psalm } = useLoaderData<typeof loader>();
+  const { locale, num, psalm } = useLoaderData<typeof loader>();
   const { t } = useTranslation();
-  const [revealedVerse, setRevealedVerse] = useState<string | null>(null);
-  const [rolling, setRolling] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  async function handleRoll() {
-    setRolling(true);
-    setError(null);
-    try {
-      const res = await fetch("/api/sessions/roll", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ psalm: num }),
-      });
-      if (!res.ok) throw new Error(await res.text());
-      const roll = (await res.json()) as { verse: number };
-      setRevealedVerse(String(roll.verse));
-    } catch {
-      setError("Roll failed — is the backend running?");
-    } finally {
-      setRolling(false);
-    }
-  }
+  const revealedVerse = useLocation().hash.replace(/^#verse-/, "") || null;
 
   return (
     <main>
@@ -56,10 +33,7 @@ export default function PsalmPage() {
           </li>
         ))}
       </ol>
-      <Button onPress={handleRoll} isDisabled={rolling}>
-        {t("roll")}
-      </Button>
-      {error && <p role="alert">{error}</p>}
+      <Link to={`/${locale}`}>{t("backToCover")}</Link>
     </main>
   );
 }

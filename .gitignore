@@ -9,3 +9,5 @@ build/
 .serena/
 build/
 .react-router/
+*.sqlite
+*.sqlite-*
