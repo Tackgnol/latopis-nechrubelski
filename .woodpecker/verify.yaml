@@ -19,7 +19,7 @@ steps:
         : "${NPMRC_CONTENT:?npmrc_content secret is required}"
         printf '%s\n' "$NPMRC_CONTENT" > backend/.npmrc
 
-        npm --prefix backend ci --no-audit --no-fund
+        npm --prefix backend ci --legacy-peer-deps --no-audit --no-fund
         npm --prefix backend run typecheck
         npm --prefix backend run test
         npm --prefix backend run build
