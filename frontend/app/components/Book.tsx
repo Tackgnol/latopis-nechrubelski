@@ -95,6 +95,7 @@ export function Book({ locale, current }: { locale: Locale; current: CurrentPsal
     const stageEl = stageRef.current;
     if (!stageEl) return;
     bookRef.current?.classList.remove("closed");
+    bookRef.current?.classList.add("flipping");
     const jitterId = startJitter(stageEl);
     try {
       let from = flippedCountRef.current;
@@ -115,6 +116,7 @@ export function Book({ locale, current }: { locale: Locale; current: CurrentPsal
       requestAnimationFrame(() => setHighlightOn(true));
     } finally {
       settleJitter(stageEl, jitterId);
+      bookRef.current?.classList.remove("flipping");
     }
   }
 
@@ -145,13 +147,14 @@ export function Book({ locale, current }: { locale: Locale; current: CurrentPsal
 
   async function closeAndGoHome() {
     if (flippedCount === 0) return;
-    bookRef.current?.classList.add("closed");
+    bookRef.current?.classList.add("closed", "flipping");
     const stageEl = stageRef.current;
     if (stageEl) {
       const jitterId = startJitter(stageEl);
       await flipBackward(flippedCount, CLOSE_STAGGER);
       settleJitter(stageEl, jitterId);
     }
+    bookRef.current?.classList.remove("flipping");
     flippedCountRef.current = 0;
     setFlippedCount(0);
     setSpread(null);
