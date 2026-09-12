@@ -1,0 +1,32 @@
+# Snippet to add to the host's /etc/caddy/Caddyfile (see rpgtools.co's live
+# config for the real `cloudflare_tls_co` snippet this imports).
+#
+# Matches the bladerack/trenchrats pattern: static asset routes and API
+# routes reverse-proxied straight to the stack's published ports, everything
+# else falls through to the frontend (react-router-serve does SSR + serves
+# its own /assets/* — see frontend/Dockerfile).
+
+miseries.rpgtools.co {
+        import cloudflare_tls_co
+
+        @asset_routes path /assets/*
+        handle @asset_routes {
+                reverse_proxy 127.0.0.1:3100 {
+                        @asset_not_found status 404
+                        handle_response @asset_not_found {
+                                header Cache-Control "no-store"
+                                header CDN-Cache-Control "no-store"
+                                copy_response
+                        }
+                }
+        }
+
+        @api_routes path /api/*
+        handle @api_routes {
+                reverse_proxy 127.0.0.1:3101
+        }
+
+        handle {
+                reverse_proxy 127.0.0.1:3100
+        }
+}

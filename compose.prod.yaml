@@ -1,0 +1,90 @@
+# Docker Swarm stack, driven by Woodpecker (.woodpecker/deploy.yaml).
+# No separate db service: the backend's state lives in a single SQLite file
+# on a named volume (better-sqlite3 + WAL mode, see backend/src/db.ts).
+#
+# Required env (Woodpecker secrets, see .woodpecker/deploy.yaml):
+#   BETTER_AUTH_SECRET
+#   TRUSTED_ORIGINS   e.g. https://miseries.rpgtools.co
+#   AUTH_BASE_URL     e.g. https://miseries.rpgtools.co
+#
+# Optional (Logto sign-in; anonymous-only auth works fine without these —
+# see ticket 05, still open):
+#   LOGTO_ENDPOINT, LOGTO_APP_ID, LOGTO_APP_SECRET, LOGTO_REDIRECT_URI
+
+services:
+  backend:
+    image: latopis-nechrubelski-backend:${IMAGE_TAG:-prod}
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    deploy:
+      replicas: ${BACKEND_REPLICAS:-1}
+      update_config:
+        order: start-first
+        failure_action: rollback
+      restart_policy:
+        condition: on-failure
+    environment:
+      NODE_ENV: production
+      PORT: 3141
+      DB_PATH: /data/data.sqlite
+      TRUSTED_ORIGINS: ${TRUSTED_ORIGINS:?TRUSTED_ORIGINS is required}
+      AUTH_BASE_URL: ${AUTH_BASE_URL:?AUTH_BASE_URL is required}
+      BETTER_AUTH_SECRET: ${BETTER_AUTH_SECRET:?BETTER_AUTH_SECRET is required}
+      LOGTO_ENDPOINT: ${LOGTO_ENDPOINT:-}
+      LOGTO_APP_ID: ${LOGTO_APP_ID:-}
+      LOGTO_APP_SECRET: ${LOGTO_APP_SECRET:-}
+      LOGTO_REDIRECT_URI: ${LOGTO_REDIRECT_URI:-}
+    volumes:
+      - reading_data:/data
+    ports:
+      - target: 3141
+        published: ${BACKEND_PORT:-3101}
+        protocol: tcp
+    networks:
+      - rpg-network
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3141/api/csrf-token').then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 20s
+
+  frontend:
+    image: latopis-nechrubelski-frontend:${IMAGE_TAG:-prod}
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    deploy:
+      replicas: ${FRONTEND_REPLICAS:-1}
+      update_config:
+        order: start-first
+        failure_action: rollback
+      restart_policy:
+        condition: on-failure
+    ports:
+      - target: 3000
+        published: ${FRONTEND_PORT:-3100}
+        protocol: tcp
+    networks:
+      - rpg-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/pl').then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 10s
+
+volumes:
+  reading_data:
+    name: ${READING_DATA_VOLUME:-latopis-nechrubelski-prod_reading_data}
+
+networks:
+  rpg-network:
+    external: true

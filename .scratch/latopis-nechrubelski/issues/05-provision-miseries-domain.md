@@ -15,3 +15,24 @@ This is infra access only the human has. Checklist to hand back once done (the a
 ## Answer
 
 _(recorded on resolution)_
+
+Repo-side scaffolding is now in place, ports picked from the live Caddyfile
+(free below 3100: `3100` frontend, `3101` backend — nothing else on the host
+claims either):
+
+- `backend/Dockerfile`, `frontend/Dockerfile`
+- `compose.prod.yaml` (Docker Swarm stack; single SQLite file on a named
+  volume, no separate db service), `compose.build.yaml` (BuildKit npmrc secret)
+- `Caddyfile.example` (`miseries.rpgtools.co`, ports 3100/3101, mirrors the
+  bladerack/trenchrats pattern)
+- `.woodpecker/verify.yaml`, `.woodpecker/deploy.yaml`
+
+Still only the human can do:
+
+- [ ] DNS: point `miseries.rpgtools.co` at the Caddy host.
+- [ ] Caddy: paste `Caddyfile.example`'s block into the host's live Caddyfile, reload.
+- [ ] Logto: register an app, or skip — the backend runs anonymous-only auth
+      if `LOGTO_*` env vars are left unset.
+- [ ] Woodpecker: add the secrets listed at the top of `.woodpecker/deploy.yaml`
+      (`npmrc_content`, `better_auth_secret`, `trusted_origins`, `auth_base_url`,
+      and the optional `logto_*` ones).

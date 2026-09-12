@@ -1,0 +1,82 @@
+when:
+  - event: [push, manual, deployment]
+    branch: master
+
+depends_on:
+  - verify
+
+# Secrets (set in Woodpecker UI, lowercase names):
+#   npmrc_content        -> NPMRC_CONTENT (BuildKit secret for private @tackgnol/* packages)
+#   better_auth_secret   -> BETTER_AUTH_SECRET
+#   trusted_origins      -> TRUSTED_ORIGINS   (e.g. https://miseries.rpgtools.co)
+#   auth_base_url        -> AUTH_BASE_URL     (e.g. https://miseries.rpgtools.co)
+#   logto_endpoint, logto_app_id, logto_app_secret, logto_redirect_uri
+#     -> optional; anonymous-only auth works without them (see ticket 05)
+#
+# Runs on a Swarm manager via the mounted docker socket, single-node swarm,
+# so the one-off migrate container below can mount the same named volume
+# the stack's backend service writes to.
+
+steps:
+  deploy:
+    image: docker:27-cli
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      DOCKER_BUILDKIT: "1"
+      COMPOSE_DOCKER_CLI_BUILD: "1"
+      NPMRC_CONTENT:
+        from_secret: npmrc_content
+      BETTER_AUTH_SECRET:
+        from_secret: better_auth_secret
+      TRUSTED_ORIGINS:
+        from_secret: trusted_origins
+      AUTH_BASE_URL:
+        from_secret: auth_base_url
+      LOGTO_ENDPOINT:
+        from_secret: logto_endpoint
+      LOGTO_APP_ID:
+        from_secret: logto_app_id
+      LOGTO_APP_SECRET:
+        from_secret: logto_app_secret
+      LOGTO_REDIRECT_URI:
+        from_secret: logto_redirect_uri
+    commands:
+      - |
+        set -e
+
+        STACK=latopis-nechrubelski
+        VOLUME=latopis-nechrubelski-prod_reading_data
+
+        required_vars="NPMRC_CONTENT BETTER_AUTH_SECRET TRUSTED_ORIGINS AUTH_BASE_URL"
+        for var_name in $required_vars; do
+          if [ -z "$(printenv "$var_name")" ]; then
+            secret_name="$(echo "$var_name" | tr '[:upper:]' '[:lower:]')"
+            echo "$${secret_name} secret is required" >&2
+            exit 1
+          fi
+        done
+
+        if ! docker network inspect rpg-network > /dev/null 2>&1; then
+          docker network create --driver overlay --attachable rpg-network
+        fi
+
+        docker compose -f compose.prod.yaml -f compose.build.yaml build
+
+        # Run the one-time better-auth schema migration directly against the
+        # persistent volume before (re)deploying the stack. Idempotent: a
+        # no-op once the tables already exist.
+        docker run --rm \
+          -v "$${VOLUME}:/data" \
+          -e DB_PATH=/data/data.sqlite \
+          -e BETTER_AUTH_SECRET="$BETTER_AUTH_SECRET" \
+          -e TRUSTED_ORIGINS="$TRUSTED_ORIGINS" \
+          -e AUTH_BASE_URL="$AUTH_BASE_URL" \
+          latopis-nechrubelski-backend:prod \
+          node dist/migrate.js
+
+        docker stack deploy -c compose.prod.yaml $STACK --detach=true --resolve-image never
+        docker service update --force --detach=false $${STACK}_backend
+        docker service update --force --detach=false $${STACK}_frontend
+
+        docker stack services $STACK

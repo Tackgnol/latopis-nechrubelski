@@ -1,0 +1,14 @@
+**/node_modules
+**/dist
+**/build
+.git
+.idea
+.claude
+.scratch
+*.sqlite
+*.sqlite-*
+.npmrc
+**/.npmrc
+.env
+.env.*
+!.env.example

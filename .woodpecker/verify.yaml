@@ -1,0 +1,30 @@
+when:
+  - event: [push, pull_request, manual]
+
+steps:
+  verify:
+    image: node:22-alpine
+    environment:
+      NPMRC_CONTENT:
+        from_secret: npmrc_content
+    commands:
+      - |
+        set -e
+
+        cleanup() {
+          rm -f backend/.npmrc
+        }
+        trap cleanup EXIT
+
+        : "${NPMRC_CONTENT:?npmrc_content secret is required}"
+        printf '%s\n' "$NPMRC_CONTENT" > backend/.npmrc
+
+        npm --prefix backend ci --no-audit --no-fund
+        npm --prefix backend run typecheck
+        npm --prefix backend run test
+        npm --prefix backend run build
+
+        npm --prefix frontend ci --no-audit --no-fund
+        npm --prefix frontend run typecheck
+        npm --prefix frontend run test
+        npm --prefix frontend run build

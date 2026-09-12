@@ -1,0 +1,13 @@
+# Wires the BuildKit "npmrc" secret into the backend build (it's the only
+# service depending on private @tackgnol/* packages). Used as:
+#   docker compose -f compose.prod.yaml -f compose.build.yaml build
+
+services:
+  backend:
+    build:
+      secrets:
+        - npmrc
+
+secrets:
+  npmrc:
+    environment: NPMRC_CONTENT
