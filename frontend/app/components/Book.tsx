@@ -189,12 +189,25 @@ export function Book({ locale, current }: { locale: Locale; current: CurrentPsal
   useEffect(() => {
     const verses = bookRef.current?.querySelector<HTMLElement>(".psalm .verses");
     if (!verses) return;
-    let size = 14.5;
-    verses.style.fontSize = size + "px";
-    while (verses.scrollHeight > verses.clientHeight + 1 && size > 9.5) {
-      size -= 0.5;
+
+    function fit() {
+      if (!verses) return;
+      let size = 14.5;
       verses.style.fontSize = size + "px";
+      // Floor low enough that the longest psalms still fit once the async audio
+      // control has claimed its vertical space.
+      while (verses.scrollHeight > verses.clientHeight + 1 && size > 7) {
+        size -= 0.5;
+        verses.style.fontSize = size + "px";
+      }
     }
+
+    fit();
+    // The <audio> control mounts asynchronously (see PsalmAudio) and shrinks the
+    // available height, so re-fit whenever the container is resized.
+    const observer = new ResizeObserver(fit);
+    observer.observe(verses);
+    return () => observer.disconnect();
   }, [spread]);
 
   useEffect(() => {
