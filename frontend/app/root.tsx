@@ -17,6 +17,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
+        <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
+          <filter id="grit">
+            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="n" />
+            <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" />
+          </filter>
+        </svg>
         <div className="ghost" aria-hidden="true">
           NECHRUBEL
         </div>

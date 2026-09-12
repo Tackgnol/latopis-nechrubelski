@@ -27,4 +27,4 @@ ENV PORT=3141
 
 EXPOSE 3141
 
-CMD ["node", "dist/index.js"]
+CMD ["sh", "-c", "node dist/migrate.js && node dist/index.js"]

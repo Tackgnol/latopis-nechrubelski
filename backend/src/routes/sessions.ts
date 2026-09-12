@@ -32,7 +32,7 @@ export default async function sessionRoutes(fastify: FastifyInstance) {
     const remaining = remainingPsalms(revealed.map((r) => r.psalm));
 
     if (remaining.length === 0) {
-      return reply.status(409).send({ error: "All of Psalms I-VI are already revealed." });
+      return reply.status(409).send({ error: "all-revealed" });
     }
 
     const psalmRoll = await fastify.roller.roll(`1d${remaining.length}`, {
@@ -57,7 +57,7 @@ export default async function sessionRoutes(fastify: FastifyInstance) {
     const revealed = await revealedPsalmVerses(session.rollerSessionId);
 
     if (remainingPsalms(revealed.map((r) => r.psalm)).length > 0) {
-      return reply.status(409).send({ error: "Psalms I-VI must all be revealed first." });
+      return reply.status(409).send({ error: "not-all-revealed" });
     }
 
     await fastify.roller.roll("1d1", {

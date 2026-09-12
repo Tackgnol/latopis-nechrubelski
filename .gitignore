@@ -14,3 +14,7 @@ build/
 .npmrc
 **/.npmrc
 .idea/
+CSS-button-ink-hover-Effect-main
+
+.playwright-cli/
+output/playwright/

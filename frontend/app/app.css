@@ -1,12 +1,18 @@
-/* Ported from PoC.html's MÖRK BORG design system: palette, type, torn-paper
-   buttons, the book/page layout, verse-highlight wipe, corner-stain/skull art,
-   and a page-flip transition (native View Transitions API, see bottom). */
+/* Ported 1:1 from PoC-improved.html's MÖRK BORG design system: palette,
+   type, torn-paper buttons, corner-stain/skull art, and the leaf-flip book. */
 
 :root {
   --yellow: #ffe600;
   --black: #000;
   --pink: #ff2f92;
   --bone: #ede6d1;
+
+  --pw: 340px; /* page width */
+  --ph: 520px; /* page height */
+  --s: 1; /* stage scale, set by JS */
+  --jx: 0px;
+  --jy: 0px;
+  --jr: 0deg; /* riffle jitter, set by JS */
 
   --display: "Pirata One", "Old English Text MT", Georgia, serif;
   --grot: "Anton", Impact, "Arial Narrow Bold", sans-serif;
@@ -36,11 +42,16 @@ body {
   background: var(--yellow);
   color: var(--black);
   font-family: var(--book);
+  overflow: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
 a {
   color: inherit;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 /* ---------- backdrop ---------- */
@@ -116,128 +127,120 @@ a {
   }
 }
 
-/* ---------- page shell ---------- */
-.page-shell {
-  position: relative;
-  min-height: 100vh;
+/* ---------- stage & book ---------- */
+.viewport {
+  position: fixed;
+  inset: 0;
   display: grid;
   place-items: center;
-  padding: 32px 16px;
-}
-
-/* ---------- cover ---------- */
-.cover {
-  position: relative;
-  z-index: 1;
-  width: min(680px, 100%);
-  background: var(--black);
-  color: var(--bone);
-  padding: 32px 32px 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  box-shadow: 18px 18px 0 rgba(0, 0, 0, 0.4);
-  view-transition-name: page-content;
-}
-
-.cover-title {
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: 52px;
-  line-height: 0.9;
-  margin: 0;
-  color: var(--pink);
-  transform: rotate(-2.4deg);
-  transform-origin: left top;
-}
-
-.cover-sub {
-  font-style: italic;
-  font-size: 19px;
-  margin: 14px 0 0 2px;
-  color: var(--bone);
-  opacity: 0.85;
-}
-
-.cover-skull {
-  height: 220px;
-  margin: 16px 0;
-  background: var(--bone);
-  opacity: 0.9;
-  -webkit-mask: var(--img-skull) center / contain no-repeat;
-  mask: var(--img-skull) center / contain no-repeat;
-}
-
-.cover-by {
-  margin: 18px 0 0;
-  font-size: 13px;
-  line-height: 1.35;
-  color: var(--bone);
-  opacity: 0.6;
-}
-
-.cover-controls {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-top: 24px;
-}
-
-.cover-error {
-  color: var(--pink);
-  font-style: italic;
-}
-
-.cover-nav {
-  margin-top: 28px;
-  border-top: 2px solid var(--bone);
-  padding-top: 16px;
-}
-
-.cover-nav ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 20px;
-}
-
-.cover-nav a {
-  font-family: var(--book);
-  font-style: italic;
-  font-size: 15px;
-  color: var(--bone);
-  text-decoration: none;
-  border-bottom: 2px solid var(--pink);
-}
-
-.cover-nav a:hover {
-  color: var(--pink);
-}
-
-/* ---------- book spread (psalm page) ---------- */
-.book-spread {
-  position: relative;
-  z-index: 1;
-  width: min(900px, 100%);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  background: var(--black);
-  padding: 8px;
-  gap: 8px;
-  box-shadow: 18px 18px 0 rgba(0, 0, 0, 0.4);
-  view-transition-name: page-content;
-}
-
-.book-page {
-  position: relative;
-  background: var(--bone);
   overflow: hidden;
-  min-height: 460px;
 }
 
-.book-page::before {
+.stage {
+  width: calc(var(--pw) * 2);
+  height: var(--ph);
+  transform: translate(var(--jx), var(--jy)) rotate(var(--jr)) scale(var(--s));
+  transition: transform 0.16s ease-out;
+  transform-origin: center;
+}
+
+.stage.settle {
+  transition: transform 0.7s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.book {
+  position: relative;
+  width: calc(var(--pw) * 2);
+  height: var(--ph);
+  perspective: 2300px;
+  transition: transform 0.9s cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+.book.closed {
+  transform: translateX(-25%);
+}
+
+.shadow {
+  position: absolute;
+  inset: -8px;
+  left: -8px;
+  background: var(--black);
+  transform: translate(18px, 18px);
+  z-index: 0;
+  transition: left 0.9s cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+.book.closed .shadow {
+  left: 50%;
+}
+
+.board {
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  left: 50%;
+  right: -8px;
+  background: var(--black);
+  z-index: 1;
+}
+
+.spine {
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  left: calc(50% - 9px);
+  width: 18px;
+  background: var(--black);
+  z-index: 2;
+}
+
+.leaf {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transform: rotateY(0deg);
+  transition: transform var(--dur, 0.42s) var(--ease, cubic-bezier(0.55, 0, 0.35, 1));
+}
+
+.leaf.cover {
+  top: -8px;
+  height: calc(100% + 16px);
+  width: calc(50% + 8px);
+  cursor: pointer;
+}
+
+.leaf.paper {
+  top: 4px;
+  height: calc(100% - 8px);
+  width: calc(50% - 10px);
+}
+
+.leaf.flipped {
+  transform: rotateY(-180deg);
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.face.back {
+  transform: rotateY(180deg);
+}
+
+/* paper */
+.paper .face {
+  background: var(--bone);
+}
+
+.paper .face::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -245,16 +248,111 @@ a {
   opacity: 0.22;
   mix-blend-mode: multiply;
   pointer-events: none;
+  z-index: 2;
 }
 
-.num-page {
-  padding: 24px;
-}
-
-.num-page::after {
+.paper .face::after {
   content: "";
   position: absolute;
-  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0) 14%);
+}
+
+.paper .face.back::after {
+  background: linear-gradient(-90deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0) 14%);
+}
+
+/* cover faces */
+.cover .face {
+  background: var(--black);
+  color: var(--bone);
+}
+
+.cover-front {
+  height: 100%;
+  padding: 24px 24px 22px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cover-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 41px;
+  line-height: 0.9;
+  margin: 0;
+  color: var(--pink);
+  transform: rotate(-2.4deg);
+  transform-origin: left top;
+  filter: url(#grit);
+  backface-visibility: hidden;
+}
+
+.cover-sub {
+  font-style: italic;
+  font-size: 17px;
+  margin: 14px 0 0 2px;
+  color: var(--bone);
+  opacity: 0.85;
+}
+
+.cover-skull {
+  flex: 1;
+  min-height: 0;
+  margin: 12px -10px 8px;
+  background: var(--bone);
+  -webkit-mask: var(--img-skull) center bottom / contain no-repeat;
+  mask: var(--img-skull) center bottom / contain no-repeat;
+}
+
+.cover-by {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--bone);
+  opacity: 0.6;
+}
+
+.cover-back {
+  display: grid;
+  place-items: center;
+}
+
+.cover-mark {
+  width: 58%;
+  height: 34%;
+  background: var(--bone);
+  opacity: 0.22;
+  transform: rotate(-14deg);
+  -webkit-mask: var(--img-blot) center / contain no-repeat;
+  mask: var(--img-blot) center / contain no-repeat;
+}
+
+/* left page: giant numeral */
+.num-page {
+  position: relative;
+  height: 100%;
+}
+
+.num-page .numeral {
+  position: absolute;
+  left: 9%;
+  top: 16%;
+  font-family: var(--grot);
+  font-size: 190px;
+  line-height: 1;
+  color: var(--black);
+  text-shadow: 9px 9px 0 var(--pink);
+  transform: rotate(-7deg);
+  filter: url(#grit);
+  backface-visibility: hidden;
+  z-index: 1;
+}
+
+.num-page .blot {
+  position: absolute;
   right: -8%;
   top: 34%;
   width: 76%;
@@ -264,28 +362,16 @@ a {
   transform: rotate(9deg);
   -webkit-mask: var(--img-blot) center / contain no-repeat;
   mask: var(--img-blot) center / contain no-repeat;
-}
-
-.num-page .numeral {
-  position: relative;
-  z-index: 1;
-  font-family: var(--grot);
-  font-size: 160px;
-  line-height: 1;
-  color: var(--black);
-  text-shadow: 9px 9px 0 var(--pink);
-  transform: rotate(-7deg);
-  transform-origin: left top;
-  margin-top: 24px;
+  z-index: 0;
 }
 
 .num-page .misery {
   position: absolute;
-  z-index: 1;
   left: 32px;
-  bottom: 28px;
+  bottom: 34px;
   font-style: italic;
   font-size: 17px;
+  z-index: 1;
 }
 
 .num-page .misery b {
@@ -297,8 +383,10 @@ a {
   letter-spacing: 0.03em;
 }
 
+/* right page: the psalm */
 .psalm {
   position: relative;
+  z-index: 1;
   height: 100%;
   padding: 26px 26px 28px 32px;
   display: flex;
@@ -314,6 +402,7 @@ a {
   padding: 0 0 6px;
   border-bottom: 7px solid var(--black);
   letter-spacing: 0.01em;
+  backface-visibility: hidden;
 }
 
 .psalm-label {
@@ -330,14 +419,25 @@ a {
 .verses {
   flex: 1;
   min-height: 0;
+  overflow: hidden;
   margin-top: 14px;
-  font-size: 15.5px;
-  line-height: 1.5;
+  font-size: 14.5px;
+  line-height: 1.42;
 }
 
 .verse {
-  margin: 0 0 0.65em;
+  margin: 0 0 0.55em;
   list-style: none;
+}
+
+.verse[data-playing="true"] .vt {
+  color: #68202c;
+}
+
+.psalm audio {
+  width: 100%;
+  margin-top: 10px;
+  height: 30px;
 }
 
 .vn {
@@ -348,7 +448,7 @@ a {
   margin-right: 0.45em;
 }
 
-.vt {
+.marked .vt {
   background-image: linear-gradient(var(--yellow), var(--yellow));
   background-repeat: no-repeat;
   background-size: 0% 100%;
@@ -357,39 +457,152 @@ a {
   -webkit-box-decoration-break: clone;
 }
 
-.verse[data-revealed="true"] .vt,
-.verse[data-playing="true"] .vt {
+.marked.on .vt {
   background-size: 100% 100%;
 }
 
-.psalm-back {
-  margin-top: 20px;
+/* filler pages: meaningless Latin flavour text shown mid-riffle */
+.filler {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  padding: 27px 25px 26px 32px;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  color: var(--black);
+}
+
+.face.back .filler {
+  padding: 27px 32px 26px 25px;
+}
+
+.filler-heading {
+  font-family: var(--display);
+  font-size: 35px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  border-bottom: 3px double currentColor;
+  padding-bottom: 9px;
+  transform: rotate(-1deg);
+  transform-origin: left;
+  filter: url(#grit);
+}
+
+.filler-rubric {
+  font-family: var(--book);
+  font-size: 10px;
+  font-style: italic;
+  letter-spacing: 0.06em;
+  color: #68202c;
+  margin-top: 6px;
+}
+
+.filler-script {
+  margin-top: 15px;
+  position: relative;
+  z-index: 1;
+  font-family: var(--display);
+  font-size: 15px;
+  line-height: 1.24;
+  letter-spacing: 0.015em;
+  opacity: 0.88;
+  max-height: 348px;
+  overflow: hidden;
+}
+
+.filler-paragraph {
+  margin: 0 0 9px;
+  text-align: justify;
+  text-indent: 13px;
+}
+
+.filler-paragraph:first-child {
+  text-indent: 0;
+}
+
+.filler-paragraph:first-child::first-letter {
+  float: left;
+  font-family: var(--display);
+  font-size: 59px;
+  line-height: 0.85;
+  padding: 4px 6px 0 0;
+  color: #68202c;
+  filter: url(#grit);
+}
+
+.filler-paragraph:nth-child(3) {
+  opacity: 0.7;
+}
+
+.filler-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.filler-note {
+  position: absolute;
+  right: 20px;
+  bottom: 58px;
   font-family: var(--book);
   font-style: italic;
-  font-size: 15px;
-  color: var(--black);
-  text-decoration: none;
-  border-bottom: 2px solid var(--black);
-  align-self: flex-start;
+  font-size: 11px;
+  color: #68202c;
+  opacity: 0.72;
+  border-bottom: 1px solid currentColor;
 }
 
-.psalm-back:hover {
+.filler-blot {
+  position: absolute;
+  left: -10px;
+  bottom: 38px;
+  width: 160px;
+  height: 125px;
+  background: var(--black);
+  opacity: 0.045;
+  -webkit-mask: var(--img-blot) center / contain no-repeat;
+  mask: var(--img-blot) center / contain no-repeat;
+}
+
+.filler-folio {
+  position: absolute;
+  bottom: 20px;
+  left: 32px;
+  right: 25px;
+  border-top: 1px solid currentColor;
+  padding-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--book);
+  font-size: 11px;
+  font-style: italic;
+  opacity: 0.65;
+}
+
+.filler-compact .filler-script {
+  font-size: 14px;
+  line-height: 1.27;
+}
+
+/* ---------- ui ---------- */
+.controls {
+  position: fixed;
+  left: 22px;
+  bottom: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  z-index: 60;
+}
+
+.cover-error {
+  position: fixed;
+  left: 22px;
+  bottom: 84px;
+  z-index: 60;
   color: var(--pink);
-  border-color: var(--pink);
-}
-
-@media (max-width: 640px) {
-  .book-spread {
-    grid-template-columns: 1fr;
-  }
-
-  .num-page {
-    min-height: 240px;
-  }
-
-  .num-page .numeral {
-    font-size: 100px;
-  }
+  font-style: italic;
+  max-width: min(420px, calc(100vw - 44px));
 }
 
 /* ---------- torn-paper buttons ---------- */
@@ -414,8 +627,6 @@ a {
     2% 58%,
     0% 30%
   );
-  --dry: polygon(0% 100%, 11% 100%, 24% 100%, 37% 100%, 51% 100%, 65% 100%, 79% 100%, 91% 100%, 100% 100%, 100% 101%, 0% 101%);
-  --wet: polygon(0% 6%, 11% -2%, 24% 4%, 37% -1%, 51% 5%, 65% -3%, 79% 3%, 91% -2%, 100% 4%, 100% 101%, 0% 101%);
   --ink: var(--pink);
   position: relative;
   font-family: var(--grot);
@@ -445,8 +656,9 @@ a {
   display: grid;
   place-items: center;
   background: var(--ink);
-  clip-path: var(--dry);
-  transition: clip-path 0.55s cubic-bezier(0.22, 0.61, 0.36, 1);
+  -webkit-mask: url("/img/ink-mask-sprite.png") 100% 0 / 2300% 100% no-repeat;
+  mask: url("/img/ink-mask-sprite.png") 100% 0 / 2300% 100% no-repeat;
+  transition: -webkit-mask-position 0.7s steps(22), mask-position 0.7s steps(22);
 }
 
 .btn .flood .label {
@@ -455,7 +667,8 @@ a {
 
 .btn:hover .flood,
 .btn:focus-visible .flood {
-  clip-path: var(--wet);
+  -webkit-mask-position: 0 0;
+  mask-position: 0 0;
 }
 
 .btn::after {
@@ -505,6 +718,20 @@ a {
   color: var(--yellow);
 }
 
+.btn.quiet .tearline {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+.btn.quiet .tearline path {
+  fill: none;
+  stroke: var(--black);
+  stroke-width: 7;
+  stroke-linejoin: round;
+}
 .btn.quiet::after {
   display: none;
 }
@@ -523,60 +750,89 @@ a {
   cursor: not-allowed;
 }
 
+/* ---------- SEO index: crawlable psalm links, visually tucked below the book ---------- */
+.seo-index {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  overflow: hidden;
+  height: 1px;
+  width: 1px;
+  white-space: nowrap;
+}
+
+.seo-index:focus-within {
+  clip: auto;
+  clip-path: none;
+  height: auto;
+  width: auto;
+  white-space: normal;
+  background: var(--bone);
+  padding: 12px 16px;
+  z-index: 80;
+}
+
+/* ---------- narrow screens: show only the right page ---------- */
+body.single .stage {
+  width: var(--pw);
+}
+
+body.single .book {
+  margin-left: calc(var(--pw) * -1);
+}
+
+body.single .book.closed {
+  transform: none;
+}
+
+body.single .ghost {
+  font-size: 52vw;
+  top: 2vh;
+}
+
+body.single .controls {
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  gap: 10px;
+}
+
+body.single .btn {
+  flex: 1;
+  font-size: 15px;
+  padding: 12px 8px 11px;
+  text-align: center;
+}
+
+body.single .stain-a {
+  right: -40px;
+  top: -44px;
+  width: 214px;
+  height: 237px;
+}
+
+body.single .stain-b {
+  width: 150px;
+  height: 161px;
+  left: -34px;
+  bottom: -26px;
+}
+
+body.single .stain-c {
+  display: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .vt,
+  .leaf,
+  .book,
+  .stage,
+  .shadow,
+  .marked .vt,
   .btn,
   .btn .flood {
     transition-duration: 0.01ms !important;
-  }
-}
-
-/* ---------- page-flip transition (native View Transitions API) ----------
-   `.cover`/`.book-spread` share view-transition-name: page-content, so a
-   `viewTransition` navigation morphs one into the other instead of the
-   browser's default crossfade. riffle-out/in gives it the loose, jittery
-   snap of pages riffling, rather than a clean single flip. */
-@media (prefers-reduced-motion: no-preference) {
-  ::view-transition-group(page-content) {
-    perspective: 2400px;
-  }
-
-  ::view-transition-old(page-content) {
-    animation: riffle-out 0.45s cubic-bezier(0.55, 0, 0.35, 1) both;
-    transform-origin: right center;
-  }
-
-  ::view-transition-new(page-content) {
-    animation: riffle-in 0.45s cubic-bezier(0.2, 0.9, 0.3, 1) both;
-    animation-delay: 0.2s;
-    transform-origin: left center;
-  }
-
-  @keyframes riffle-out {
-    0% {
-      transform: rotateY(0deg) rotate(0deg);
-      opacity: 1;
-    }
-    30% {
-      transform: rotateY(-25deg) rotate(-1deg);
-    }
-    100% {
-      transform: rotateY(-100deg) rotate(1.5deg);
-      opacity: 0;
-    }
-  }
-
-  @keyframes riffle-in {
-    0% {
-      transform: rotateY(100deg) rotate(-1.5deg);
-      opacity: 0;
-    }
-    60% {
-      transform: rotateY(-8deg) rotate(0.6deg);
-      opacity: 1;
-    }
-    100% {
-      transform: rotateY(0deg) rotate(0deg);
-    }
   }
 }

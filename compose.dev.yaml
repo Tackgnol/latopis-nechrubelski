@@ -16,7 +16,7 @@ services:
   backend:
     image: node:22-alpine
     working_dir: /app
-    command: sh -c "apk add --no-cache python3 make g++ >/dev/null && cp /run/secrets/npmrc ~/.npmrc && npm ci --legacy-peer-deps && rm -f ~/.npmrc && npm run dev"
+    command: sh -c "apk add --no-cache python3 make g++ >/dev/null && cp /run/secrets/npmrc ~/.npmrc && npm ci --legacy-peer-deps && rm -f ~/.npmrc && npm run migrate && npm run dev"
     secrets:
       - npmrc
     volumes:

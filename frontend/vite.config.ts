@@ -13,5 +13,8 @@ export default defineConfig({
     proxy: {
       "/api": process.env.VITE_BACKEND_PROXY_TARGET ?? "http://localhost:3141",
     },
+    watch: {
+      usePolling: true,
+    },
   },
 });
