@@ -33,7 +33,7 @@ export default function LocaleIndex() {
   const [error, setError] = useState<string | null>(null);
 
   async function goToResult(result: RollResult) {
-    navigate(`/${locale}/psalm/${result.psalm}#verse-${result.verse}`);
+    navigate(`/${locale}/psalm/${result.psalm}#verse-${result.verse}`, { viewTransition: true });
   }
 
   async function handleRoll() {
@@ -70,6 +70,7 @@ export default function LocaleIndex() {
       <main className="cover">
         <h1 className="cover-title">{cover.title}</h1>
         <p className="cover-sub">{cover.subtitle}</p>
+        <div className="cover-skull" aria-hidden="true" />
         <p className="cover-by">{cover.author}</p>
 
         <div className="cover-controls">
@@ -93,7 +94,9 @@ export default function LocaleIndex() {
           <ul>
             {psalmNumbers.map((n) => (
               <li key={n}>
-                <Link to={`/${locale}/psalm/${n}`}>Psalm {toRomanNumeral(n)}</Link>
+                <Link to={`/${locale}/psalm/${n}`} viewTransition>
+                  Psalm {toRomanNumeral(n)}
+                </Link>
               </li>
             ))}
           </ul>

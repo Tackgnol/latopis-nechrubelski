@@ -20,6 +20,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="ghost" aria-hidden="true">
           NECHRUBEL
         </div>
+        <div className="stain stain-a" aria-hidden="true" />
+        <div className="stain stain-b" aria-hidden="true" />
+        <div className="stain stain-c" aria-hidden="true" />
         {children}
         <div className="grain" aria-hidden="true" />
         <ScrollRestoration />

@@ -80,7 +80,7 @@ export default function PsalmPage() {
                 </li>
               ))}
             </ol>
-            <Link className="psalm-back" to={`/${locale}`}>
+            <Link className="psalm-back" to={`/${locale}`} viewTransition>
               {t("backToCover")}
             </Link>
           </div>
