@@ -235,10 +235,6 @@ a {
   transform: rotateY(180deg);
 }
 
-.book.flipping .face.back {
-  transform: rotateY(0deg);
-}
-
 /* paper */
 .paper .face {
   background: var(--bone);
