@@ -22,12 +22,14 @@ const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 interface CurrentPsalm {
   num: number;
   verse: string;
+  reveal: number;
 }
 
 interface Spread {
   target: number;
   num: number;
   verse: string;
+  reveal: number;
 }
 
 export function Book({ locale, current }: { locale: Locale; current: CurrentPsalm | null }) {
@@ -37,7 +39,7 @@ export function Book({ locale, current }: { locale: Locale; current: CurrentPsal
 
   const [flippedCount, setFlippedCount] = useState(() => (current ? FIXED_OPEN_TARGET : 0));
   const [spread, setSpread] = useState<Spread | null>(() =>
-      current ? { target: FIXED_OPEN_TARGET, num: current.num, verse: current.verse } : null,
+      current ? { target: FIXED_OPEN_TARGET, ...current } : null,
   );
   // Previous spread kept mounted during a flip so the old psalm page is organically covered, not blanked.
   const [prevSpread, setPrevSpread] = useState<Spread | null>(null);
@@ -93,7 +95,7 @@ export function Book({ locale, current }: { locale: Locale; current: CurrentPsal
     await delay(Math.max(0, LEAF_MS - stagger));
   }
 
-  async function animateRoll(num: number, verse: string) {
+  async function animateRoll(num: number, verse: string, reveal: number) {
     const stageEl = stageRef.current;
     if (!stageEl) return;
     bookRef.current?.classList.remove("closed");
@@ -110,7 +112,7 @@ export function Book({ locale, current }: { locale: Locale; current: CurrentPsal
         target = Math.min(k, MAX_TARGET);
       }
       setPrevSpread(spread);
-      setSpread({ target, num, verse });
+      setSpread({ target, num, verse, reveal });
       await new Promise(requestAnimationFrame);
       await flipForward(from, target);
       flippedCountRef.current = target;
@@ -130,17 +132,17 @@ export function Book({ locale, current }: { locale: Locale; current: CurrentPsal
     setRolling(true);
     setError(null);
     try {
-      let result: { psalm: number; verse: number };
+      let result: { psalm: number; verse: number; reveal: number };
       try {
-        result = await apiPost<{ psalm: number; verse: number }>("/api/sessions/roll");
+        result = await apiPost<typeof result>("/api/sessions/roll");
       } catch (err) {
         if (!(err instanceof Error) || err.message !== "all-revealed") throw err;
-        result = await apiPost<{ psalm: number; verse: number }>("/api/sessions/reveal-end");
+        result = await apiPost<typeof result>("/api/sessions/reveal-end");
       }
       const verse = String(result.verse);
-      await animateRoll(result.psalm, verse);
+      await animateRoll(result.psalm, verse, result.reveal);
       pendingSelfNav.current = true;
-      navigate(`/${locale}/psalm/${result.psalm}?v=${verse}`);
+      navigate(`/${locale}/psalm/${result.psalm}?v=${verse}&r=${result.reveal}`);
     } catch {
       setError(t("rollFailed"));
     } finally {
@@ -181,10 +183,10 @@ export function Book({ locale, current }: { locale: Locale; current: CurrentPsal
     for (let i = 0; i < NLEAVES; i++) setLeafFlipped(i, i < target);
     flippedCountRef.current = target;
     setFlippedCount(target);
-    setSpread(current ? { target, num: current.num, verse: current.verse } : null);
+    setSpread(current ? { target, ...current } : null);
     setHighlightOn(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [current?.num, current?.verse]);
+  }, [current?.num, current?.verse, current?.reveal]);
 
   useEffect(() => {
     function layout() {
@@ -230,7 +232,7 @@ export function Book({ locale, current }: { locale: Locale; current: CurrentPsal
             <p className="misery">
               {t("misery")}{" "}
               <b>
-                {s.num}:{s.verse}
+                {s.reveal}:7
               </b>
             </p>
           </div>

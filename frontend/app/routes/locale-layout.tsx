@@ -16,8 +16,10 @@ export default function LocaleLayout() {
   const { locale } = useLoaderData<typeof loader>();
   const i18n = createI18nInstance(locale);
   const matches = useMatches();
-  const leafData = matches.at(-1)?.loaderData as { num?: number; verse?: string } | undefined;
-  const current = leafData?.num ? { num: leafData.num, verse: leafData.verse ?? "1" } : null;
+  const leafData = matches.at(-1)?.loaderData as { num?: number; verse?: string; reveal?: number } | undefined;
+  const current = leafData?.num
+    ? { num: leafData.num, verse: leafData.verse ?? "1", reveal: leafData.reveal ?? leafData.num }
+    : null;
   return (
     <I18nextProvider i18n={i18n}>
       <Book locale={locale} current={current} />

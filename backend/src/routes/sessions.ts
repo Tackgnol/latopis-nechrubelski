@@ -48,7 +48,7 @@ export default async function sessionRoutes(fastify: FastifyInstance) {
       meta: { psalm },
     });
 
-    return { psalm, verse: verseRoll.total };
+    return { psalm, verse: verseRoll.total, reveal: Math.min(revealed.length + 1, FINAL_PSALM) };
   });
 
   fastify.post("/api/sessions/reveal-end", async (request, reply) => {
@@ -67,7 +67,7 @@ export default async function sessionRoutes(fastify: FastifyInstance) {
       meta: { psalm: FINAL_PSALM, verse: FINAL_PSALM },
     });
 
-    return { psalm: FINAL_PSALM, verse: FINAL_PSALM };
+    return { psalm: FINAL_PSALM, verse: FINAL_PSALM, reveal: Math.min(revealed.length + 1, FINAL_PSALM) };
   });
 
   fastify.get("/api/sessions/me", async (request) => {
