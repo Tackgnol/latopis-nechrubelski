@@ -8,7 +8,7 @@ The deploy pipeline reads these values from Woodpecker repository secrets. Secre
 | `better_auth_secret` | `BETTER_AUTH_SECRET` | yes | Long random production secret for Better Auth |
 | `trusted_origins` | `TRUSTED_ORIGINS` | yes | Comma-separated browser origins, normally `https://miseries.rpgtools.co` |
 | `auth_base_url` | `AUTH_BASE_URL` | yes | Public backend/auth origin, normally `https://miseries.rpgtools.co` |
-| `glitchtip_dsn` | `GLITCHTIP_DSN` | no | GlitchTip DSN. The backend reports with it and relays browser errors through `/api/tunnel`; it is also baked into the frontend build as `VITE_GLITCHTIP_DSN`. Reporting is off when unset |
+| `glitchtip_dsn` | `GLITCHTIP_DSN` | no | GlitchTip DSN. The backend reports with it and relays browser errors through `/api/tunnel`; the frontend build gets the same DSN with the key replaced by a placeholder (`VITE_GLITCHTIP_DSN`, derived in `deploy.yaml`), so the real key never ships to browsers. Reporting is off when unset |
 | `logto_endpoint` | `LOGTO_ENDPOINT` | no | Logto issuer URL |
 | `logto_app_id` | `LOGTO_APP_ID` | no | Logto application ID |
 | `logto_app_secret` | `LOGTO_APP_SECRET` | no | Logto application secret |

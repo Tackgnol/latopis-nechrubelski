@@ -64,6 +64,9 @@ steps:
           docker network create --driver overlay --attachable rpg-network
         fi
 
+        # The tunnel pins the real key server-side, so the browser bundle only gets a placeholder key.
+        export VITE_GLITCHTIP_DSN=$(printf '%s' "$GLITCHTIP_DSN" | sed -E 's#//[^@/]*@#//tunnel@#')
+
         docker compose -f compose.prod.yaml -f compose.build.yaml build
 
         # Run the one-time better-auth schema migration directly against the

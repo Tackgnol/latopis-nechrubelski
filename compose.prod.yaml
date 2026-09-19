@@ -63,7 +63,7 @@ services:
       context: .
       dockerfile: frontend/Dockerfile
       args:
-        VITE_GLITCHTIP_DSN: ${GLITCHTIP_DSN:-}
+        VITE_GLITCHTIP_DSN: ${VITE_GLITCHTIP_DSN:-}
     deploy:
       replicas: ${FRONTEND_REPLICAS:-1}
       update_config:
