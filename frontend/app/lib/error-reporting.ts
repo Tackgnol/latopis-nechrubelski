@@ -13,6 +13,7 @@ export function initErrorReporting() {
   Sentry.init({
     dsn,
     tunnel: "/api/tunnel",
+    release: import.meta.env.VITE_SENTRY_RELEASE,
     environment: import.meta.env.MODE,
     initialScope: { tags: { source: "frontend" } },
     // GlitchTip does not support sessions.

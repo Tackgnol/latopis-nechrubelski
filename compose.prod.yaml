@@ -64,6 +64,10 @@ services:
       dockerfile: frontend/Dockerfile
       args:
         VITE_GLITCHTIP_DSN: ${VITE_GLITCHTIP_DSN:-}
+        SENTRY_RELEASE: ${SENTRY_RELEASE:-}
+        SENTRY_URL: ${SENTRY_URL:-https://glitchtip.rpgtools.co}
+        SENTRY_ORG: ${SENTRY_ORG:-tackgnols-rpg-tools}
+        SENTRY_PROJECT: ${SENTRY_PROJECT:-}
     deploy:
       replicas: ${FRONTEND_REPLICAS:-1}
       update_config:

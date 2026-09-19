@@ -1,5 +1,6 @@
-# Wires the BuildKit "npmrc" secret into the backend build (it's the only
-# service depending on private @tackgnol/* packages). Used as:
+# Wires BuildKit secrets into the image builds: "npmrc" for the backend (the only
+# service depending on private @tackgnol/* packages) and "sentry_auth_token" for the
+# frontend's source map upload to GlitchTip. Used as:
 #   docker compose -f compose.prod.yaml -f compose.build.yaml build
 
 services:
@@ -7,7 +8,13 @@ services:
     build:
       secrets:
         - npmrc
+  frontend:
+    build:
+      secrets:
+        - sentry_auth_token
 
 secrets:
   npmrc:
     environment: NPMRC_CONTENT
+  sentry_auth_token:
+    environment: SENTRY_AUTH_TOKEN

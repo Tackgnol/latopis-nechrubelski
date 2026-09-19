@@ -11,6 +11,8 @@ depends_on:
 #   trusted_origins      -> TRUSTED_ORIGINS   (e.g. https://miseries.rpgtools.co)
 #   auth_base_url        -> AUTH_BASE_URL     (e.g. https://miseries.rpgtools.co)
 #   glitchtip_dsn        -> GLITCHTIP_DSN     (optional; error reporting is off without it)
+#   sentry_auth_token    -> SENTRY_AUTH_TOKEN (required once glitchtip_dsn is set; source map upload)
+#   sentry_project       -> SENTRY_PROJECT    (GlitchTip project slug the maps are uploaded to)
 #   logto_endpoint, logto_app_id, logto_app_secret, logto_redirect_uri
 #     -> optional; anonymous-only auth works without them (see ticket 05)
 #
@@ -36,6 +38,10 @@ steps:
         from_secret: auth_base_url
       GLITCHTIP_DSN:
         from_secret: glitchtip_dsn
+      SENTRY_AUTH_TOKEN:
+        from_secret: sentry_auth_token
+      SENTRY_PROJECT:
+        from_secret: sentry_project
       LOGTO_ENDPOINT:
         from_secret: logto_endpoint
       LOGTO_APP_ID:
@@ -66,6 +72,10 @@ steps:
 
         # The tunnel pins the real key server-side, so the browser bundle only gets a placeholder key.
         export VITE_GLITCHTIP_DSN=$(printf '%s' "$GLITCHTIP_DSN" | sed -E 's#//[^@/]*@#//tunnel@#')
+
+        # Release name ties uploaded source maps to the events the browser reports.
+        export SENTRY_RELEASE="latopis-nechrubelski@$(printf '%s' "$CI_COMMIT_SHA" | cut -c1-8)"
+        export SENTRY_AUTH_TOKEN="$(printenv SENTRY_AUTH_TOKEN || true)"
 
         docker compose -f compose.prod.yaml -f compose.build.yaml build
 

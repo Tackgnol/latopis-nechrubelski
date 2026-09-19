@@ -9,6 +9,8 @@ The deploy pipeline reads these values from Woodpecker repository secrets. Secre
 | `trusted_origins` | `TRUSTED_ORIGINS` | yes | Comma-separated browser origins, normally `https://miseries.rpgtools.co` |
 | `auth_base_url` | `AUTH_BASE_URL` | yes | Public backend/auth origin, normally `https://miseries.rpgtools.co` |
 | `glitchtip_dsn` | `GLITCHTIP_DSN` | no | GlitchTip DSN. The backend reports with it and relays browser errors through `/api/tunnel`; the frontend build gets the same DSN with the key replaced by a placeholder (`VITE_GLITCHTIP_DSN`, derived in `deploy.yaml`), so the real key never ships to browsers. Reporting is off when unset |
+| `sentry_auth_token` | `SENTRY_AUTH_TOKEN` | with `glitchtip_dsn` | GlitchTip API token allowed to create releases and upload source maps. Mounted as a BuildKit secret for the frontend build only; never in an image layer or build arg |
+| `sentry_project` | `SENTRY_PROJECT` | with `glitchtip_dsn` | Slug of the GlitchTip project the frontend source maps are uploaded to (the org defaults to `tackgnols-rpg-tools`) |
 | `logto_endpoint` | `LOGTO_ENDPOINT` | no | Logto issuer URL |
 | `logto_app_id` | `LOGTO_APP_ID` | no | Logto application ID |
 | `logto_app_secret` | `LOGTO_APP_SECRET` | no | Logto application secret |
