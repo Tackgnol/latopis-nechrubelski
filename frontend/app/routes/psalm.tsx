@@ -16,7 +16,7 @@ export function loader({ params, request }: LoaderFunctionArgs) {
 
 export const meta: MetaFunction<typeof loader> = ({ loaderData }) => [{ title: loaderData?.title }];
 
-// Rendering is handled by the persistent <Book> mounted in locale-layout.tsx, which reads
+// Rendering is handled by the persistent <BookPage> mounted in locale-layout.tsx, which reads
 // this route's loader data (via useMatches) to know which leaf to open to.
 export default function PsalmPage() {
   return null;

@@ -1,0 +1,121 @@
+.filler {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  padding: 27px 25px 26px 32px;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  color: var(--black);
+}
+
+.face.back .filler {
+  padding: 27px 32px 26px 25px;
+}
+
+.filler-heading {
+  font-family: var(--display);
+  font-size: 35px;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  border-bottom: 3px double currentColor;
+  padding-bottom: 9px;
+  transform: rotate(-1deg);
+  transform-origin: left;
+  filter: url(#grit);
+}
+
+.filler-rubric {
+  font-family: var(--book);
+  font-size: 10px;
+  font-style: italic;
+  letter-spacing: 0.06em;
+  color: #68202c;
+  margin-top: 6px;
+}
+
+.filler-script {
+  margin-top: 15px;
+  position: relative;
+  z-index: 1;
+  font-family: var(--display);
+  font-size: 15px;
+  line-height: 1.24;
+  letter-spacing: 0.015em;
+  opacity: 0.88;
+  max-height: 348px;
+  overflow: hidden;
+}
+
+.filler-paragraph {
+  margin: 0 0 9px;
+  text-align: justify;
+  text-indent: 13px;
+}
+
+.filler-paragraph:first-child {
+  text-indent: 0;
+}
+
+.filler-paragraph:first-child::first-letter {
+  float: left;
+  font-family: var(--display);
+  font-size: 59px;
+  line-height: 0.85;
+  padding: 4px 6px 0 0;
+  color: #68202c;
+  filter: url(#grit);
+}
+
+.filler-paragraph:nth-child(3) {
+  opacity: 0.7;
+}
+
+.filler-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+.filler-note {
+  position: absolute;
+  right: 20px;
+  bottom: 58px;
+  font-family: var(--book);
+  font-style: italic;
+  font-size: 11px;
+  color: #68202c;
+  opacity: 0.72;
+  border-bottom: 1px solid currentColor;
+}
+
+.filler-blot {
+  position: absolute;
+  left: -10px;
+  bottom: 38px;
+  width: 160px;
+  height: 125px;
+  background: var(--black);
+  opacity: 0.045;
+  -webkit-mask: var(--img-blot) center / contain no-repeat;
+  mask: var(--img-blot) center / contain no-repeat;
+}
+
+.filler-folio {
+  position: absolute;
+  bottom: 20px;
+  left: 32px;
+  right: 25px;
+  border-top: 1px solid currentColor;
+  padding-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--book);
+  font-size: 11px;
+  font-style: italic;
+  opacity: 0.65;
+}
+
+.filler-compact .filler-script {
+  font-size: 14px;
+  line-height: 1.27;
+}

@@ -2,7 +2,7 @@ import { data, Outlet, useLoaderData, useMatches, type LoaderFunctionArgs } from
 import { I18nextProvider } from "react-i18next";
 import { isLocale } from "~/content";
 import { createI18nInstance } from "~/i18n-instance";
-import { Book } from "~/components/Book";
+import { BookPage } from "~/components/pages/BookPage/BookPage";
 
 export function loader({ params }: LoaderFunctionArgs) {
   const locale = params.locale;
@@ -22,7 +22,7 @@ export default function LocaleLayout() {
     : null;
   return (
     <I18nextProvider i18n={i18n}>
-      <Book locale={locale} current={current} />
+      <BookPage locale={locale} current={current} />
       <Outlet />
     </I18nextProvider>
   );

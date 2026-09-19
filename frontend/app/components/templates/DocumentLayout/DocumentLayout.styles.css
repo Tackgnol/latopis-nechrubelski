@@ -1,0 +1,94 @@
+.ghost {
+  position: fixed;
+  left: -3vw;
+  top: 4vh;
+  font-family: var(--grot);
+  font-size: 27vw;
+  line-height: 1;
+  color: var(--black);
+  opacity: 0.055;
+  transform: rotate(-7deg);
+  pointer-events: none;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.grain {
+  position: fixed;
+  inset: 0;
+  background-image: var(--grain);
+  opacity: 0.28;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 40;
+}
+
+.stain {
+  position: fixed;
+  background: var(--black);
+  pointer-events: none;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+}
+
+.stain-a {
+  -webkit-mask-image: var(--img-splat-a);
+  mask-image: var(--img-splat-a);
+  right: -58px;
+  top: -70px;
+  width: 330px;
+  height: 366px;
+  transform: rotate(186deg);
+}
+
+.stain-b {
+  -webkit-mask-image: var(--img-splat-b);
+  mask-image: var(--img-splat-b);
+  left: -52px;
+  bottom: -56px;
+  width: 196px;
+  height: 211px;
+  transform: rotate(-28deg);
+}
+
+.stain-c {
+  -webkit-mask-image: var(--img-splat-c);
+  mask-image: var(--img-splat-c);
+  left: -70px;
+  top: 26%;
+  width: 300px;
+  height: 314px;
+  opacity: 0.1;
+  transform: rotate(126deg);
+}
+
+@media (max-width: 640px) {
+  .stain-c {
+    display: none;
+  }
+}
+
+body.single .ghost {
+  font-size: 52vw;
+  top: 2vh;
+}
+
+body.single .stain-a {
+  right: -40px;
+  top: -44px;
+  width: 214px;
+  height: 237px;
+}
+
+body.single .stain-b {
+  width: 150px;
+  height: 161px;
+  left: -34px;
+  bottom: -26px;
+}
+
+body.single .stain-c {
+  display: none;
+}

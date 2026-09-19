@@ -1,43 +1,20 @@
-import { Links, Meta, Outlet, Scripts, ScrollRestoration } from "react-router";
+import { useEffect, useState } from "react";
+import { Outlet } from "react-router";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { initErrorReporting } from "~/lib/error-reporting";
 import "./app.css";
 
-export function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="pl">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Anton&family=IM+Fell+English:ital@0;1&family=Pirata+One&display=swap"
-          rel="stylesheet"
-        />
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <svg width="0" height="0" style={{ position: "absolute" }} aria-hidden="true">
-          <filter id="grit">
-            <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="7" result="n" />
-            <feDisplacementMap in="SourceGraphic" in2="n" scale="2.2" />
-          </filter>
-        </svg>
-        <div className="ghost" aria-hidden="true">
-          NECHRUBEL
-        </div>
-        <div className="stain stain-a" aria-hidden="true" />
-        <div className="stain stain-b" aria-hidden="true" />
-        <div className="stain stain-c" aria-hidden="true" />
-        {children}
-        <div className="grain" aria-hidden="true" />
-        <ScrollRestoration />
-        <Scripts />
-      </body>
-    </html>
-  );
-}
+export { DocumentLayout as Layout } from "~/components/templates/DocumentLayout/DocumentLayout";
+export { ErrorScreen as ErrorBoundary } from "~/components/organisms/ErrorScreen/ErrorScreen";
 
 export default function App() {
-  return <Outlet />;
+  const [queryClient] = useState(() => new QueryClient());
+
+  useEffect(initErrorReporting, []);
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <Outlet />
+    </QueryClientProvider>
+  );
 }

@@ -22,6 +22,7 @@ Optional non-secret stack variables from `compose.prod.yaml`:
 | `FRONTEND_REPLICAS` | `1` | Frontend Swarm replicas |
 | `BACKEND_PORT` | `3101` | Host port for the API |
 | `FRONTEND_PORT` | `3100` | Host port for the web app |
+| `GLITCHTIP_DSN` | unset (reporting off) | GlitchTip DSN; read by the backend at runtime and baked into the frontend at build time as `VITE_GLITCHTIP_DSN` |
 | `READING_DATA_VOLUME` | `latopis-nechrubelski-prod_reading_data` | Named volume for SQLite reading-session data |
 
 Woodpecker must run on a Swarm manager with access to `/var/run/docker.sock`. The external Docker network `rpg-network` must exist. Caddy should proxy the public site to frontend port `3100` and `/api` to backend port `3101`.

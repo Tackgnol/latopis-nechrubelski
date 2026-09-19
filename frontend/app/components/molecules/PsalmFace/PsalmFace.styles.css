@@ -1,0 +1,41 @@
+.psalm {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  padding: 26px 26px 28px 32px;
+  display: flex;
+  flex-direction: column;
+}
+
+.psalm-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 1;
+  margin: 0;
+  padding: 0 0 6px;
+  border-bottom: 7px solid var(--black);
+  letter-spacing: 0.01em;
+  backface-visibility: hidden;
+}
+
+.psalm-label {
+  font-family: var(--grot);
+  font-size: 14px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--pink);
+  margin: 7px 0 0;
+  transform: rotate(-1.5deg);
+  transform-origin: left;
+}
+
+.verses {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  margin: 14px 0 0;
+  padding: 0;
+  font-size: 14.5px;
+  line-height: 1.42;
+}

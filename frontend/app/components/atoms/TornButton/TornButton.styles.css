@@ -1,0 +1,157 @@
+.btn {
+  --tear: polygon(
+          1% 6%,
+          9% 0%,
+          31% 5%,
+          52% 0%,
+          74% 4%,
+          91% 0%,
+          100% 7%,
+          99% 34%,
+          100% 63%,
+          98% 94%,
+          88% 100%,
+          66% 95%,
+          43% 100%,
+          22% 96%,
+          7% 100%,
+          0% 91%,
+          2% 58%,
+          0% 30%
+  );
+  --ink: var(--pink);
+  position: relative;
+  font-family: var(--grot);
+  font-size: 17px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--yellow);
+  background: var(--black);
+  border: 0;
+  padding: 12px 22px;
+  cursor: pointer;
+  transform: rotate(-1.2deg);
+  clip-path: var(--tear);
+  transition: transform 0.12s;
+}
+
+.btn .label {
+  position: relative;
+  z-index: 3;
+  display: block;
+}
+
+.btn .flood {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  -webkit-mask: url("/img/ink-mask-sprite.png") 100% 0 / 2300% 100% no-repeat;
+  mask: url("/img/ink-mask-sprite.png") 100% 0 / 2300% 100% no-repeat;
+  transition: -webkit-mask-position 0.7s steps(22), mask-position 0.7s steps(22);
+}
+
+.btn .flood .label {
+  color: var(--black);
+}
+
+.btn:hover .flood,
+.btn:focus-visible .flood {
+  -webkit-mask-position: 0 0;
+  mask-position: 0 0;
+}
+
+.btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background-image: var(--grain);
+  opacity: 0.3;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.btn:active {
+  transform: rotate(-1.2deg) scale(0.97) translateY(2px);
+}
+
+.btn.quiet {
+  --tear: polygon(
+          0% 8%,
+          13% 1%,
+          28% 6%,
+          47% 0%,
+          63% 5%,
+          82% 0%,
+          100% 6%,
+          98% 38%,
+          100% 66%,
+          99% 96%,
+          84% 100%,
+          62% 96%,
+          41% 100%,
+          19% 95%,
+          5% 100%,
+          1% 88%,
+          0% 56%,
+          2% 28%
+  );
+  --ink: var(--black);
+  background: none;
+  color: var(--black);
+  transform: rotate(0.9deg);
+  padding: 12px 20px;
+}
+
+.btn.quiet .flood .label {
+  color: var(--yellow);
+}
+
+.btn.quiet .tearline {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+}
+.btn.quiet .tearline path {
+  fill: none;
+  stroke: var(--black);
+  stroke-width: 7;
+  stroke-linejoin: round;
+}
+.btn.quiet::after {
+  display: none;
+}
+
+.btn.quiet:active {
+  transform: rotate(0.9deg) scale(0.97) translateY(2px);
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--black);
+  outline-offset: 4px;
+}
+
+.btn[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+body.single .btn {
+  flex: 1;
+  font-size: 15px;
+  padding: 12px 8px 11px;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .btn .flood {
+    transition-duration: 0.01ms !important;
+  }
+}

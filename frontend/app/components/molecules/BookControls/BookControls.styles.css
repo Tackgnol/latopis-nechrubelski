@@ -1,0 +1,16 @@
+.controls {
+  position: fixed;
+  left: 22px;
+  bottom: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  z-index: 60;
+}
+
+body.single .controls {
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  gap: 10px;
+}

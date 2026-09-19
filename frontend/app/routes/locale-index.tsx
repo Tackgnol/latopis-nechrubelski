@@ -1,6 +1,6 @@
-import { Link, redirect, useLoaderData, type LoaderFunctionArgs, type MetaFunction } from "react-router";
+import { redirect, useLoaderData, type LoaderFunctionArgs, type MetaFunction } from "react-router";
 import { psalmsByLocale, type Locale } from "~/content";
-import { toRomanNumeral } from "~/content/roman-numerals";
+import { PsalmIndexNav } from "~/components/molecules/PsalmIndexNav/PsalmIndexNav";
 
 export function loader({ params, request }: LoaderFunctionArgs) {
   const locale = params.locale as Locale;
@@ -24,15 +24,5 @@ export const meta: MetaFunction<typeof loader> = ({ loaderData }) => [{ title: l
 export default function LocaleIndex() {
   const { locale, psalmNumbers } = useLoaderData<typeof loader>();
 
-  return (
-    <nav className="seo-index" aria-label="Psalms">
-      <ul>
-        {psalmNumbers.map((n) => (
-          <li key={n}>
-            <Link to={`/${locale}/psalm/${n}`}>Psalm {toRomanNumeral(n)}</Link>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  );
+  return <PsalmIndexNav locale={locale} psalmNumbers={psalmNumbers} />;
 }

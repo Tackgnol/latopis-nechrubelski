@@ -1,0 +1,59 @@
+.cover-front {
+  height: 100%;
+  padding: 24px 24px 22px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cover-title {
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 41px;
+  line-height: 0.9;
+  margin: 0;
+  color: var(--pink);
+  transform: rotate(-2.4deg);
+  transform-origin: left top;
+  filter: url(#grit);
+  backface-visibility: hidden;
+}
+
+.cover-sub {
+  font-style: italic;
+  font-size: 17px;
+  margin: 14px 0 0 2px;
+  color: var(--bone);
+  opacity: 0.85;
+}
+
+.cover-skull {
+  flex: 1;
+  min-height: 0;
+  margin: 12px -10px 8px;
+  background: var(--bone);
+  -webkit-mask: var(--img-skull) center bottom / contain no-repeat;
+  mask: var(--img-skull) center bottom / contain no-repeat;
+}
+
+.cover-by {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--bone);
+  opacity: 0.6;
+}
+
+.cover-back {
+  display: grid;
+  place-items: center;
+}
+
+.cover-mark {
+  width: 58%;
+  height: 34%;
+  background: var(--bone);
+  opacity: 0.22;
+  transform: rotate(-14deg);
+  -webkit-mask: var(--img-blot) center / contain no-repeat;
+  mask: var(--img-blot) center / contain no-repeat;
+}

@@ -1,3 +1,4 @@
+import { z } from "zod";
 import type { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import {
   getCurrentReadingSession,
@@ -15,7 +16,11 @@ async function ensureAuthUserId(
 ): Promise<string> {
   if (request.appSession?.user) return request.appSession.user.id;
   const response = await fastify.auth.api.signInAnonymous({
-    headers: new Headers(request.headers as any),
+    headers: new Headers(
+      Object.entries(request.headers).flatMap(([name, value]): [string, string][] =>
+        value === undefined ? [] : [[name, Array.isArray(value) ? value.join(", ") : value]],
+      ),
+    ),
     asResponse: true,
   });
   const setCookies = response.headers.getSetCookie?.() ?? [];
@@ -23,6 +28,8 @@ async function ensureAuthUserId(
   const body = (await response.json()) as { user: { id: string } };
   return body.user.id;
 }
+
+const monitorParams = z.object({ token: z.string().length(26) });
 
 export default async function sessionRoutes(fastify: FastifyInstance) {
   fastify.post("/api/sessions/roll", async (request, reply) => {
@@ -83,8 +90,9 @@ export default async function sessionRoutes(fastify: FastifyInstance) {
     return { monitorToken: session.monitorToken };
   });
 
-  fastify.get<{ Params: { token: string } }>("/api/monitor/:token", async (request, reply) => {
-    const session = getReadingSessionByMonitorToken(request.params.token);
+  fastify.get("/api/monitor/:token", async (request, reply) => {
+    const params = monitorParams.safeParse(request.params);
+    const session = params.success ? getReadingSessionByMonitorToken(params.data.token) : null;
     if (!session) return reply.status(404).send({ error: "Unknown monitor link." });
     return { revealed: await revealedPsalmVerses(session.rollerSessionId) };
   });

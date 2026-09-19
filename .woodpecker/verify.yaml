@@ -27,5 +27,33 @@ steps:
 
         npm --prefix frontend ci --no-audit --no-fund
         npm --prefix frontend run typecheck
+        npm --prefix frontend run lint
         npm --prefix frontend run test
         npm --prefix frontend run build
+
+  react-doctor:
+    image: node:22-alpine
+    depends_on: [verify]
+    commands:
+      - |
+        apk add --no-cache git
+        set -e
+
+        score() { npx --yes react-doctor@latest --score "$1" | tail -n 1; }
+
+        CURRENT=$(score frontend)
+        echo "react-doctor score: $CURRENT"
+        [ "$CURRENT" -ge 80 ] || { echo "React Doctor score is below the 80 floor" >&2; exit 1; }
+
+        # Never regress: compare against the base (master for branches/PRs, the previous commit on master).
+        if [ "$CI_COMMIT_BRANCH" = "master" ]; then BASE_REF=HEAD~1; else
+          git fetch --no-tags --depth=1 origin master && BASE_REF=FETCH_HEAD
+        fi
+        if [ -n "$BASE_REF" ] && git rev-parse --verify -q "$BASE_REF" > /dev/null; then
+          git worktree add ../base "$BASE_REF" > /dev/null
+          BASE=$(score ../base/frontend)
+          echo "base score: $BASE"
+          [ "$CURRENT" -ge "$BASE" ] || { echo "React Doctor score regressed ($BASE -> $CURRENT)" >&2; exit 1; }
+        else
+          echo "no base ref available; skipping regression check"
+        fi

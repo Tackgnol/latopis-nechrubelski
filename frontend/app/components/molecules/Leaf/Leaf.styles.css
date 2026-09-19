@@ -1,0 +1,79 @@
+.leaf {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 50%;
+  height: 100%;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transform: rotateY(0deg);
+  transition: transform var(--dur, 0.42s) var(--ease, cubic-bezier(0.55, 0, 0.35, 1));
+}
+
+.leaf.cover {
+  top: -8px;
+  height: calc(100% + 16px);
+  width: calc(50% + 8px);
+  cursor: pointer;
+}
+
+.leaf.paper {
+  top: 4px;
+  height: calc(100% - 8px);
+  width: calc(50% - 10px);
+}
+
+.leaf.flipped {
+  transform: rotateY(-180deg);
+}
+
+.face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.face.back {
+  transform: rotateY(180deg);
+}
+
+.paper .face {
+  background: var(--bone);
+}
+
+.paper .face::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--grain);
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.paper .face::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0) 14%);
+}
+
+.paper .face.back::after {
+  background: linear-gradient(-90deg, rgba(0, 0, 0, 0.24), rgba(0, 0, 0, 0) 14%);
+}
+
+.cover .face {
+  background: var(--black);
+  color: var(--bone);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .leaf {
+    transition-duration: 0.01ms !important;
+  }
+}

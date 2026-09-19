@@ -1,0 +1,22 @@
+.error-screen {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 8px;
+  padding: 24px;
+  text-align: center;
+}
+
+.error-screen h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 56px;
+  font-weight: 400;
+  color: var(--pink);
+}
+
+.error-screen p {
+  margin: 0;
+  font-style: italic;
+}

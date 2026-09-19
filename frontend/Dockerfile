@@ -6,6 +6,8 @@ COPY frontend/package*.json ./
 RUN npm ci
 
 COPY frontend/ ./
+ARG VITE_GLITCHTIP_DSN
+ENV VITE_GLITCHTIP_DSN=$VITE_GLITCHTIP_DSN
 RUN npm run build
 
 FROM node:22-alpine

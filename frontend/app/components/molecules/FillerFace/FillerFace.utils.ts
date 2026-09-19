@@ -1,4 +1,4 @@
-/** Deterministic gibberish "flavour" text for the blank leaves the book riffles through mid-flip. */
+import type { FillerContent } from "./FillerFace.models";
 
 const HEADINGS = [
   "De Umbra Nechrubeli",
@@ -47,14 +47,7 @@ function sentence(rnd: () => number): string {
   return text.charAt(0).toUpperCase() + text.slice(1) + ".";
 }
 
-export interface FillerContent {
-  heading: string;
-  rubric: string;
-  paragraphs: string[];
-  note: string;
-  folioLabel: string;
-}
-
+/** Deterministic gibberish flavour text for the blank leaves the book riffles through mid-flip. */
 export function renderFiller(folio: number, side: "front" | "back"): FillerContent {
   const seed = folio * 2 + (side === "back" ? 1 : 0) + 1;
   const rnd = lcg(seed);

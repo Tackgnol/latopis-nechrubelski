@@ -9,7 +9,15 @@ export interface ReadingSession {
   createdAt: string;
 }
 
-function rowToSession(row: any): ReadingSession {
+interface ReadingSessionRow {
+  id: string;
+  auth_session_id: string;
+  roller_session_id: string;
+  monitor_token: string;
+  created_at: string;
+}
+
+function rowToSession(row: ReadingSessionRow): ReadingSession {
   return {
     id: row.id,
     authSessionId: row.auth_session_id,
@@ -39,7 +47,7 @@ export function getCurrentReadingSession(authSessionId: string): ReadingSession 
     .prepare(
       `SELECT * FROM reading_sessions WHERE auth_session_id = ? ORDER BY created_at DESC LIMIT 1`,
     )
-    .get(authSessionId);
+    .get(authSessionId) as ReadingSessionRow | undefined;
   return row ? rowToSession(row) : null;
 }
 
@@ -52,6 +60,6 @@ export function resetReadingSession(authSessionId: string): ReadingSession {
 }
 
 export function getReadingSessionByMonitorToken(token: string): ReadingSession | null {
-  const row = db.prepare(`SELECT * FROM reading_sessions WHERE monitor_token = ?`).get(token);
+  const row = db.prepare(`SELECT * FROM reading_sessions WHERE monitor_token = ?`).get(token) as ReadingSessionRow | undefined;
   return row ? rowToSession(row) : null;
 }

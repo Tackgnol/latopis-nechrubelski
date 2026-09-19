@@ -1,0 +1,35 @@
+.verse {
+  margin: 0 0 0.55em;
+  list-style: none;
+}
+
+.verse[data-playing="true"] .vt {
+  color: #68202c;
+}
+
+.vn {
+  font-family: var(--grot);
+  color: var(--pink);
+  font-size: 0.96em;
+  letter-spacing: 0.03em;
+  margin-right: 0.45em;
+}
+
+.marked .vt {
+  background-image: linear-gradient(var(--yellow), var(--yellow));
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  transition: background-size 0.55s cubic-bezier(0.3, 0, 0.2, 1);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.marked.on .vt {
+  background-size: 100% 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marked .vt {
+    transition-duration: 0.01ms !important;
+  }
+}

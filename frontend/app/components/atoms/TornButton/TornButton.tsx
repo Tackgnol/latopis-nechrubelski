@@ -1,17 +1,8 @@
-import type { ReactNode } from "react";
 import { Button } from "react-aria-components";
+import type { TornButtonProps } from "./TornButton.models";
+import "./TornButton.styles.css";
 
-export function TornButton({
-  children,
-  quiet,
-  onPress,
-  isDisabled,
-}: {
-  children: ReactNode;
-  quiet?: boolean;
-  onPress?: () => void;
-  isDisabled?: boolean;
-}) {
+export function TornButton({ children, quiet, onPress, isDisabled }: TornButtonProps) {
   return (
     <Button className={quiet ? "btn quiet" : "btn"} onPress={onPress} isDisabled={isDisabled}>
       <span className="flood" aria-hidden="true">

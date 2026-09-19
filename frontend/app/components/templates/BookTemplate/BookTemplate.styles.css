@@ -1,0 +1,95 @@
+.viewport {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.stage {
+  width: calc(var(--pw) * 2);
+  height: var(--ph);
+  transform: translate(var(--jx), var(--jy)) rotate(var(--jr)) scale(var(--s));
+  transition: transform 0.16s ease-out;
+  transform-origin: center;
+}
+
+.stage.settle {
+  transition: transform 0.7s cubic-bezier(0.2, 0.9, 0.3, 1);
+}
+
+.book {
+  position: relative;
+  width: calc(var(--pw) * 2);
+  height: var(--ph);
+  perspective: 2300px;
+  transition: transform 0.9s cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+.book.closed {
+  transform: translateX(-25%);
+}
+
+.shadow {
+  position: absolute;
+  inset: -8px;
+  left: -8px;
+  background: var(--black);
+  transform: translate(18px, 18px);
+  z-index: 0;
+  transition: left 0.9s cubic-bezier(0.7, 0, 0.2, 1);
+}
+
+.book.closed .shadow {
+  left: 50%;
+}
+
+.board {
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  left: 50%;
+  right: -8px;
+  background: var(--black);
+  z-index: 1;
+}
+
+.spine {
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  left: calc(50% - 9px);
+  width: 18px;
+  background: var(--black);
+  z-index: 2;
+}
+
+.cover-error {
+  position: fixed;
+  left: 22px;
+  bottom: 84px;
+  z-index: 60;
+  color: var(--pink);
+  font-style: italic;
+  max-width: min(420px, calc(100vw - 44px));
+}
+
+body.single .stage {
+  width: var(--pw);
+}
+
+body.single .book {
+  margin-left: calc(var(--pw) * -1);
+}
+
+body.single .book.closed {
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .book,
+  .stage,
+  .shadow {
+    transition-duration: 0.01ms !important;
+  }
+}

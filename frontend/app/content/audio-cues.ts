@@ -1,7 +1,8 @@
-export interface AudioCue {
-  verse: string;
-  start: number;
-}
+import { z } from "zod";
+
+export const audioCuesSchema = z.array(z.object({ verse: z.string(), start: z.number() }));
+
+export type AudioCue = z.infer<typeof audioCuesSchema>[number];
 
 /** Narration audio + its cue file live at these paths once recorded; absent until then. */
 export function audioSrc(locale: string, num: number): string {

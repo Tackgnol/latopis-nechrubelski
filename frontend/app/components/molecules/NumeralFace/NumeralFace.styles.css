@@ -1,0 +1,51 @@
+.num-page {
+  position: relative;
+  height: 100%;
+}
+
+.num-page .numeral {
+  position: absolute;
+  left: 9%;
+  top: 16%;
+  font-family: var(--display);
+  font-size: 190px;
+  line-height: 1;
+  color: var(--black);
+  text-shadow: 9px 9px 0 var(--pink);
+  transform: rotate(-7deg);
+  filter: url(#grit);
+  backface-visibility: hidden;
+  z-index: 1;
+}
+
+.num-page .blot {
+  position: absolute;
+  right: -8%;
+  top: 34%;
+  width: 76%;
+  height: 44%;
+  background: var(--black);
+  opacity: 0.09;
+  transform: rotate(9deg);
+  -webkit-mask: var(--img-blot) center / contain no-repeat;
+  mask: var(--img-blot) center / contain no-repeat;
+  z-index: 0;
+}
+
+.num-page .misery {
+  position: absolute;
+  left: 32px;
+  bottom: 34px;
+  font-style: italic;
+  font-size: 17px;
+  z-index: 1;
+}
+
+.num-page .misery b {
+  font-style: normal;
+  font-family: var(--grot);
+  font-weight: 400;
+  font-size: 19px;
+  color: var(--pink);
+  letter-spacing: 0.03em;
+}
