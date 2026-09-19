@@ -19,5 +19,5 @@ export const pl: CommonResource = {
   cancel: "Anuluj",
   rollFailed: "Rzut się nie powiódł — czy backend działa?",
   misery: "Nieszczęście",
-  welcome: "Welcome",
+  welcome: "Witaj",
 };
