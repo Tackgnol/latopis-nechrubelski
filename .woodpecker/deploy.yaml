@@ -10,6 +10,7 @@ depends_on:
 #   better_auth_secret   -> BETTER_AUTH_SECRET
 #   trusted_origins      -> TRUSTED_ORIGINS   (e.g. https://miseries.rpgtools.co)
 #   auth_base_url        -> AUTH_BASE_URL     (e.g. https://miseries.rpgtools.co)
+#   glitchtip_dsn        -> GLITCHTIP_DSN     (optional; error reporting is off without it)
 #   logto_endpoint, logto_app_id, logto_app_secret, logto_redirect_uri
 #     -> optional; anonymous-only auth works without them (see ticket 05)
 #
@@ -33,6 +34,8 @@ steps:
         from_secret: trusted_origins
       AUTH_BASE_URL:
         from_secret: auth_base_url
+      GLITCHTIP_DSN:
+        from_secret: glitchtip_dsn
       LOGTO_ENDPOINT:
         from_secret: logto_endpoint
       LOGTO_APP_ID:

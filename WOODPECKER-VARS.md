@@ -8,6 +8,7 @@ The deploy pipeline reads these values from Woodpecker repository secrets. Secre
 | `better_auth_secret` | `BETTER_AUTH_SECRET` | yes | Long random production secret for Better Auth |
 | `trusted_origins` | `TRUSTED_ORIGINS` | yes | Comma-separated browser origins, normally `https://miseries.rpgtools.co` |
 | `auth_base_url` | `AUTH_BASE_URL` | yes | Public backend/auth origin, normally `https://miseries.rpgtools.co` |
+| `glitchtip_dsn` | `GLITCHTIP_DSN` | no | GlitchTip DSN. The backend reports with it and relays browser errors through `/api/tunnel`; it is also baked into the frontend build as `VITE_GLITCHTIP_DSN`. Reporting is off when unset |
 | `logto_endpoint` | `LOGTO_ENDPOINT` | no | Logto issuer URL |
 | `logto_app_id` | `LOGTO_APP_ID` | no | Logto application ID |
 | `logto_app_secret` | `LOGTO_APP_SECRET` | no | Logto application secret |
@@ -22,7 +23,6 @@ Optional non-secret stack variables from `compose.prod.yaml`:
 | `FRONTEND_REPLICAS` | `1` | Frontend Swarm replicas |
 | `BACKEND_PORT` | `3101` | Host port for the API |
 | `FRONTEND_PORT` | `3100` | Host port for the web app |
-| `GLITCHTIP_DSN` | unset (reporting off) | GlitchTip DSN; read by the backend at runtime and baked into the frontend at build time as `VITE_GLITCHTIP_DSN` |
 | `READING_DATA_VOLUME` | `latopis-nechrubelski-prod_reading_data` | Named volume for SQLite reading-session data |
 
 Woodpecker must run on a Swarm manager with access to `/var/run/docker.sock`. The external Docker network `rpg-network` must exist. Caddy should proxy the public site to frontend port `3100` and `/api` to backend port `3101`.

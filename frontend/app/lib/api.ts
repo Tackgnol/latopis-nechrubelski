@@ -14,7 +14,7 @@ async function readJson(res: Response): Promise<unknown> {
   return res.json();
 }
 
-async function csrfToken(): Promise<string> {
+export async function csrfToken(): Promise<string> {
   return csrfSchema.parse(await readJson(await fetch("/api/csrf-token"))).token;
 }
 

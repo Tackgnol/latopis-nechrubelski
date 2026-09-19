@@ -6,6 +6,7 @@ import { clientIp } from "./client-ip.js";
 import { db } from "./db.js";
 import { rollLogStore } from "./roller.js";
 import sessionRoutes from "./routes/sessions.js";
+import tunnelRoutes from "./routes/tunnel.js";
 
 export async function buildServer() {
   const fastify = Fastify({ logger: true });
@@ -21,6 +22,9 @@ export async function buildServer() {
   await fastify.register(rollerPlugin, { store: rollLogStore });
 
   await fastify.register(sessionRoutes);
+
+  const glitchtipDsn = process.env.GLITCHTIP_DSN;
+  if (glitchtipDsn) await fastify.register(tunnelRoutes, { dsn: glitchtipDsn });
 
   Sentry.setupFastifyErrorHandler(fastify);
 
