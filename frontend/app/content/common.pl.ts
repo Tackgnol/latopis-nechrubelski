@@ -7,6 +7,7 @@ export interface CommonResource {
   cancel: string;
   rollFailed: string;
   misery: string;
+  welcome: string;
 }
 
 export const pl: CommonResource = {
@@ -18,4 +19,5 @@ export const pl: CommonResource = {
   cancel: "Anuluj",
   rollFailed: "Rzut się nie powiódł — czy backend działa?",
   misery: "Nieszczęście",
+  welcome: "Welcome",
 };

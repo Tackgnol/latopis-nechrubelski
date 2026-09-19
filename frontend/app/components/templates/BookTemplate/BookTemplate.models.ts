@@ -5,6 +5,7 @@ export interface BookTemplateProps {
   bookRef: Ref<HTMLDivElement>;
   closed: boolean;
   controls: ReactNode;
+  userIndicator?: ReactNode;
   error: string | null;
   children: ReactNode;
 }
