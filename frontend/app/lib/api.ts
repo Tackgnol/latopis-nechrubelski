@@ -3,6 +3,12 @@ import { z } from "zod";
 export const rollResultSchema = z.object({ psalm: z.number(), verse: z.number(), reveal: z.number() });
 export type RollResult = z.infer<typeof rollResultSchema>;
 
+const currentUserSchema = z.object({
+  authenticated: z.boolean(),
+  user: z.object({ login: z.string(), isAnonymous: z.boolean() }).nullable(),
+});
+export type CurrentUser = z.infer<typeof currentUserSchema>;
+
 const csrfSchema = z.object({ token: z.string() });
 const resetSchema = z.object({ monitorToken: z.string() });
 
@@ -21,6 +27,10 @@ export async function csrfToken(): Promise<string> {
 async function apiPost<T>(path: string, schema: z.ZodType<T>): Promise<T> {
   const token = await csrfToken();
   return schema.parse(await readJson(await fetch(path, { method: "POST", headers: { "csrf-token": token } })));
+}
+
+export async function fetchCurrentUser(): Promise<CurrentUser> {
+  return currentUserSchema.parse(await readJson(await fetch("/api/me")));
 }
 
 /** Rolls the next psalm, falling back to the fixed final reveal once all of I-VI are out. */

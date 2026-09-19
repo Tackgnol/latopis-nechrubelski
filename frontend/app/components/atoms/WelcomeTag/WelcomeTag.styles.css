@@ -1,0 +1,95 @@
+.welcome-tag {
+  --tear: polygon(
+    0% 10%,
+    9% 2%,
+    24% 8%,
+    41% 0%,
+    58% 6%,
+    76% 1%,
+    92% 7%,
+    100% 3%,
+    98% 38%,
+    100% 66%,
+    99% 94%,
+    84% 100%,
+    64% 94%,
+    45% 100%,
+    27% 95%,
+    10% 100%,
+    1% 92%,
+    2% 60%,
+    0% 34%
+  );
+  position: fixed;
+  top: 16px;
+  right: 18px;
+  z-index: 60;
+  display: flex;
+  align-items: baseline;
+  gap: 0.45em;
+  max-width: min(300px, calc(100vw - 36px));
+  margin: 0;
+  padding: 10px 22px 11px 20px;
+  white-space: nowrap;
+  color: var(--black);
+  background: var(--bone);
+  clip-path: var(--tear);
+  transform: rotate(1.6deg);
+  transform-origin: top right;
+  animation: welcome-drop 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.welcome-tag::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--grain);
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.welcome-greeting {
+  font-family: var(--book);
+  font-style: italic;
+  font-size: 15px;
+  color: #68202c;
+}
+
+.welcome-nick {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: var(--grot);
+  font-size: 17px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-shadow: 1.5px 1.5px 0 var(--pink);
+}
+
+body.single .welcome-tag {
+  top: 10px;
+  right: 12px;
+  padding: 8px 18px 9px 16px;
+}
+
+body.single .welcome-greeting {
+  font-size: 13px;
+}
+
+body.single .welcome-nick {
+  font-size: 15px;
+}
+
+@keyframes welcome-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-12px) rotate(4.5deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .welcome-tag {
+    animation: none;
+  }
+}

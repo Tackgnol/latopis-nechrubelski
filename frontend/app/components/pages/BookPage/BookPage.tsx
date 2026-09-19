@@ -7,6 +7,7 @@ import { psalmsByLocale } from "~/content";
 import { BookControls } from "~/components/molecules/BookControls/BookControls";
 import { CoverFace } from "~/components/molecules/CoverFace/CoverFace";
 import { Leaf } from "~/components/molecules/Leaf/Leaf";
+import { UserIndicator } from "~/components/organisms/UserIndicator/UserIndicator";
 import { PaperLeaf } from "~/components/organisms/PaperLeaf/PaperLeaf";
 import { BookTemplate } from "~/components/templates/BookTemplate/BookTemplate";
 import type { BookPageProps, Spread } from "./BookPage.models";
@@ -154,6 +155,7 @@ export function BookPage({ locale, current }: BookPageProps) {
       bookRef={bookRef}
       closed={flippedCount === 0}
       error={error}
+      userIndicator={<UserIndicator />}
       controls={
         <BookControls
           isOpen={flippedCount > 0}
