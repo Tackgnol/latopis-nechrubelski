@@ -261,8 +261,8 @@
   position: absolute;
   left: 50%;
   right: 0;
-  top: -50px;
-  z-index: 60;
+  top: -56px;
+  z-index: 5;
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
@@ -272,14 +272,14 @@
 }
 
 .proto-topedge-tab {
-  --tear: polygon(
-    0% 14%, 16% 2%, 42% 10%, 68% 1%, 90% 9%, 100% 4%,
-    100% 86%, 98% 100%, 2% 100%, 0% 88%
-  );
+  --tear: polygon(0% 9%, 16% 1%, 42% 7%, 68% 0%, 90% 6%, 100% 2%, 100% 100%, 0% 100%);
   position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
   width: 46px;
-  min-height: 44px;
-  padding: 12px 0 10px;
+  min-height: 76px;
+  padding: 11px 0 0;
   border: 0;
   cursor: pointer;
   pointer-events: auto;
@@ -289,20 +289,20 @@
   font-size: 18px;
   letter-spacing: 0.04em;
   clip-path: var(--tear);
-  transform: translateY(4px) rotate(-1.4deg);
+  transform: translateY(2px) rotate(-1.4deg);
   transition: transform 0.16s cubic-bezier(0.16, 1, 0.3, 1), background 0.16s;
 }
 
 .proto-topedge-tab:nth-child(2) {
-  transform: translateY(7px) rotate(1.1deg);
+  transform: translateY(6px) rotate(1.1deg);
 }
 
 .proto-topedge-tab:nth-child(3) {
-  transform: translateY(2px) rotate(-0.7deg);
+  transform: translateY(0) rotate(-0.7deg);
 }
 
 .proto-topedge-tab:nth-child(4) {
-  transform: translateY(8px) rotate(1.6deg);
+  transform: translateY(7px) rotate(1.6deg);
 }
 
 .proto-topedge-tab::after {
@@ -321,13 +321,13 @@
 .proto-topedge-tab.on:nth-child(3),
 .proto-topedge-tab.on:nth-child(4) {
   width: 54px;
-  min-height: 58px;
-  padding-top: 14px;
+  min-height: 90px;
+  padding-top: 13px;
   background: var(--bone);
   color: var(--black);
-  font-size: 23px;
+  font-size: 24px;
   text-shadow: 2.5px 2.5px 0 var(--pink);
-  transform: translateY(-4px) rotate(-0.5deg);
+  transform: translateY(-8px) rotate(-0.5deg);
 }
 
 .proto-topedge-tab.on::after {
