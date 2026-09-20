@@ -256,46 +256,53 @@
   font-size: 14px;
 }
 
-/* ---- D: one system — tabs on the recto's top edge, so they track the book at every width ---- */
+/* ---- D: one system — ink tabs on the recto's top edge, tracking the book at every width ---- */
 .proto-topedge {
   position: absolute;
   left: 50%;
   right: 0;
-  top: -38px;
+  top: -50px;
   z-index: 60;
   display: flex;
+  justify-content: flex-end;
   align-items: flex-end;
-  gap: 9px;
-  padding: 0 12px 0 8px;
+  gap: 7px;
+  padding: 0 22px 0 0;
+  pointer-events: none;
 }
 
 .proto-topedge-tab {
   --tear: polygon(
-    0% 12%, 14% 0%, 38% 7%, 62% 1%, 86% 8%, 100% 2%,
-    100% 84%, 99% 100%, 1% 100%, 0% 86%
+    0% 14%, 16% 2%, 42% 10%, 68% 1%, 90% 9%, 100% 4%,
+    100% 86%, 98% 100%, 2% 100%, 0% 88%
   );
   position: relative;
-  flex: 1;
-  min-height: 46px;
-  padding: 9px 0 18px;
-  transform: translateY(8px);
+  width: 46px;
+  min-height: 44px;
+  padding: 12px 0 10px;
   border: 0;
   cursor: pointer;
-  background: var(--bone);
-  color: var(--black);
+  pointer-events: auto;
+  background: var(--black);
+  color: var(--bone);
   font-family: var(--grot);
-  font-size: 19px;
-  letter-spacing: 0.05em;
+  font-size: 18px;
+  letter-spacing: 0.04em;
   clip-path: var(--tear);
-  filter: brightness(0.93) drop-shadow(0 -3px 0 var(--black));
-  transition: transform 0.14s, filter 0.14s;
+  transform: translateY(4px) rotate(-1.4deg);
+  transition: transform 0.16s cubic-bezier(0.16, 1, 0.3, 1), background 0.16s;
 }
 
-.proto-topedge-tab:nth-child(odd) {
-  --tear: polygon(
-    0% 9%, 18% 1%, 44% 8%, 70% 0%, 92% 7%, 100% 3%,
-    100% 84%, 99% 100%, 1% 100%, 0% 88%
-  );
+.proto-topedge-tab:nth-child(2) {
+  transform: translateY(7px) rotate(1.1deg);
+}
+
+.proto-topedge-tab:nth-child(3) {
+  transform: translateY(2px) rotate(-0.7deg);
+}
+
+.proto-topedge-tab:nth-child(4) {
+  transform: translateY(8px) rotate(1.6deg);
 }
 
 .proto-topedge-tab::after {
@@ -303,18 +310,29 @@
   position: absolute;
   inset: 0;
   background-image: var(--grain);
-  opacity: 0.22;
-  mix-blend-mode: multiply;
+  opacity: 0.3;
+  mix-blend-mode: screen;
   pointer-events: none;
 }
 
-.proto-topedge-tab.on {
-  min-height: 60px;
-  font-size: 24px;
-  padding: 10px 0 20px;
-  transform: translateY(0);
+/* the chosen recording is the one that is paper: it belongs to the page below it */
+.proto-topedge-tab.on,
+.proto-topedge-tab.on:nth-child(2),
+.proto-topedge-tab.on:nth-child(3),
+.proto-topedge-tab.on:nth-child(4) {
+  width: 54px;
+  min-height: 58px;
+  padding-top: 14px;
+  background: var(--bone);
+  color: var(--black);
+  font-size: 23px;
   text-shadow: 2.5px 2.5px 0 var(--pink);
-  filter: drop-shadow(0 -5px 0 var(--black));
+  transform: translateY(-4px) rotate(-0.5deg);
+}
+
+.proto-topedge-tab.on::after {
+  opacity: 0.2;
+  mix-blend-mode: multiply;
 }
 
 .proto-mark {
