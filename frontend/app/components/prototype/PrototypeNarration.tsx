@@ -9,13 +9,14 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import "./PrototypeNarration.styles.css";
 
-const VARIANTS = ["A", "B", "C"] as const;
+const VARIANTS = ["A", "B", "C", "D"] as const;
 type Variant = (typeof VARIANTS)[number];
 
 const VARIANT_NAMES: Record<Variant, string> = {
   A: "Pinned scraps",
   B: "Ledger tabs",
   C: "Control strip",
+  D: "One system",
 };
 
 const LETTERS = ["A", "B", "C", "D"] as const;
@@ -73,10 +74,28 @@ export function PrototypeNarrationOverlay() {
   );
 }
 
-/** Variant B: chooser is fixed to the book itself, so it scales and moves with it. */
+/** Variants B and D: chooser is fixed to the book itself, so it scales and moves with it. */
 export function PrototypeBookTabs() {
   const variant = useVariant();
   const [letter, setLetter] = useLetter();
+
+  if (variant === "D") {
+    return (
+      <div className="proto-topedge">
+        {LETTERS.map((l) => (
+          <button
+            key={l}
+            type="button"
+            className={l === letter ? "proto-topedge-tab on" : "proto-topedge-tab"}
+            onClick={() => setLetter(l)}
+          >
+            {l}
+          </button>
+        ))}
+      </div>
+    );
+  }
+
   if (variant !== "B") return null;
 
   return (
@@ -110,6 +129,26 @@ export function PrototypePlayControl() {
         aria-label={playing ? "Cisza" : "Czytaj"}
       >
         {playing ? "■" : "▶"}
+      </button>
+    );
+  }
+
+  if (variant === "D") {
+    return (
+      <button type="button" className={playing ? "proto-bar on" : "proto-bar"} onClick={toggle}>
+        <svg className="proto-bar-tear" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M0 8 L13 1 L28 6 L47 0 L63 5 L82 0 L100 6 L98 38 L100 66 L99 96 L84 100 L62 96 L41 100 L19 95 L5 100 L1 88 L0 56 Z" />
+        </svg>
+        <span>
+          <svg className="proto-mark" viewBox="0 0 12 12" aria-hidden="true">
+            {playing ? (
+              <path d="M1.4 1.1 L10.6 1.9 L10.1 10.8 L1.1 10.2 Z" />
+            ) : (
+              <path d="M2.1 0.9 L11.2 6.2 L2.4 11.1 L1.8 6.1 Z" />
+            )}
+          </svg>
+          {playing ? "Cisza" : "Czytaj"}
+        </span>
       </button>
     );
   }

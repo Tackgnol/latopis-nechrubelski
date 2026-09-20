@@ -255,3 +255,72 @@
   cursor: pointer;
   font-size: 14px;
 }
+
+/* ---- D: one system — tabs on the recto's top edge, so they track the book at every width ---- */
+.proto-topedge {
+  position: absolute;
+  left: 50%;
+  right: 0;
+  top: -38px;
+  z-index: 60;
+  display: flex;
+  align-items: flex-end;
+  gap: 9px;
+  padding: 0 12px 0 8px;
+}
+
+.proto-topedge-tab {
+  --tear: polygon(
+    0% 12%, 14% 0%, 38% 7%, 62% 1%, 86% 8%, 100% 2%,
+    100% 84%, 99% 100%, 1% 100%, 0% 86%
+  );
+  position: relative;
+  flex: 1;
+  min-height: 46px;
+  padding: 9px 0 18px;
+  transform: translateY(8px);
+  border: 0;
+  cursor: pointer;
+  background: var(--bone);
+  color: var(--black);
+  font-family: var(--grot);
+  font-size: 19px;
+  letter-spacing: 0.05em;
+  clip-path: var(--tear);
+  filter: brightness(0.93) drop-shadow(0 -3px 0 var(--black));
+  transition: transform 0.14s, filter 0.14s;
+}
+
+.proto-topedge-tab:nth-child(odd) {
+  --tear: polygon(
+    0% 9%, 18% 1%, 44% 8%, 70% 0%, 92% 7%, 100% 3%,
+    100% 84%, 99% 100%, 1% 100%, 0% 88%
+  );
+}
+
+.proto-topedge-tab::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--grain);
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+.proto-topedge-tab.on {
+  min-height: 60px;
+  font-size: 24px;
+  padding: 10px 0 20px;
+  transform: translateY(0);
+  text-shadow: 2.5px 2.5px 0 var(--pink);
+  filter: drop-shadow(0 -5px 0 var(--black));
+}
+
+.proto-mark {
+  width: 0.72em;
+  height: 0.72em;
+  margin-right: 0.5em;
+  vertical-align: -0.02em;
+  fill: currentColor;
+}
