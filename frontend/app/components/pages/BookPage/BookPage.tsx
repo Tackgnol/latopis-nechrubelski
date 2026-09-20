@@ -10,6 +10,7 @@ import { Leaf } from "~/components/molecules/Leaf/Leaf";
 import { UserIndicator } from "~/components/organisms/UserIndicator/UserIndicator";
 import { PaperLeaf } from "~/components/organisms/PaperLeaf/PaperLeaf";
 import { BookTemplate } from "~/components/templates/BookTemplate/BookTemplate";
+import { PrototypeBookTabs, PrototypeNarrationOverlay } from "~/components/prototype/PrototypeNarration";
 import type { BookPageProps, Spread } from "./BookPage.models";
 import {
   CLOSE_STAGGER,
@@ -155,7 +156,12 @@ export function BookPage({ locale, current }: BookPageProps) {
       bookRef={bookRef}
       closed={flippedCount === 0}
       error={error}
-      userIndicator={<UserIndicator />}
+      userIndicator={
+        <>
+          <UserIndicator />
+          <PrototypeNarrationOverlay />
+        </>
+      }
       controls={
         <BookControls
           isOpen={flippedCount > 0}
@@ -167,6 +173,7 @@ export function BookPage({ locale, current }: BookPageProps) {
         />
       }
     >
+      <PrototypeBookTabs />
       <Leaf
         ref={(el) => {
           leafRefs.current[0] = el;

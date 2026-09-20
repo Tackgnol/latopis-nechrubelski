@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { toRomanNumeral } from "~/content/roman-numerals";
-import { AudioPlayer } from "~/components/atoms/AudioPlayer/AudioPlayer";
+import { PrototypePlayControl } from "~/components/prototype/PrototypeNarration";
 import { Verse } from "~/components/atoms/Verse/Verse";
 import type { PsalmFaceProps } from "./PsalmFace.models";
 import { fitFontSize } from "./PsalmFace.utils";
@@ -34,7 +34,7 @@ export function PsalmFace({ num, psalm, verse, highlightOn, playingVerse, audio,
     <div className="psalm">
       <h1 className="psalm-title">Psalm {toRomanNumeral(num)}</h1>
       {num === 7 && <p className="psalm-label">KOŃCZĄCY</p>}
-      {audio && <AudioPlayer src={audio.src} cues={audio.cues} onVerseChange={onVerseChange} />}
+      <PrototypePlayControl />
       <ol ref={versesRef} className="verses">
         {Object.entries(psalm.verses).map(([vn, text]) => (
           <Verse
