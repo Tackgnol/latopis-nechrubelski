@@ -9,3 +9,9 @@ export interface BookPageProps {
 export interface Spread extends PsalmSelection {
   target: number;
 }
+
+/** Browser audio hints not yet in TypeScript's DOM lib. */
+export type AudioNavigator = Navigator & {
+  audioSession?: { type: string };
+  connection?: { saveData?: boolean };
+};

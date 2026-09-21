@@ -1,7 +1,7 @@
 import type { BookTemplateProps } from "./BookTemplate.models";
 import "./BookTemplate.styles.css";
 
-export function BookTemplate({ stageRef, bookRef, closed, controls, userIndicator, error, children }: BookTemplateProps) {
+export function BookTemplate({ stageRef, bookRef, closed, controls, userIndicator, audioControl, error, children }: BookTemplateProps) {
   return (
     <div className="viewport">
       <div className="stage" ref={stageRef}>
@@ -16,6 +16,8 @@ export function BookTemplate({ stageRef, bookRef, closed, controls, userIndicato
       {controls}
 
       {userIndicator}
+
+      {audioControl}
 
       {error && (
         <p className="cover-error" role="alert">

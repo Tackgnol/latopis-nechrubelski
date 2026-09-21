@@ -6,6 +6,7 @@ export interface BookTemplateProps {
   closed: boolean;
   controls: ReactNode;
   userIndicator?: ReactNode;
+  audioControl?: ReactNode;
   error: string | null;
   children: ReactNode;
 }

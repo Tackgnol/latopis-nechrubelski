@@ -1,0 +1,17 @@
+/* Hangs on the recto's top edge, inside the book: the one page body.single always keeps on screen. */
+.variant-tabs {
+  position: absolute;
+  left: 50%;
+  right: 0;
+  bottom: calc(100% - 30px);
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 7px;
+  padding: 0 22px 0 0;
+  pointer-events: none;
+}
+
+.variant-tabs > * {
+  pointer-events: auto;
+}

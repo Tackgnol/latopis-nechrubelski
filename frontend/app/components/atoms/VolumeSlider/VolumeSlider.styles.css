@@ -1,0 +1,51 @@
+.volume-slider {
+  display: grid;
+  gap: 10px;
+  width: 180px;
+}
+
+.volume-slider-label {
+  font-family: var(--grot);
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Inset by half the thumb so it stays on the paper at either end. */
+.volume-slider-track {
+  position: relative;
+  height: 44px;
+  margin: 0 11px;
+}
+
+.volume-slider-track::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  height: 4px;
+  transform: translateY(-50%) rotate(-0.6deg);
+  background: var(--black);
+}
+
+.volume-slider-fill {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  height: 9px;
+  transform: translateY(-50%) rotate(-0.6deg);
+  background: var(--pink);
+}
+
+.volume-slider-thumb {
+  top: 50%;
+  width: 22px;
+  height: 30px;
+  background: var(--black);
+  clip-path: polygon(8% 4%, 92% 0%, 100% 50%, 90% 100%, 6% 94%, 0% 48%);
+}
+
+.volume-slider-thumb[data-focus-visible] {
+  background: var(--pink);
+}

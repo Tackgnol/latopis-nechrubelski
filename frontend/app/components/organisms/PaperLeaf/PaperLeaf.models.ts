@@ -1,6 +1,7 @@
 import type { Ref } from "react";
 import type { Locale } from "~/content";
 import type { FillerFaceSpec, NumeralFaceSpec, PsalmFaceSpec } from "~/components/models";
+import type { Narration } from "~/lib/narration";
 
 export interface PaperLeafProps {
   ref?: Ref<HTMLDivElement>;
@@ -10,7 +11,6 @@ export interface PaperLeafProps {
   zIndex: number;
   front: PsalmFaceSpec | FillerFaceSpec;
   back: NumeralFaceSpec | FillerFaceSpec;
-  highlightOn: boolean;
-  playingVerse: string | null;
-  onVerseChange: (verse: string | null) => void;
+  narration: Narration;
+  onToggleReading: (num: number) => void;
 }

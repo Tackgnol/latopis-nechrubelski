@@ -21,6 +21,18 @@ miseries.rpgtools.co {
                 }
         }
 
+        # Narration recordings, uploaded by scripts/upload-audio.sh, never by
+        # a deploy. /var/www/miseries carries a semanage httpd_sys_content_t
+        # rule (SELinux enforcing). file_server never sniffs, so the type is set.
+        @audio_routes path /audio/*
+        handle @audio_routes {
+                root * /var/www/miseries
+                header Content-Type "audio/mp4"
+                # A re-recorded verse shows up within a day; no versioned URLs, no purge.
+                header Cache-Control "public, max-age=86400"
+                file_server
+        }
+
         @api_routes path /api/*
         handle @api_routes {
                 reverse_proxy 127.0.0.1:3101

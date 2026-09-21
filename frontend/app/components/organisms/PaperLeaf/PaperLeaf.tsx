@@ -1,22 +1,9 @@
-import { skipToken, useQuery } from "@tanstack/react-query";
-import { psalmsByLocale, type Locale } from "~/content";
-import { audioSrc } from "~/content/audio-cues";
+import { psalmsByLocale } from "~/content";
 import { FillerFace } from "~/components/molecules/FillerFace/FillerFace";
 import { Leaf } from "~/components/molecules/Leaf/Leaf";
 import { NumeralFace } from "~/components/molecules/NumeralFace/NumeralFace";
 import { PsalmFace } from "~/components/molecules/PsalmFace/PsalmFace";
 import type { PaperLeafProps } from "./PaperLeaf.models";
-import { fetchAudioCues } from "./PaperLeaf.utils";
-
-function useAudioCues(locale: Locale, num: number | null) {
-  const { data } = useQuery({
-    queryKey: ["audio-cues", locale, num],
-    queryFn: num === null ? skipToken : () => fetchAudioCues(locale, num),
-    staleTime: Infinity,
-    retry: false,
-  });
-  return data ?? null;
-}
 
 export function PaperLeaf({
   ref,
@@ -26,12 +13,11 @@ export function PaperLeaf({
   zIndex,
   front,
   back,
-  highlightOn,
-  playingVerse,
-  onVerseChange,
+  narration,
+  onToggleReading,
 }: PaperLeafProps) {
   const { cover, psalms } = psalmsByLocale[locale];
-  const cues = useAudioCues(locale, front.kind === "psalm" ? front.num : null);
+  const reading = front.kind === "psalm" && narration?.mode === "narration" && narration.psalm === front.num;
 
   return (
     <Leaf
@@ -44,11 +30,9 @@ export function PaperLeaf({
           <PsalmFace
             num={front.num}
             psalm={psalms[front.num]}
-            verse={front.verse}
-            highlightOn={highlightOn}
-            playingVerse={playingVerse}
-            audio={cues && { src: audioSrc(locale, front.num), cues }}
-            onVerseChange={onVerseChange}
+            reading={reading}
+            readingVerse={reading ? (narration?.verse ?? null) : null}
+            onToggleReading={() => onToggleReading(front.num)}
           />
         ) : (
           <FillerFace folio={folio} side="front" coverTitle={cover.title} />

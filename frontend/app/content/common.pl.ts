@@ -8,6 +8,10 @@ export interface CommonResource {
   rollFailed: string;
   misery: string;
   welcome: string;
+  read: string;
+  silence: string;
+  voice: string;
+  volume: string;
 }
 
 export const pl: CommonResource = {
@@ -20,4 +24,8 @@ export const pl: CommonResource = {
   rollFailed: "Rzut się nie powiódł — czy backend działa?",
   misery: "Nieszczęście",
   welcome: "Witaj",
+  read: "Czytaj",
+  silence: "Cisza",
+  voice: "Głos lektora",
+  volume: "Głośność",
 };
