@@ -13,7 +13,7 @@
 
   --display: "Pirata One", "Old English Text MT", Georgia, serif;
   --grot: "Anton", Impact, "Arial Narrow Bold", sans-serif;
-  --book: "IM Fell English", Georgia, "Times New Roman", serif;
+  --book: "EB Garamond", Georgia, "Times New Roman", serif;
 
   /* art: alpha masks, recoloured in CSS. credits: see README/Caddyfile.example sources. */
   --img-skull: url("/img/hourglass-2027035.png");
