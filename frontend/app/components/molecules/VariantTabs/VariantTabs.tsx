@@ -5,12 +5,12 @@ import { VARIANTS } from "~/lib/narration";
 import type { VariantTabsProps } from "./VariantTabs.models";
 import "./VariantTabs.styles.css";
 
-export function VariantTabs({ selected, zIndex, onChoose }: VariantTabsProps) {
+export function VariantTabs({ ref, selected, zIndex, onChoose }: VariantTabsProps) {
   const { t } = useTranslation();
   const labelId = useId();
 
   return (
-    <div className="variant-tabs" role="group" aria-labelledby={labelId} style={{ zIndex }}>
+    <div ref={ref} className="variant-tabs" role="group" aria-labelledby={labelId} style={{ zIndex }}>
       <span id={labelId} className="variant-tabs-label">
         {t("variants")}
       </span>
