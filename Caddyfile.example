@@ -28,6 +28,8 @@ miseries.rpgtools.co {
         handle @audio_routes {
                 root * /var/www/miseries
                 header Content-Type "audio/mp4"
+                # A re-recorded verse shows up within a day; no versioned URLs, no purge.
+                header Cache-Control "public, max-age=86400"
                 file_server
         }
 

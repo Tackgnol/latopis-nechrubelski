@@ -1,0 +1,75 @@
+/* Sized in stage pixels, divided by the stage scale so the exposed stub clears 44px on screen. */
+.variant-tab {
+  --tear: polygon(0% 9%, 16% 1%, 42% 7%, 68% 0%, 90% 6%, 100% 2%, 100% 100%, 0% 100%);
+  --exposed: calc(46px / var(--s));
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  width: calc(46px / var(--s));
+  min-height: calc(var(--exposed) + 30px);
+  padding: calc(11px / var(--s)) 0 0;
+  border: 0;
+  cursor: pointer;
+  background: var(--black);
+  color: var(--bone);
+  font-family: var(--grot);
+  font-size: calc(18px / var(--s));
+  letter-spacing: 0.04em;
+  clip-path: var(--tear);
+  transform: translateY(2px) rotate(-1.4deg);
+  transition:
+    transform 0.16s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.16s;
+}
+
+.variant-tab:nth-child(2) {
+  transform: translateY(6px) rotate(1.1deg);
+}
+
+.variant-tab:nth-child(3) {
+  transform: translateY(0) rotate(-0.7deg);
+}
+
+.variant-tab:nth-child(4) {
+  transform: translateY(7px) rotate(1.6deg);
+}
+
+.variant-tab::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--grain);
+  opacity: 0.3;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* clip-path eats outline and box-shadow, so hover and focus follow the tear with drop-shadow. */
+.variant-tab[data-hovered],
+.variant-tab[data-focus-visible] {
+  filter: drop-shadow(0 -3px 0 var(--pink));
+}
+
+.variant-tab[data-selected],
+.variant-tab[data-selected]:nth-child(n) {
+  width: calc(54px / var(--s));
+  min-height: calc(var(--exposed) + 44px);
+  padding-top: calc(13px / var(--s));
+  background: var(--bone);
+  color: var(--black);
+  font-size: calc(24px / var(--s));
+  text-shadow: 2.5px 2.5px 0 var(--pink);
+  transform: translateY(-8px) rotate(-0.5deg);
+}
+
+.variant-tab[data-selected]::after {
+  opacity: 0.2;
+  mix-blend-mode: multiply;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .variant-tab {
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,12 +1,11 @@
 import type { Psalm } from "~/content";
-import type { AudioCue } from "~/content/audio-cues";
 
 export interface PsalmFaceProps {
   num: number;
   psalm: Psalm;
-  verse: string;
-  highlightOn: boolean;
-  playingVerse: string | null;
-  audio: { src: string; cues: readonly AudioCue[] } | null;
-  onVerseChange: (verse: string | null) => void;
+  /** This psalm is being narrated; the bar reads CISZA. */
+  reading: boolean;
+  /** The verse the voice is on, the only one inked yellow. */
+  readingVerse: string | null;
+  onToggleReading: () => void;
 }

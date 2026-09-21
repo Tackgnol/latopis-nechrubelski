@@ -47,6 +47,8 @@ export default defineConfig(({ isSsrBuild }) => ({
   server: {
     proxy: {
       "/api": process.env.VITE_BACKEND_PROXY_TARGET ?? "http://localhost:3141",
+      // Recordings live only on the VM (scripts/upload-audio.sh), never in the repo.
+      "/audio": { target: process.env.VITE_AUDIO_PROXY_TARGET ?? "https://miseries.rpgtools.co", changeOrigin: true },
     },
     watch: {
       usePolling: true,

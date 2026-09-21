@@ -5,4 +5,5 @@ export interface TornButtonProps {
   quiet?: boolean;
   onPress?: () => void;
   isDisabled?: boolean;
+  ariaLabel?: string;
 }

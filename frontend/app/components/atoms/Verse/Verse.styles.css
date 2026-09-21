@@ -3,10 +3,6 @@
   list-style: none;
 }
 
-.verse[data-playing="true"] .vt {
-  color: #68202c;
-}
-
 .vn {
   font-family: var(--grot);
   color: var(--pink);
@@ -15,7 +11,7 @@
   margin-right: 0.45em;
 }
 
-.marked .vt {
+.verse .vt {
   background-image: linear-gradient(var(--yellow), var(--yellow));
   background-repeat: no-repeat;
   background-size: 0% 100%;
@@ -24,12 +20,12 @@
   -webkit-box-decoration-break: clone;
 }
 
-.marked.on .vt {
+.verse[data-playing="true"] .vt {
   background-size: 100% 100%;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .marked .vt {
+  .verse .vt {
     transition-duration: 0.01ms !important;
   }
 }

@@ -18,6 +18,11 @@ export function leafZIndex(i: number, flippedCount: number): number {
   return i < flippedCount ? 100 + i : NLEAVES - i;
 }
 
+/** The variant tabs tuck just under the open recto (the first unflipped leaf), so only their tops show. */
+export function tabsZIndex(flippedCount: number): number {
+  return leafZIndex(flippedCount, flippedCount) - 1;
+}
+
 /** Flips a leaf's DOM directly so the riffle animation doesn't depend on React re-renders. */
 export function setLeafFlipped(leaves: LeafElements, i: number, flipped: boolean) {
   const el = leaves[i];
@@ -84,6 +89,6 @@ export function leafFacesFor(
   const filler: FillerFaceSpec = { kind: "filler" };
   const anchor = [prevSpread, spread].find((s) => s && (i === s.target || i === s.target - 1));
   if (!anchor) return { front: filler, back: filler };
-  if (i === anchor.target) return { front: { kind: "psalm", num: anchor.num, verse: anchor.verse }, back: filler };
+  if (i === anchor.target) return { front: { kind: "psalm", num: anchor.num }, back: filler };
   return { front: filler, back: { kind: "numeral", num: anchor.num, reveal: anchor.reveal } };
 }

@@ -7,13 +7,9 @@ export function loader({ params, request }: LoaderFunctionArgs) {
   const url = new URL(request.url);
   const psalmParam = url.searchParams.get("psalm");
   if (psalmParam !== null) {
-    const [numPart, versePart] = psalmParam.split(":");
-    const num = Number(numPart);
-    const psalm = psalmsByLocale[locale].psalms[num];
-    if (Number.isInteger(num) && psalm) {
-      const verse = versePart && psalm.verses[versePart] ? versePart : Object.keys(psalm.verses)[0];
-      return redirect(`/${locale}/psalm/${num}?v=${verse}`);
-    }
+    // Old links may carry a verse (`?psalm=4:3`); only the psalm is kept.
+    const num = Number(psalmParam.split(":")[0]);
+    if (Number.isInteger(num) && psalmsByLocale[locale].psalms[num]) return redirect(`/${locale}/psalm/${num}`);
   }
   const { cover, psalms } = psalmsByLocale[locale];
   return { locale, psalmNumbers: Object.keys(psalms).map(Number).sort((a, b) => a - b), title: cover.title };

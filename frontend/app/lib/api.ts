@@ -11,6 +11,7 @@ export type CurrentUser = z.infer<typeof currentUserSchema>;
 
 const csrfSchema = z.object({ token: z.string() });
 const resetSchema = z.object({ monitorToken: z.string() });
+const readingSessionSchema = z.object({ revealed: z.array(z.object({ psalm: z.number() })) });
 
 async function readJson(res: Response): Promise<unknown> {
   if (!res.ok) {
@@ -41,6 +42,12 @@ export async function rollPsalm(): Promise<RollResult> {
     if (!(err instanceof Error) || err.message !== "all-revealed") throw err;
     return apiPost("/api/sessions/reveal-end", rollResultSchema);
   }
+}
+
+/** Psalms already revealed in this reader's session; empty before the first roll. */
+export async function fetchRevealedPsalms(): Promise<number[]> {
+  const { revealed } = readingSessionSchema.parse(await readJson(await fetch("/api/sessions/me")));
+  return revealed.map((r) => r.psalm);
 }
 
 export async function resetSession(): Promise<void> {

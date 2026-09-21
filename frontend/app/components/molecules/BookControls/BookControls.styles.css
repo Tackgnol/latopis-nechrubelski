@@ -10,7 +10,7 @@
 
 body.single .controls {
   left: 14px;
-  right: 14px;
+  right: 72px; /* room for the volume control */
   bottom: 14px;
   gap: 10px;
 }
