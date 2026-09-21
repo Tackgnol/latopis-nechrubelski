@@ -1,0 +1,103 @@
+/* PROTOTYPE — issue #6. Each variant only restyles .verse[data-playing="true"]; the roll's
+   yellow ink-bleed (.marked.on) is left exactly as production draws it. */
+
+/* ---- A: a torn ink pointer in the gutter, stamped beside the narrating verse ---- */
+body[data-nv="A"] .verses {
+  padding-left: 1.1em;
+}
+
+body[data-nv="A"] .verse {
+  position: relative;
+}
+
+body[data-nv="A"] .verse::before {
+  content: "";
+  position: absolute;
+  left: -1.05em;
+  top: 0.28em;
+  width: 0.72em;
+  height: 0.62em;
+  background: var(--black);
+  clip-path: polygon(0 8%, 22% 0, 100% 46%, 96% 58%, 18% 100%, 4% 88%, 12% 50%);
+  opacity: 0;
+  transform: translateX(-0.35em) scale(0.6);
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
+}
+
+body[data-nv="A"] .verse[data-playing="true"]::before {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.12s ease,
+    transform 0.18s cubic-bezier(0.2, 1.6, 0.4, 1);
+}
+
+/* ---- B: a pink line is written under the verse for as long as it is read ---- */
+body[data-nv="B"] .verse .vt {
+  background-image: linear-gradient(var(--pink), var(--pink));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 3px;
+  /* slice: the line travels through the verse in reading order instead of restarting per line */
+  box-decoration-break: slice;
+  -webkit-box-decoration-break: slice;
+  transition: background-size 0.3s ease;
+}
+
+body[data-nv="B"] .verse[data-playing="true"] .vt {
+  background-size: 100% 3px;
+  transition: background-size var(--nv-dur, 3s) linear;
+}
+
+body[data-nv="B"] .verse.marked .vt {
+  background-image: linear-gradient(var(--pink), var(--pink)), linear-gradient(var(--yellow), var(--yellow));
+  background-position:
+    0 100%,
+    0 0;
+  background-size:
+    0% 3px,
+    0% 100%;
+}
+
+body[data-nv="B"] .verse.marked.on .vt {
+  background-size:
+    0% 3px,
+    100% 100%;
+}
+
+body[data-nv="B"] .verse.marked.on[data-playing="true"] .vt {
+  background-size:
+    100% 3px,
+    100% 100%;
+}
+
+/* ---- C: reading lamp — while narration runs, every other verse sinks into the page ---- */
+body[data-nv="C"] .verse {
+  transition: opacity 0.4s ease;
+}
+
+body[data-nv="C"] .verses:has(.verse[data-playing="true"]) .verse:not([data-playing="true"]) {
+  opacity: 0.28;
+}
+
+/* ---- D: the verse number is stamped — inverted, knocked askew — while its verse is read ---- */
+body[data-nv="D"] .vn {
+  display: inline-block;
+  padding: 0 0.22em;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+body[data-nv="D"] .verse[data-playing="true"] .vn {
+  background: var(--black);
+  color: var(--bone);
+  transform: rotate(-4deg) scale(1.12);
+  transition:
+    background-color 0.08s ease,
+    color 0.08s ease,
+    transform 0.16s cubic-bezier(0.2, 1.8, 0.4, 1);
+}

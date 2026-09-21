@@ -11,6 +11,7 @@ import { UserIndicator } from "~/components/organisms/UserIndicator/UserIndicato
 import { PaperLeaf } from "~/components/organisms/PaperLeaf/PaperLeaf";
 import { BookTemplate } from "~/components/templates/BookTemplate/BookTemplate";
 import { PrototypeBookTabs, PrototypeNarrationOverlay } from "~/components/prototype/PrototypeNarration";
+import { PrototypeNvSwitcher } from "~/components/prototype/PrototypeNarratingVerse";
 import type { BookPageProps, Spread } from "./BookPage.models";
 import {
   CLOSE_STAGGER,
@@ -160,6 +161,7 @@ export function BookPage({ locale, current }: BookPageProps) {
         <>
           <UserIndicator />
           <PrototypeNarrationOverlay />
+          <PrototypeNvSwitcher playingVerse={playingVerse} />
         </>
       }
       controls={

@@ -3,10 +3,6 @@
   list-style: none;
 }
 
-.verse[data-playing="true"] .vt {
-  color: #68202c;
-}
-
 .vn {
   font-family: var(--grot);
   color: var(--pink);

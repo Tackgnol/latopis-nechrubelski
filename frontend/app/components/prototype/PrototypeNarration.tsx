@@ -8,6 +8,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import "./PrototypeNarration.styles.css";
+import { useFakeNarration } from "./PrototypeNarratingVerse";
 
 const VARIANTS = ["A", "B", "C", "D"] as const;
 type Variant = (typeof VARIANTS)[number];
@@ -24,7 +25,7 @@ const LETTERS = ["A", "B", "C", "D"] as const;
 function useVariant(): Variant {
   const [params] = useSearchParams();
   const value = params.get("variant") ?? "";
-  return (VARIANTS as readonly string[]).includes(value) ? (value as Variant) : "A";
+  return (VARIANTS as readonly string[]).includes(value) ? (value as Variant) : "D";
 }
 
 function useLetter() {
@@ -69,7 +70,7 @@ export function PrototypeNarrationOverlay() {
         </div>
       )}
 
-      <PrototypeSwitcher />
+      {false && <PrototypeSwitcher />}
     </>
   );
 }
@@ -115,9 +116,16 @@ export function PrototypeBookTabs() {
 }
 
 /** The play/stop control on the psalm face, replacing today's <audio controls>. */
-export function PrototypePlayControl() {
+export function PrototypePlayControl({
+  verses,
+  onVerseChange,
+}: {
+  verses: Record<string, string>;
+  onVerseChange: (vn: string | null) => void;
+}) {
   const variant = useVariant();
   const [playing, setPlaying] = useState(false);
+  useFakeNarration(playing, verses, onVerseChange, () => setPlaying(false));
   const toggle = () => setPlaying((p) => !p);
 
   if (variant === "A") {

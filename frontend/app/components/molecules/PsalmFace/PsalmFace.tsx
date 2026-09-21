@@ -34,7 +34,7 @@ export function PsalmFace({ num, psalm, verse, highlightOn, playingVerse, audio,
     <div className="psalm">
       <h1 className="psalm-title">Psalm {toRomanNumeral(num)}</h1>
       {num === 7 && <p className="psalm-label">KOŃCZĄCY</p>}
-      <PrototypePlayControl />
+      <PrototypePlayControl verses={psalm.verses} onVerseChange={onVerseChange} />
       <ol ref={versesRef} className="verses">
         {Object.entries(psalm.verses).map(([vn, text]) => (
           <Verse
