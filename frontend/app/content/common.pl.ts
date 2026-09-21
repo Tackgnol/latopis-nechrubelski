@@ -14,6 +14,16 @@ export interface CommonResource {
   volume: string;
   tapHint: string;
   clickHint: string;
+  credits: string;
+  readBy: string;
+  creditsText: string;
+  creditsArt: string;
+  creditsAllArt: string;
+  creditSkull: string;
+  creditBlot: string;
+  creditSplatTop: string;
+  creditSplatBottom: string;
+  creditSplatBackground: string;
 }
 
 export const pl: CommonResource = {
@@ -32,4 +42,14 @@ export const pl: CommonResource = {
   volume: "Głośność",
   tapHint: "Stuknij dwa razy, by odsłonić następny psalm",
   clickHint: "Kliknij dwa razy, by odsłonić następny psalm",
+  credits: "Źródła",
+  readBy: "Czytane przez",
+  creditsText: "Tekst psalmów pochodzi z MÖRK BORG — Skóra i Kości.",
+  creditsArt: "Grafiki z serwisu Pixabay, użyte na licencji Pixabay Content License.",
+  creditsAllArt: "Wszystkie grafiki:",
+  creditSkull: "Czaszka z klepsydrą",
+  creditBlot: "Kleks (karta i strona psalmu)",
+  creditSplatTop: "Plama (prawy górny róg)",
+  creditSplatBottom: "Plama (lewy dolny róg)",
+  creditSplatBackground: "Plama (tło)",
 };

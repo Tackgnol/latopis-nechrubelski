@@ -18,6 +18,7 @@ import { readStored, useStored, writeStored } from "~/lib/stored";
 import { psalmsByLocale, type PsalmsResource } from "~/content";
 import { BookControls } from "~/components/molecules/BookControls/BookControls";
 import { CoverFace } from "~/components/molecules/CoverFace/CoverFace";
+import { CreditsControl } from "~/components/molecules/CreditsControl/CreditsControl";
 import { Leaf } from "~/components/molecules/Leaf/Leaf";
 import { VariantTabs } from "~/components/molecules/VariantTabs/VariantTabs";
 import { VolumeControl } from "~/components/molecules/VolumeControl/VolumeControl";
@@ -290,6 +291,7 @@ export function BookPage({ locale, current }: BookPageProps) {
       hint={hint.visible && <TapHint text={t(hintCopyKey())} />}
       userIndicator={<UserIndicator />}
       audioControl={<VolumeControl volume={voice.volume} onChange={voice.setVolume} />}
+      creditsControl={<CreditsControl />}
       controls={
         <BookControls
           isOpen={flippedCount > 0}
