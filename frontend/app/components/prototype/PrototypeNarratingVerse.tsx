@@ -17,7 +17,7 @@ const NV_NAMES: Record<Nv, string> = {
   B: "Line written under the verse",
   C: "Reading lamp (the rest dims)",
   D: "Stamped verse number",
-  E: "The same yellow, following the voice",
+  E: "One yellow, on the verse being read",
 };
 
 export function useNv(): Nv {
