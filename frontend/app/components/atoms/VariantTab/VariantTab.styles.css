@@ -42,7 +42,6 @@
   inset: 0;
   background-image: var(--grain);
   opacity: 0.3;
-  mix-blend-mode: screen;
   pointer-events: none;
 }
 
@@ -66,7 +65,6 @@
 
 .variant-tab[data-selected]::after {
   opacity: 0.2;
-  mix-blend-mode: multiply;
 }
 
 @media (prefers-reduced-motion: reduce) {

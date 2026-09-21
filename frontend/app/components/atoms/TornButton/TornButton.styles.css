@@ -77,7 +77,6 @@
   z-index: 2;
   background-image: var(--grain);
   opacity: 0.3;
-  mix-blend-mode: screen;
   pointer-events: none;
 }
 
