@@ -24,7 +24,7 @@ import { VolumeControl } from "~/components/molecules/VolumeControl/VolumeContro
 import { UserIndicator } from "~/components/organisms/UserIndicator/UserIndicator";
 import { PaperLeaf } from "~/components/organisms/PaperLeaf/PaperLeaf";
 import { BookTemplate } from "~/components/templates/BookTemplate/BookTemplate";
-import type { BookPageProps, Spread } from "./BookPage.models";
+import type { AudioNavigator, BookPageProps, Spread } from "./BookPage.models";
 import {
   CLOSE_STAGGER,
   FIXED_OPEN_TARGET,
@@ -44,11 +44,6 @@ import {
 const VARIANT_KEY = "narration-variant";
 const VOLUME_KEY = "narration-volume";
 const LAST_VOLUME_KEY = "narration-last-volume";
-
-type AudioNavigator = Navigator & {
-  audioSession?: { type: string };
-  connection?: { saveData?: boolean };
-};
 
 /**
  * The page's one voice: narration and previews through Howler, the reader's variant and volume,
@@ -88,7 +83,11 @@ function useNarration(psalms: PsalmsResource["psalms"]) {
   function setVolume(v: number) {
     writeStored(VOLUME_KEY, String(v));
     if (v > 0) writeStored(LAST_VOLUME_KEY, String(v));
+    // A muted voice must not keep moving the yellow.
+    else narrator.stop();
   }
+
+  // These read the store, not `variant`/`volume`: autoplay runs from the roll's closure, after the flip awaits.
 
   /** An explicit play brings a muted reader back to their last audible level. */
   function unmute() {

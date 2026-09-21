@@ -131,6 +131,25 @@ describe("createNarrator", () => {
     expect(latest("/audio/A/2-1.m4a").plays).toBe(1);
   });
 
+  it("lets go of the verse it was reading and the one fetched ahead when stopped", () => {
+    const { narrator, latest } = setup();
+    narrator.play("narration", psalm2);
+    narrator.stop();
+
+    expect(latest("/audio/A/2-1.m4a").unloaded).toBe(true);
+    expect(latest("/audio/A/2-2.m4a").unloaded).toBe(true);
+  });
+
+  it("lets go of warmed files the new warm-up no longer wants, but not one being read", () => {
+    const { narrator, latest } = setup();
+    narrator.warm(["/audio/A/2-1.m4a", "/audio/A/3-1.m4a"]);
+    narrator.play("narration", psalm2);
+    narrator.warm(["/audio/C/3-1.m4a"]);
+
+    expect(latest("/audio/A/3-1.m4a").unloaded).toBe(true);
+    expect(latest("/audio/A/2-1.m4a").unloaded).toBe(false);
+  });
+
   it("falls silent on stop", () => {
     const { narrator, latest, last } = setup();
     narrator.play("narration", psalm2);

@@ -1,7 +1,8 @@
-/* Sized in stage pixels, divided by the stage scale so the exposed stub clears 44px on screen. */
+/* Sized in stage pixels, divided by the stage scale so the exposed stub clears 44px on screen
+   even after the per-tab offsets and the torn top. */
 .variant-tab {
   --tear: polygon(0% 9%, 16% 1%, 42% 7%, 68% 0%, 90% 6%, 100% 2%, 100% 100%, 0% 100%);
-  --exposed: calc(46px / var(--s));
+  --exposed: calc(56px / var(--s));
   position: relative;
   display: flex;
   align-items: flex-start;

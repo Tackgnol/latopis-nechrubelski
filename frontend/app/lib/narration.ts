@@ -12,7 +12,9 @@ export function parseVolume(raw: string | null): number {
 }
 
 const RANDOM_PSALMS = [1, 2, 3, 4, 5, 6];
+const VERSES_PER_PSALM = 6;
 const FINALE_PSALM = 7;
+const FINALE_VERSE = "7";
 
 function audioSrc(variant: Variant, psalm: number, verse: string): string {
   return `/audio/${variant}/${psalm}-${verse}.m4a`;
@@ -31,13 +33,13 @@ export function psalmTracks(variant: Variant, psalm: number, verses: Record<stri
 export function warmSources(variant: Variant, revealed: readonly number[]): string[] {
   const unrevealed = RANDOM_PSALMS.filter((p) => !revealed.includes(p));
   if (unrevealed.length > 0) return unrevealed.map((p) => audioSrc(variant, p, "1"));
-  return revealed.includes(FINALE_PSALM) ? [] : [audioSrc(variant, FINALE_PSALM, "7")];
+  return revealed.includes(FINALE_PSALM) ? [] : [audioSrc(variant, FINALE_PSALM, FINALE_VERSE)];
 }
 
 /** A random verse of psalms I-VI to demonstrate a variant's intonation; never the finale. */
 export function previewTrack(variant: Variant, random: () => number = Math.random): Track {
-  const n = Math.floor(random() * 36);
-  return track(variant, RANDOM_PSALMS[Math.floor(n / 6)], String((n % 6) + 1));
+  const n = Math.floor(random() * RANDOM_PSALMS.length * VERSES_PER_PSALM);
+  return track(variant, RANDOM_PSALMS[Math.floor(n / VERSES_PER_PSALM)], String((n % VERSES_PER_PSALM) + 1));
 }
 
 export type SoundEvent = "play" | "end" | "loaderror" | "playerror";
@@ -61,12 +63,12 @@ export type NarrationMode = "narration" | "preview";
 /** What is sounding: `verse` is null until the voice actually starts. Null when silent. */
 export type Narration = { mode: NarrationMode; psalm: number; verse: string | null } | null;
 
-export type Narrator = ReturnType<typeof createNarrator>;
-
 /** One voice at a time: plays a queue of tracks in order and reports the verse being read. */
 export function createNarrator(createSound: (src: string) => Sound, onChange: (state: Narration) => void) {
   let run = 0;
-  let current: Sound | null = null;
+  // The verse being read and the one fetched ahead of it: both are freed when the voice stops.
+  let reading: string[] = [];
+  let warmed = new Set<string>();
   const loaded = new Map<string, Sound>();
 
   function load(src: string): Sound {
@@ -78,15 +80,17 @@ export function createNarrator(createSound: (src: string) => Sound, onChange: (s
     return sound;
   }
 
-  function release(src: string, sound: Sound) {
+  function release(src: string, sound: Sound | undefined = loaded.get(src)) {
+    if (!sound) return;
     if (loaded.get(src) === sound) loaded.delete(src);
     sound.unload();
   }
 
   function silence() {
     run++;
-    current?.stop();
-    current = null;
+    loaded.get(reading[0])?.stop();
+    reading.forEach((src) => release(src));
+    reading = [];
   }
 
   function stop() {
@@ -103,13 +107,14 @@ export function createNarrator(createSound: (src: string) => Sound, onChange: (s
       if (id !== run) return;
       const track = tracks[i];
       if (!track) {
-        current = null;
+        reading = [];
         onChange(null);
         return;
       }
       const sound = load(track.src);
-      if (tracks[i + 1]) load(tracks[i + 1].src);
-      current = sound;
+      const next = tracks[i + 1];
+      if (next) load(next.src);
+      reading = next ? [track.src, next.src] : [track.src];
       sound.once("play", () => {
         if (id === run) onChange({ mode, psalm: track.psalm, verse: track.verse });
       });
@@ -129,12 +134,17 @@ export function createNarrator(createSound: (src: string) => Sound, onChange: (s
     step(0);
   }
 
-  /** Loads files ahead of need; ones already loaded are left alone. */
+  /** Loads files ahead of need, and frees earlier warm-ups this list drops unless they are being read. */
   function warm(srcs: readonly string[]) {
+    const keep = new Set([...srcs, ...reading]);
+    warmed.forEach((src) => {
+      if (!keep.has(src)) release(src);
+    });
+    warmed = new Set(srcs);
     srcs.forEach(load);
   }
 
-  /** Stops and frees every loaded file; the narrator is not used afterwards. */
+  /** Stops and frees every loaded file. */
   function dispose() {
     stop();
     loaded.forEach((sound) => sound.unload());
