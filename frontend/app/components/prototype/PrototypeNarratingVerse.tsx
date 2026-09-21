@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import "./PrototypeNarratingVerse.styles.css";
 
-const NV = ["A", "B", "C", "D"] as const;
+const NV = ["A", "B", "C", "D", "E"] as const;
 type Nv = (typeof NV)[number];
 
 const NV_NAMES: Record<Nv, string> = {
@@ -17,6 +17,7 @@ const NV_NAMES: Record<Nv, string> = {
   B: "Line written under the verse",
   C: "Reading lamp (the rest dims)",
   D: "Stamped verse number",
+  E: "The same yellow, following the voice",
 };
 
 export function useNv(): Nv {

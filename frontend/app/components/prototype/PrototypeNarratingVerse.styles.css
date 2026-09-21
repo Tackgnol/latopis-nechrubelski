@@ -31,7 +31,7 @@ body[data-nv="A"] .verse[data-playing="true"]::before {
   transform: none;
   transition:
     opacity 0.12s ease,
-    transform 0.18s cubic-bezier(0.2, 1.6, 0.4, 1);
+    transform 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 /* ---- B: a pink line is written under the verse for as long as it is read ---- */
@@ -99,5 +99,19 @@ body[data-nv="D"] .verse[data-playing="true"] .vn {
   transition:
     background-color 0.08s ease,
     color 0.08s ease,
-    transform 0.16s cubic-bezier(0.2, 1.8, 0.4, 1);
+    transform 0.16s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ---- E: no second treatment — the roll's own yellow bleeds into whichever verse is read ---- */
+body[data-nv="E"] .verse .vt {
+  background-image: linear-gradient(var(--yellow), var(--yellow));
+  background-repeat: no-repeat;
+  background-size: 0% 100%;
+  transition: background-size 0.55s cubic-bezier(0.3, 0, 0.2, 1);
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+body[data-nv="E"] .verse[data-playing="true"] .vt {
+  background-size: 100% 100%;
 }
