@@ -1,0 +1,56 @@
+/* Lies on the open recto inside the scaled book, scaled back up so it reads the same on a phone. */
+.tap-hint {
+  --tear: polygon(
+    0% 14%,
+    9% 2%,
+    27% 10%,
+    48% 0%,
+    67% 9%,
+    87% 2%,
+    100% 11%,
+    99% 54%,
+    100% 90%,
+    89% 100%,
+    69% 92%,
+    49% 100%,
+    29% 93%,
+    10% 100%,
+    0% 87%,
+    1% 50%
+  );
+  position: absolute;
+  left: 50%;
+  right: 0;
+  bottom: 26px;
+  z-index: 200;
+  width: max-content;
+  max-width: calc(50% - 40px);
+  margin: 0 auto;
+  padding: 9px 18px 10px;
+  font-family: var(--grot);
+  font-size: 14px;
+  line-height: 1.25;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--yellow);
+  background: var(--black);
+  clip-path: var(--tear);
+  transform: rotate(-1.2deg) scale(calc(1 / var(--s)));
+  transform-origin: bottom center;
+  pointer-events: none;
+  animation: tap-hint-in 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes tap-hint-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) rotate(-5deg) scale(calc(1 / var(--s)));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tap-hint {
+    animation: none;
+  }
+}

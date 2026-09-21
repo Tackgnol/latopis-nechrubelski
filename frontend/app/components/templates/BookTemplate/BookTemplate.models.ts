@@ -8,5 +8,7 @@ export interface BookTemplateProps {
   userIndicator?: ReactNode;
   audioControl?: ReactNode;
   error: string | null;
+  /** Lies on the open recto, above the leaves. */
+  hint?: ReactNode;
   children: ReactNode;
 }

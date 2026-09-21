@@ -15,6 +15,8 @@ export function PaperLeaf({
   back,
   narration,
   onToggleReading,
+  onTap,
+  onDoubleTap,
 }: PaperLeafProps) {
   const { cover, psalms } = psalmsByLocale[locale];
   const reading = front.kind === "psalm" && narration?.mode === "narration" && narration.psalm === front.num;
@@ -25,6 +27,8 @@ export function PaperLeaf({
       variant="paper"
       flipped={flipped}
       zIndex={zIndex}
+      onTap={onTap}
+      onDoubleTap={onDoubleTap}
       front={
         front.kind === "psalm" ? (
           <PsalmFace

@@ -15,3 +15,20 @@
 .variant-tabs > * {
   pointer-events: auto;
 }
+
+/* A caption on the yellow above the first stub (the top-right corner is under an ink splat);
+   scaled back up like the stubs so a phone can read it. */
+.variant-tabs-label {
+  align-self: flex-start;
+  margin-right: 2px;
+  font-family: var(--grot);
+  font-size: 12px;
+  line-height: 1;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--black);
+  transform: translateY(calc(-100% - 8px)) rotate(-1.5deg) scale(calc(1 / var(--s)));
+  transform-origin: bottom left;
+  pointer-events: none;
+}

@@ -13,4 +13,6 @@ export interface PaperLeafProps {
   back: NumeralFaceSpec | FillerFaceSpec;
   narration: Narration;
   onToggleReading: (num: number) => void;
+  onTap?: () => void;
+  onDoubleTap?: () => void;
 }

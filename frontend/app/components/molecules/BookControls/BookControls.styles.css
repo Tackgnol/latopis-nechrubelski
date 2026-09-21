@@ -1,7 +1,7 @@
 .controls {
   position: fixed;
-  left: 22px;
-  bottom: 22px;
+  left: calc(22px + env(safe-area-inset-left));
+  bottom: calc(22px + env(safe-area-inset-bottom));
   display: flex;
   flex-wrap: wrap;
   gap: 14px;
@@ -9,8 +9,22 @@
 }
 
 body.single .controls {
-  left: 14px;
-  right: 72px; /* room for the volume control */
-  bottom: 14px;
+  left: calc(14px + env(safe-area-inset-left));
+  right: calc(72px + env(safe-area-inset-right)); /* room for the volume control */
+  bottom: calc(14px + env(safe-area-inset-bottom));
   gap: 10px;
+}
+
+/* A phone on its side: the controls stand in a column right of the book, above the volume control
+   (fitStage reserves the width); the verso peeks out on the left when there is room for it. */
+@media (max-height: 500px) and (orientation: landscape) {
+  body.single .controls {
+    top: 50%;
+    left: auto;
+    bottom: auto;
+    right: calc(16px + env(safe-area-inset-right));
+    width: 180px;
+    flex-direction: column;
+    transform: translateY(-50%);
+  }
 }

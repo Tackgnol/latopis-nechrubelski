@@ -1,0 +1,671 @@
+- generic [active] [ref=f6e1]:
+  - generic [aria-hidden]: NECHRUBEL
+  - generic [ref=f6e2]:
+    - generic [ref=f6e4]:
+      - generic [ref=f6e8]:
+        - button "A" [ref=f6e9] [cursor=pointer]
+        - button "B" [ref=f6e10] [cursor=pointer]
+        - button "C" [ref=f6e11] [cursor=pointer]
+        - button "D" [ref=f6e12] [cursor=pointer]
+      - generic [ref=f6e15] [cursor=pointer]:
+        - heading "Latopis Nechrubelski" [level=1] [ref=f6e16]
+        - paragraph [ref=f6e17]: Pisma Nienazwane.
+        - paragraph [ref=f6e19]: Spisane przez mnicha Anuka Schlegera.
+      - generic [ref=f6e22]:
+        - generic [ref=f6e23]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Glossa Krwawa
+            - paragraph: przekreślone przez cenzora
+            - generic:
+              - paragraph: Graven pustka daejmon obscurum krypta krypta corvus. Requiem cinis silentium obscurum pustka nechrubel. Obscurum vermis tenebrae krypta verhu.
+              - paragraph: Requiem smoła chaos tenebrae silentium yetsab smoła verhu obscurum. Morbus ruina tenebrae morbus popielisko yetsab. Obscurum tenebrae chaos ossa spectrum wóal corvus smoła smoła arkh anthelia corvus popielisko. Lewiatan anthelia yetsab vermis anthelia cinis mortis chaos chaos.
+            - paragraph: brak dalszego ciągu
+            - generic:
+              - generic: Folio 1r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e25]:
+          - generic [ref=f6e27]: IV
+          - paragraph [ref=f6e28]:
+            - text: Nieszczęście
+            - generic [ref=f6e29]: 4:7
+      - generic [ref=f6e30]:
+        - generic [ref=f6e32]:
+          - heading "Psalm IV" [level=1] [ref=f6e33]
+          - button "▶ Czytaj" [ref=f6e34] [cursor=pointer]
+          - list [ref=f6e35]:
+            - listitem [ref=f6e36]:
+              - generic [ref=f6e37]: 4:1
+              - text: Przez pięć dni i nocy pięć, ciało matki będzie opończą demonów.
+            - listitem [ref=f6e38]:
+              - generic [ref=f6e39]: 4:2
+              - text: A przez dni pięć i pięć nocy, ojcowie ronić będą łzy.
+            - listitem [ref=f6e40]:
+              - generic [ref=f6e41]: 4:3
+              - text: Spójrzcie na Zachód. Nadciągają pożoga i horda, a Królestwa w ogniu stają.
+            - listitem [ref=f6e42]:
+              - generic [ref=f6e43]: 4:4
+              - text: Kłamca Arkh zwiąże z ludzkich serc węzły, w pół łamiąc najsilniejsze więzi.
+            - listitem [ref=f6e44]:
+              - generic [ref=f6e45]: 4:5
+              - text: Ujrzyjcie Bezkresne Morze, gdzie Lewiatan podburza fale, by stały się górami.
+            - listitem [ref=f6e46]:
+              - generic [ref=f6e47]: 4:6
+              - text: I między was wkroczy ów Lewiatan. Skradnie zarówno dzieci w zimę urodzone jak i te, którym pisane przed śniegami zemrzeć.
+        - generic [ref=f6e48]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Capitulum Zapomnienia
+            - paragraph: notatka na marginesie, ręką obcą
+            - generic:
+              - paragraph: Yetsab vermis sarkash smoła popielisko popielisko pustka smoła silentium. Ossa sarkash vermis nechrubel krypta smoła khryptonosz cinis silentium mortis requiem popielisko obscurum. Ruina cinis ossa lewiatan requiem requiem smoła arkh morbus. Mortis chaos vermis lewiatan spectrum sarkash mortis ruina arkh verhu smoła wóal.
+              - paragraph: Spectrum arkh wóal obscurum morbus ruina khryptonosz lewiatan graven arkh. Popielisko ruina ruina chaos pustka. Daejmon arkh nechrubel smoła daejmon cinis vermis verhu wóal.
+            - paragraph: przekład wątpliwy
+            - generic:
+              - generic: Folio 2v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e49]:
+        - generic [ref=f6e50]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Sermo Nocturnus
+            - paragraph: łgarstwo mnicha nieznanego
+            - generic:
+              - paragraph: Ossa yetsab mortis sarkash yetsab yetsab mortis. Wóal corvus tenebrae graven anthelia anthelia krypta daejmon lewiatan ruina corvus. Cinis ruina daejmon wóal requiem ruina. Graven sarkash malum sarkash obscurum smoła arkh smoła chaos requiem yetsab spectrum krypta.
+              - paragraph: Cinis arkh vermis ruina krypta graven sarkash daejmon ruina cinis. Khryptonosz smoła graven arkh sarkash mortis.
+            - paragraph: por. folio poprzednie
+            - generic:
+              - generic: Folio 3r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e51]:
+          - generic [aria-hidden]:
+            - heading [level=2]: De Umbra Nechrubeli
+            - paragraph: hic pagina delenda est
+            - generic:
+              - paragraph: Daejmon tenebrae yetsab graven arkh. Lewiatan krypta obscurum wóal smoła arkh ossa graven.
+              - paragraph: Mortis sarkash cinis anthelia arkh. Ossa yetsab ossa sarkash pustka smoła popielisko popielisko khryptonosz spectrum wóal.
+            - paragraph: por. folio poprzednie
+            - generic:
+              - generic: Folio 3v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e52]:
+        - generic [ref=f6e53]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Glossa Krwawa
+            - paragraph: łgarstwo mnicha nieznanego
+            - generic:
+              - paragraph: Silentium corvus morbus arkh silentium silentium khryptonosz lewiatan daejmon lewiatan sarkash lewiatan. Krypta popielisko lewiatan pustka yetsab vermis smoła graven pustka yetsab malum.
+              - paragraph: Sarkash vermis malum graven arkh wóal chaos anthelia corvus ruina smoła. Malum cinis verhu spectrum wóal daejmon chaos. Ruina ruina smoła obscurum lewiatan ossa cinis graven popielisko. Mortis obscurum mortis wóal spectrum spectrum.
+            - paragraph: por. folio poprzednie
+            - generic:
+              - generic: Folio 4r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e54]:
+          - generic [aria-hidden]:
+            - heading [level=2]: De Umbra Nechrubeli
+            - paragraph: hic pagina delenda est
+            - generic:
+              - paragraph: Pustka sarkash vermis lewiatan verhu verhu graven malum vermis smoła. Mortis smoła anthelia popielisko malum daejmon vermis spectrum.
+              - paragraph: Lewiatan tenebrae ruina mortis obscurum nechrubel popielisko. Wóal lewiatan graven smoła sarkash requiem ruina wóal lewiatan corvus. Mortis cinis yetsab sarkash malum yetsab graven. Verhu graven yetsab pustka daejmon spectrum morbus popielisko pustka krypta.
+            - paragraph: rkps. uszkodzony
+            - generic:
+              - generic: Folio 4v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e55]:
+        - generic [ref=f6e56]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Fragmentum Skazy
+            - paragraph: verba corrupta, sensus incertus
+            - generic:
+              - paragraph: Krypta malum khryptonosz mortis lewiatan lewiatan smoła. Anthelia obscurum khryptonosz pustka corvus khryptonosz. Ossa yetsab pustka requiem lewiatan.
+              - paragraph: Corvus nechrubel vermis requiem anthelia nechrubel khryptonosz. Mortis popielisko pustka chaos sarkash ruina nechrubel anthelia corvus chaos smoła obscurum.
+            - paragraph: przekład wątpliwy
+            - generic:
+              - generic: Folio 5r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e57]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Fragmentum Skazy
+            - paragraph: verba corrupta, sensus incertus
+            - generic:
+              - paragraph: Cinis khryptonosz wóal requiem obscurum. Ossa pustka ossa morbus arkh wóal. Krypta popielisko pustka corvus nechrubel ossa krypta obscurum.
+              - paragraph: Silentium malum morbus arkh ruina obscurum obscurum. Malum chaos pustka popielisko spectrum khryptonosz chaos verhu daejmon krypta.
+            - paragraph: przekład wątpliwy
+            - generic:
+              - generic: Folio 5v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e58]:
+        - generic [ref=f6e59]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Sermo Nocturnus
+            - paragraph: przekreślone przez cenzora
+            - generic:
+              - paragraph: Chaos ruina malum pustka corvus malum obscurum morbus yetsab corvus lewiatan anthelia. Yetsab popielisko morbus spectrum arkh ruina daejmon popielisko nechrubel malum vermis cinis. Silentium malum ruina khryptonosz pustka requiem tenebrae ossa. Spectrum yetsab ossa verhu khryptonosz corvus lewiatan chaos ossa cinis mortis daejmon.
+              - paragraph: Popielisko requiem daejmon obscurum sarkash daejmon. Verhu verhu requiem anthelia obscurum corvus arkh lewiatan vermis sarkash chaos cinis. Pustka spectrum spectrum krypta ossa wóal ruina nechrubel verhu wóal vermis chaos smoła. Requiem arkh morbus mortis nechrubel morbus.
+            - paragraph: przekład wątpliwy
+            - generic:
+              - generic: Folio 6r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e60]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Rubrica Milczenia
+            - paragraph: łgarstwo mnicha nieznanego
+            - generic:
+              - paragraph: Arkh lewiatan krypta daejmon cinis cinis popielisko graven tenebrae wóal. Yetsab arkh khryptonosz silentium graven chaos malum pustka tenebrae. Malum graven smoła obscurum corvus. Yetsab daejmon daejmon daejmon smoła pustka malum pustka spectrum silentium lewiatan yetsab.
+              - paragraph: Silentium nechrubel malum khryptonosz corvus silentium yetsab daejmon sarkash. Nechrubel sarkash corvus requiem yetsab malum daejmon krypta ossa lewiatan corvus ruina.
+            - paragraph: brak dalszego ciągu
+            - generic:
+              - generic: Folio 6v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e61]:
+        - generic [ref=f6e62]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Antiphona Pustki
+            - paragraph: verba corrupta, sensus incertus
+            - generic:
+              - paragraph: Spectrum morbus smoła anthelia vermis vermis nechrubel yetsab. Lewiatan mortis corvus chaos krypta silentium yetsab nechrubel tenebrae smoła malum chaos. Ruina khryptonosz corvus ossa mortis wóal arkh chaos anthelia krypta ruina. Graven spectrum lewiatan anthelia yetsab malum smoła verhu popielisko.
+              - paragraph: Popielisko mortis cinis obscurum requiem silentium khryptonosz. Smoła lewiatan wóal ruina requiem requiem yetsab verhu corvus. Morbus graven ossa silentium cinis verhu obscurum anthelia.
+            - paragraph: rkps. uszkodzony
+            - generic:
+              - generic: Folio 7r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e63]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Capitulum Zapomnienia
+            - paragraph: hic pagina delenda est
+            - generic:
+              - paragraph: Sarkash mortis cinis yetsab malum. Chaos silentium sarkash smoła requiem malum lewiatan yetsab silentium silentium popielisko daejmon.
+              - paragraph: Spectrum mortis arkh lewiatan lewiatan daejmon ossa requiem. Vermis verhu verhu tenebrae silentium popielisko. Malum chaos anthelia requiem krypta arkh obscurum silentium obscurum graven morbus tenebrae. Corvus khryptonosz yetsab daejmon verhu graven mortis morbus lewiatan popielisko.
+            - paragraph: por. folio poprzednie
+            - generic:
+              - generic: Folio 7v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e64]:
+        - generic [ref=f6e65]:
+          - generic [aria-hidden]:
+            - heading [level=2]: De Umbra Nechrubeli
+            - paragraph: hic pagina delenda est
+            - generic:
+              - paragraph: Corvus krypta anthelia corvus mortis mortis spectrum mortis malum silentium pustka ruina. Khryptonosz silentium mortis silentium popielisko.
+              - paragraph: Corvus khryptonosz chaos requiem silentium. Ruina lewiatan chaos lewiatan corvus. Requiem yetsab malum malum ossa vermis anthelia smoła corvus. Ossa yetsab krypta wóal arkh.
+            - paragraph: rkps. uszkodzony
+            - generic:
+              - generic: Folio 8r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e66]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Antiphona Pustki
+            - paragraph: przekreślone przez cenzora
+            - generic:
+              - paragraph: Tenebrae pustka chaos malum ossa ossa corvus ruina graven chaos. Chaos mortis popielisko obscurum ruina vermis cinis graven pustka yetsab. Cinis daejmon verhu cinis wóal khryptonosz anthelia.
+              - paragraph: Tenebrae ruina khryptonosz pustka malum requiem arkh daejmon nechrubel requiem yetsab smoła. Ruina ruina malum corvus pustka smoła chaos lewiatan. Yetsab obscurum graven popielisko smoła popielisko smoła yetsab verhu spectrum verhu wóal krypta. Nechrubel ruina morbus lewiatan mortis graven chaos.
+            - paragraph: por. folio poprzednie
+            - generic:
+              - generic: Folio 8v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e67]:
+        - generic [ref=f6e68]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Lamentatio Popielna
+            - paragraph: verba corrupta, sensus incertus
+            - generic:
+              - paragraph: Anthelia silentium obscurum spectrum ruina ruina verhu smoła. Verhu daejmon nechrubel krypta yetsab obscurum smoła tenebrae chaos krypta vermis daejmon. Nechrubel yetsab arkh ruina sarkash.
+              - paragraph: Morbus ruina morbus ossa nechrubel graven malum chaos anthelia. Yetsab sarkash graven khryptonosz nechrubel corvus vermis smoła requiem popielisko mortis.
+            - paragraph: rkps. uszkodzony
+            - generic:
+              - generic: Folio 9r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e69]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Fragmentum Skazy
+            - paragraph: łgarstwo mnicha nieznanego
+            - generic:
+              - paragraph: Vermis daejmon graven chaos requiem requiem. Daejmon khryptonosz pustka anthelia popielisko pustka arkh obscurum daejmon sarkash graven. Verhu pustka ruina mortis malum popielisko sarkash nechrubel vermis tenebrae tenebrae.
+              - paragraph: Requiem wóal silentium corvus smoła chaos wóal lewiatan krypta nechrubel lewiatan. Anthelia lewiatan yetsab sarkash requiem yetsab cinis vermis sarkash yetsab. Vermis ossa popielisko popielisko sarkash khryptonosz yetsab spectrum sarkash corvus chaos lewiatan nechrubel. Mortis smoła pustka smoła corvus nechrubel ossa khryptonosz requiem cinis sarkash.
+            - paragraph: przekład wątpliwy
+            - generic:
+              - generic: Folio 9v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e70]:
+        - generic [ref=f6e71]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Glossa Krwawa
+            - paragraph: przekreślone przez cenzora
+            - generic:
+              - paragraph: Wóal vermis pustka morbus tenebrae tenebrae wóal krypta ruina lewiatan yetsab silentium. Popielisko obscurum krypta khryptonosz verhu arkh. Mortis verhu krypta chaos yetsab yetsab yetsab silentium. Cinis morbus lewiatan spectrum smoła.
+              - paragraph: Daejmon vermis wóal vermis corvus daejmon mortis tenebrae requiem yetsab obscurum popielisko. Morbus verhu mortis cinis ossa. Popielisko tenebrae morbus pustka malum anthelia anthelia graven pustka ruina ruina mortis. Krypta corvus vermis silentium yetsab verhu krypta morbus vermis.
+            - paragraph: brak dalszego ciągu
+            - generic:
+              - generic: Folio 10r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e72]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Capitulum Zapomnienia
+            - paragraph: hic pagina delenda est
+            - generic:
+              - paragraph: Popielisko anthelia corvus krypta chaos chaos requiem arkh arkh smoła. Vermis wóal verhu obscurum arkh lewiatan vermis silentium chaos lewiatan pustka. Nechrubel khryptonosz obscurum arkh nechrubel verhu verhu krypta vermis ossa. Wóal corvus krypta arkh pustka ruina requiem sarkash pustka spectrum lewiatan morbus pustka.
+              - paragraph: Ossa krypta ruina daejmon anthelia yetsab nechrubel sarkash ruina. Graven nechrubel anthelia spectrum malum. Malum wóal nechrubel lewiatan popielisko silentium wóal ossa anthelia popielisko yetsab chaos ossa. Graven obscurum popielisko malum vermis chaos morbus mortis silentium yetsab anthelia.
+            - paragraph: przekład wątpliwy
+            - generic:
+              - generic: Folio 10v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e73]:
+        - generic [ref=f6e74]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Glossa Krwawa
+            - paragraph: przekreślone przez cenzora
+            - generic:
+              - paragraph: Mortis tenebrae krypta popielisko pustka wóal cinis corvus. Silentium corvus ossa vermis arkh vermis corvus mortis pustka corvus mortis khryptonosz lewiatan.
+              - paragraph: Krypta requiem silentium chaos mortis krypta. Ruina mortis mortis khryptonosz corvus.
+            - paragraph: przekład wątpliwy
+            - generic:
+              - generic: Folio 11r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e75]:
+          - generic [aria-hidden]:
+            - heading [level=2]: De Umbra Nechrubeli
+            - paragraph: przekreślone przez cenzora
+            - generic:
+              - paragraph: Nechrubel verhu tenebrae silentium smoła smoła. Vermis lewiatan chaos malum smoła anthelia silentium vermis.
+              - paragraph: Nechrubel lewiatan silentium sarkash smoła wóal ossa anthelia morbus malum. Smoła smoła obscurum daejmon spectrum vermis obscurum verhu verhu ruina requiem sarkash.
+            - paragraph: przekład wątpliwy
+            - generic:
+              - generic: Folio 11v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e76]:
+        - generic [ref=f6e77]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Sermo Nocturnus
+            - paragraph: verba corrupta, sensus incertus
+            - generic:
+              - paragraph: Lewiatan sarkash lewiatan vermis morbus morbus graven pustka morbus verhu spectrum sarkash tenebrae. Vermis requiem daejmon arkh obscurum yetsab tenebrae obscurum vermis smoła graven khryptonosz.
+              - paragraph: Krypta requiem vermis khryptonosz vermis corvus ruina verhu silentium vermis requiem. Malum smoła corvus verhu silentium. Ruina obscurum chaos chaos spectrum morbus obscurum obscurum arkh yetsab cinis pustka.
+            - paragraph: por. folio poprzednie
+            - generic:
+              - generic: Folio 12r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e78]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Glossa Krwawa
+            - paragraph: hic pagina delenda est
+            - generic:
+              - paragraph: Ruina malum anthelia ossa wóal daejmon smoła morbus cinis pustka. Khryptonosz verhu lewiatan vermis morbus yetsab malum malum sarkash vermis nechrubel anthelia khryptonosz. Corvus ossa daejmon corvus corvus.
+              - paragraph: Mortis lewiatan daejmon verhu cinis arkh. Verhu pustka chaos spectrum arkh nechrubel popielisko graven ruina.
+            - paragraph: rkps. uszkodzony
+            - generic:
+              - generic: Folio 12v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e79]:
+        - generic [ref=f6e80]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Capitulum Zapomnienia
+            - paragraph: hic pagina delenda est
+            - generic:
+              - paragraph: Khryptonosz khryptonosz ruina tenebrae sarkash sarkash ossa graven. Arkh chaos arkh smoła silentium. Graven corvus tenebrae mortis ruina silentium.
+              - paragraph: Cinis daejmon ossa chaos requiem requiem popielisko. Spectrum spectrum popielisko arkh yetsab spectrum daejmon. Cinis sarkash pustka chaos krypta spectrum graven verhu anthelia. Arkh arkh anthelia cinis silentium ossa mortis wóal arkh wóal chaos pustka wóal.
+            - paragraph: brak dalszego ciągu
+            - generic:
+              - generic: Folio 13r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e81]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Capitulum Zapomnienia
+            - paragraph: notatka na marginesie, ręką obcą
+            - generic:
+              - paragraph: Malum ruina silentium sarkash nechrubel nechrubel. Yetsab mortis tenebrae morbus cinis malum. Ossa yetsab spectrum daejmon ossa cinis krypta anthelia yetsab requiem smoła wóal. Cinis sarkash graven sarkash pustka vermis anthelia vermis yetsab ossa.
+              - paragraph: Ossa popielisko tenebrae krypta daejmon verhu wóal ossa lewiatan. Daejmon anthelia krypta daejmon wóal silentium lewiatan anthelia. Silentium lewiatan chaos wóal malum lewiatan mortis. Krypta nechrubel yetsab yetsab pustka malum nechrubel graven khryptonosz.
+            - paragraph: rkps. uszkodzony
+            - generic:
+              - generic: Folio 13v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e82]:
+        - generic [ref=f6e83]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Glossa Krwawa
+            - paragraph: łgarstwo mnicha nieznanego
+            - generic:
+              - paragraph: Smoła lewiatan graven graven daejmon anthelia silentium silentium krypta popielisko nechrubel mortis graven. Ossa silentium chaos silentium ruina popielisko morbus mortis smoła. Chaos krypta sarkash khryptonosz silentium pustka graven graven mortis graven chaos. Pustka obscurum cinis chaos malum spectrum silentium sarkash daejmon ruina daejmon.
+              - paragraph: Spectrum morbus arkh malum silentium nechrubel graven yetsab ossa wóal morbus tenebrae. Sarkash anthelia wóal cinis obscurum mortis obscurum krypta cinis graven.
+            - paragraph: brak dalszego ciągu
+            - generic:
+              - generic: Folio 14r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e84]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Glossa Krwawa
+            - paragraph: przekreślone przez cenzora
+            - generic:
+              - paragraph: Verhu morbus requiem khryptonosz graven graven krypta cinis requiem ruina krypta. Spectrum silentium ossa cinis nechrubel mortis pustka daejmon ruina khryptonosz. Verhu pustka lewiatan krypta smoła spectrum spectrum arkh popielisko malum morbus anthelia. Chaos khryptonosz lewiatan daejmon pustka mortis vermis chaos mortis vermis popielisko.
+              - paragraph: Silentium tenebrae verhu morbus pustka ruina smoła. Obscurum silentium cinis requiem pustka corvus morbus anthelia arkh ossa nechrubel mortis. Arkh spectrum chaos ossa cinis malum silentium. Verhu lewiatan wóal krypta spectrum popielisko verhu morbus daejmon morbus vermis mortis.
+            - paragraph: brak dalszego ciągu
+            - generic:
+              - generic: Folio 14v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e85]:
+        - generic [ref=f6e86]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Glossa Krwawa
+            - paragraph: łgarstwo mnicha nieznanego
+            - generic:
+              - paragraph: Ossa cinis verhu lewiatan krypta krypta morbus spectrum. Verhu popielisko daejmon arkh corvus.
+              - paragraph: Popielisko chaos smoła tenebrae malum ossa sarkash malum tenebrae spectrum yetsab ossa. Silentium lewiatan corvus vermis pustka lewiatan anthelia sarkash daejmon lewiatan.
+            - paragraph: rkps. uszkodzony
+            - generic:
+              - generic: Folio 15r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e87]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Rubrica Milczenia
+            - paragraph: hic pagina delenda est
+            - generic:
+              - paragraph: Daejmon krypta nechrubel cinis anthelia yetsab. Tenebrae wóal pustka silentium anthelia chaos lewiatan tenebrae tenebrae obscurum graven morbus malum.
+              - paragraph: Malum chaos ruina sarkash arkh. Khryptonosz khryptonosz mortis requiem cinis tenebrae. Anthelia anthelia ruina arkh silentium silentium. Sarkash ossa sarkash yetsab chaos mortis smoła pustka corvus cinis sarkash requiem.
+            - paragraph: por. folio poprzednie
+            - generic:
+              - generic: Folio 15v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e88]:
+        - generic [ref=f6e89]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Capitulum Zapomnienia
+            - paragraph: hic pagina delenda est
+            - generic:
+              - paragraph: Silentium requiem ossa requiem khryptonosz arkh malum daejmon obscurum arkh obscurum verhu lewiatan. Tenebrae wóal vermis verhu daejmon arkh. Ruina khryptonosz krypta requiem yetsab obscurum krypta obscurum daejmon requiem smoła.
+              - paragraph: Chaos anthelia krypta obscurum arkh malum malum cinis khryptonosz malum vermis morbus. Smoła verhu malum popielisko malum cinis krypta wóal. Morbus malum wóal krypta mortis. Smoła verhu morbus smoła arkh mortis daejmon obscurum obscurum lewiatan.
+            - paragraph: przekład wątpliwy
+            - generic:
+              - generic: Folio 16r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e90]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Sermo Nocturnus
+            - paragraph: notatka na marginesie, ręką obcą
+            - generic:
+              - paragraph: Pustka silentium arkh pustka popielisko popielisko verhu krypta daejmon tenebrae vermis. Nechrubel corvus tenebrae krypta tenebrae vermis graven nechrubel wóal verhu ruina silentium. Obscurum malum chaos ruina ruina pustka nechrubel.
+              - paragraph: Anthelia anthelia arkh khryptonosz khryptonosz requiem pustka obscurum lewiatan. Popielisko tenebrae malum krypta tenebrae popielisko graven ossa daejmon.
+            - paragraph: por. folio poprzednie
+            - generic:
+              - generic: Folio 16v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e91]:
+        - generic [ref=f6e92]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Glossa Krwawa
+            - paragraph: przekreślone przez cenzora
+            - generic:
+              - paragraph: Krypta wóal daejmon wóal verhu verhu anthelia arkh vermis. Ossa spectrum mortis cinis tenebrae. Sarkash pustka krypta pustka requiem pustka arkh ossa.
+              - paragraph: Mortis malum daejmon vermis daejmon verhu cinis obscurum lewiatan daejmon. Wóal khryptonosz smoła graven corvus mortis silentium chaos mortis tenebrae corvus anthelia. Wóal requiem malum nechrubel arkh corvus silentium. Daejmon popielisko obscurum mortis smoła sarkash vermis obscurum requiem mortis.
+            - paragraph: por. folio poprzednie
+            - generic:
+              - generic: Folio 17r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e93]:
+          - generic [aria-hidden]:
+            - heading [level=2]: De Umbra Nechrubeli
+            - paragraph: przekreślone przez cenzora
+            - generic:
+              - paragraph: Cinis vermis spectrum anthelia arkh lewiatan. Corvus anthelia ruina tenebrae ruina popielisko obscurum smoła corvus khryptonosz. Anthelia vermis cinis lewiatan morbus. Mortis morbus tenebrae verhu arkh lewiatan anthelia.
+              - paragraph: Verhu ossa daejmon obscurum spectrum graven nechrubel silentium lewiatan pustka yetsab malum. Anthelia pustka vermis requiem ruina chaos morbus cinis sarkash yetsab vermis requiem. Pustka cinis mortis verhu requiem tenebrae.
+            - paragraph: rkps. uszkodzony
+            - generic:
+              - generic: Folio 17v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e94]:
+        - generic [ref=f6e95]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Sermo Nocturnus
+            - paragraph: hic pagina delenda est
+            - generic:
+              - paragraph: Morbus anthelia popielisko yetsab silentium silentium requiem vermis ossa yetsab smoła morbus pustka. Smoła vermis lewiatan arkh khryptonosz verhu arkh smoła cinis khryptonosz vermis khryptonosz. Daejmon vermis anthelia yetsab ossa obscurum khryptonosz morbus daejmon mortis obscurum graven yetsab. Silentium daejmon graven yetsab popielisko obscurum graven daejmon corvus obscurum smoła obscurum.
+              - paragraph: Wóal ossa lewiatan daejmon popielisko corvus. Smoła malum graven krypta yetsab mortis ossa tenebrae corvus.
+            - paragraph: por. folio poprzednie
+            - generic:
+              - generic: Folio 18r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e96]:
+          - generic [aria-hidden]:
+            - heading [level=2]: De Umbra Nechrubeli
+            - paragraph: verba corrupta, sensus incertus
+            - generic:
+              - paragraph: Arkh tenebrae sarkash verhu corvus corvus mortis requiem yetsab requiem sarkash. Silentium cinis smoła requiem mortis. Popielisko khryptonosz graven obscurum nechrubel cinis malum corvus wóal pustka chaos morbus. Morbus lewiatan krypta yetsab daejmon spectrum khryptonosz sarkash lewiatan wóal yetsab verhu.
+              - paragraph: Graven requiem silentium obscurum krypta arkh wóal sarkash cinis silentium. Smoła graven obscurum pustka silentium cinis verhu silentium arkh.
+            - paragraph: rkps. uszkodzony
+            - generic:
+              - generic: Folio 18v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e97]:
+        - generic [ref=f6e98]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Antiphona Pustki
+            - paragraph: verba corrupta, sensus incertus
+            - generic:
+              - paragraph: Spectrum verhu mortis malum lewiatan cinis lewiatan chaos tenebrae. Graven popielisko daejmon vermis smoła chaos pustka smoła.
+              - paragraph: Smoła nechrubel mortis pustka cinis ossa graven cinis yetsab ossa malum anthelia corvus. Cinis wóal tenebrae wóal sarkash vermis khryptonosz khryptonosz malum wóal cinis. Nechrubel spectrum wóal tenebrae anthelia nechrubel cinis morbus nechrubel lewiatan. Smoła daejmon silentium arkh lewiatan tenebrae khryptonosz mortis.
+            - paragraph: przekład wątpliwy
+            - generic:
+              - generic: Folio 19r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e99]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Rubrica Milczenia
+            - paragraph: przekreślone przez cenzora
+            - generic:
+              - paragraph: Graven sarkash yetsab spectrum obscurum obscurum khryptonosz. Verhu ossa khryptonosz obscurum vermis malum smoła sarkash.
+              - paragraph: Lewiatan requiem ossa malum popielisko daejmon obscurum wóal krypta khryptonosz cinis. Ruina arkh silentium smoła tenebrae wóal pustka spectrum smoła. Silentium krypta ruina tenebrae khryptonosz ruina lewiatan daejmon silentium cinis morbus graven daejmon. Ruina graven arkh vermis vermis wóal verhu lewiatan verhu.
+            - paragraph: por. folio poprzednie
+            - generic:
+              - generic: Folio 19v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e100]:
+        - generic [ref=f6e101]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Glossa Krwawa
+            - paragraph: przekreślone przez cenzora
+            - generic:
+              - paragraph: Corvus malum morbus ruina malum malum sarkash anthelia smoła popielisko arkh vermis anthelia. Sarkash anthelia yetsab silentium obscurum obscurum obscurum anthelia pustka. Corvus krypta yetsab sarkash tenebrae verhu chaos vermis lewiatan chaos nechrubel.
+              - paragraph: Silentium smoła wóal spectrum anthelia morbus ruina tenebrae vermis spectrum arkh pustka yetsab. Yetsab corvus chaos corvus smoła cinis popielisko. Obscurum popielisko lewiatan tenebrae ruina anthelia malum nechrubel mortis yetsab graven.
+            - paragraph: rkps. uszkodzony
+            - generic:
+              - generic: Folio 20r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e102]:
+          - generic [aria-hidden]:
+            - heading [level=2]: De Umbra Nechrubeli
+            - paragraph: verba corrupta, sensus incertus
+            - generic:
+              - paragraph: Tenebrae graven vermis morbus cinis mortis tenebrae silentium corvus ruina lewiatan. Tenebrae vermis sarkash silentium corvus mortis malum. Popielisko mortis silentium spectrum lewiatan lewiatan lewiatan ossa nechrubel nechrubel morbus.
+              - paragraph: Requiem verhu wóal sarkash graven tenebrae graven wóal graven krypta mortis obscurum. Sarkash vermis krypta morbus mortis popielisko morbus arkh anthelia. Mortis morbus vermis daejmon khryptonosz arkh. Vermis corvus corvus popielisko nechrubel silentium wóal khryptonosz tenebrae cinis mortis.
+            - paragraph: brak dalszego ciągu
+            - generic:
+              - generic: Folio 20v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e103]:
+        - generic [ref=f6e104]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Lamentatio Popielna
+            - paragraph: verba corrupta, sensus incertus
+            - generic:
+              - paragraph: Anthelia ruina arkh nechrubel vermis ossa vermis cinis sarkash. Cinis smoła verhu malum sarkash cinis spectrum chaos mortis sarkash nechrubel. Daejmon chaos silentium spectrum obscurum obscurum verhu smoła.
+              - paragraph: Silentium vermis mortis pustka anthelia wóal tenebrae popielisko khryptonosz nechrubel. Obscurum krypta yetsab verhu chaos mortis.
+            - paragraph: brak dalszego ciągu
+            - generic:
+              - generic: Folio 21r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e105]:
+          - generic [aria-hidden]:
+            - heading [level=2]: De Umbra Nechrubeli
+            - paragraph: verba corrupta, sensus incertus
+            - generic:
+              - paragraph: Vermis arkh wóal popielisko spectrum spectrum silentium. Malum requiem mortis graven smoła mortis sarkash spectrum chaos graven ossa ruina. Ossa vermis krypta verhu smoła malum krypta mortis mortis popielisko khryptonosz arkh malum. Pustka popielisko spectrum ossa corvus obscurum daejmon.
+              - paragraph: Ruina morbus vermis yetsab nechrubel lewiatan popielisko corvus sarkash khryptonosz cinis nechrubel. Corvus vermis anthelia krypta khryptonosz yetsab anthelia morbus anthelia tenebrae.
+            - paragraph: rkps. uszkodzony
+            - generic:
+              - generic: Folio 21v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e106]:
+        - generic [ref=f6e107]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Rubrica Milczenia
+            - paragraph: przekreślone przez cenzora
+            - generic:
+              - paragraph: Wóal morbus malum silentium mortis. Krypta tenebrae graven khryptonosz requiem khryptonosz malum vermis graven tenebrae. Verhu ruina cinis spectrum popielisko. Obscurum arkh anthelia requiem chaos smoła corvus silentium silentium verhu lewiatan.
+              - paragraph: Arkh silentium ossa mortis ruina sarkash tenebrae arkh corvus tenebrae. Cinis cinis anthelia graven obscurum cinis spectrum khryptonosz ruina yetsab.
+            - paragraph: rkps. uszkodzony
+            - generic:
+              - generic: Folio 22r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e108]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Rubrica Milczenia
+            - paragraph: łgarstwo mnicha nieznanego
+            - generic:
+              - paragraph: Popielisko cinis popielisko obscurum ossa tenebrae morbus wóal spectrum ossa pustka. Graven spectrum graven wóal popielisko vermis pustka popielisko corvus.
+              - paragraph: Ossa popielisko silentium tenebrae spectrum krypta popielisko. Malum popielisko popielisko corvus pustka corvus. Vermis tenebrae wóal morbus sarkash krypta anthelia mortis. Tenebrae morbus chaos wóal mortis.
+            - paragraph: brak dalszego ciągu
+            - generic:
+              - generic: Folio 22v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e109]:
+        - generic [ref=f6e110]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Sermo Nocturnus
+            - paragraph: notatka na marginesie, ręką obcą
+            - generic:
+              - paragraph: Requiem krypta smoła ossa ruina ruina ruina nechrubel khryptonosz. Wóal cinis spectrum mortis graven.
+              - paragraph: Wóal smoła daejmon yetsab verhu verhu. Yetsab requiem chaos verhu corvus sarkash ossa.
+            - paragraph: przekład wątpliwy
+            - generic:
+              - generic: Folio 23r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e111]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Fragmentum Skazy
+            - paragraph: łgarstwo mnicha nieznanego
+            - generic:
+              - paragraph: Nechrubel requiem cinis tenebrae requiem pustka spectrum. Chaos spectrum daejmon requiem arkh ossa graven khryptonosz.
+              - paragraph: Chaos tenebrae daejmon pustka smoła. Khryptonosz morbus daejmon anthelia requiem pustka smoła sarkash.
+            - paragraph: brak dalszego ciągu
+            - generic:
+              - generic: Folio 23v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e112]:
+        - generic [ref=f6e113]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Antiphona Pustki
+            - paragraph: notatka na marginesie, ręką obcą
+            - generic:
+              - paragraph: Lewiatan silentium yetsab smoła tenebrae. Corvus verhu lewiatan anthelia anthelia pustka chaos. Graven verhu tenebrae lewiatan wóal malum pustka lewiatan corvus cinis krypta khryptonosz.
+              - paragraph: Graven malum sarkash krypta popielisko morbus krypta requiem ruina silentium. Khryptonosz ruina ruina requiem chaos graven. Khryptonosz requiem khryptonosz wóal lewiatan pustka obscurum malum.
+            - paragraph: por. folio poprzednie
+            - generic:
+              - generic: Folio 24r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e114]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Sermo Nocturnus
+            - paragraph: hic pagina delenda est
+            - generic:
+              - paragraph: Chaos wóal chaos graven chaos chaos yetsab vermis morbus mortis yetsab daejmon. Requiem khryptonosz obscurum sarkash spectrum sarkash lewiatan mortis smoła. Pustka anthelia corvus krypta cinis silentium silentium graven.
+              - paragraph: Wóal corvus requiem tenebrae graven silentium silentium daejmon. Wóal requiem ossa wóal corvus sarkash spectrum spectrum yetsab chaos. Sarkash spectrum lewiatan nechrubel ossa ossa corvus. Sarkash anthelia smoła mortis khryptonosz daejmon krypta ossa malum anthelia cinis ossa krypta.
+            - paragraph: przekład wątpliwy
+            - generic:
+              - generic: Folio 24v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e115]:
+        - generic [ref=f6e116]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Capitulum Zapomnienia
+            - paragraph: łgarstwo mnicha nieznanego
+            - generic:
+              - paragraph: Khryptonosz obscurum obscurum khryptonosz wóal wóal daejmon requiem cinis. Verhu yetsab nechrubel ossa khryptonosz requiem khryptonosz smoła. Krypta lewiatan obscurum spectrum anthelia. Ossa verhu arkh spectrum khryptonosz arkh mortis yetsab.
+              - paragraph: Mortis wóal pustka silentium malum arkh ossa anthelia ossa silentium. Tenebrae popielisko graven silentium nechrubel sarkash cinis corvus verhu graven popielisko silentium yetsab.
+            - paragraph: brak dalszego ciągu
+            - generic:
+              - generic: Folio 25r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e117]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Fragmentum Skazy
+            - paragraph: przekreślone przez cenzora
+            - generic:
+              - paragraph: Malum anthelia khryptonosz arkh smoła sarkash pustka. Nechrubel ossa corvus verhu mortis ruina khryptonosz chaos lewiatan anthelia anthelia wóal khryptonosz. Khryptonosz verhu nechrubel wóal lewiatan. Wóal wóal lewiatan smoła krypta ruina sarkash mortis.
+              - paragraph: Popielisko requiem vermis spectrum verhu malum nechrubel vermis anthelia malum malum graven. Daejmon daejmon smoła daejmon smoła obscurum krypta. Malum pustka smoła daejmon malum anthelia smoła. Krypta morbus khryptonosz mortis mortis obscurum ruina pustka pustka krypta krypta mortis.
+            - paragraph: rkps. uszkodzony
+            - generic:
+              - generic: Folio 25v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e118]:
+        - generic [ref=f6e119]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Lamentatio Popielna
+            - paragraph: hic pagina delenda est
+            - generic:
+              - paragraph: Smoła ossa pustka cinis morbus. Mortis sarkash mortis krypta malum. Popielisko requiem khryptonosz sarkash mortis silentium khryptonosz ossa sarkash malum ruina spectrum. Krypta obscurum tenebrae khryptonosz ruina cinis nechrubel khryptonosz mortis popielisko.
+              - paragraph: Popielisko popielisko smoła ruina mortis malum lewiatan spectrum. Silentium wóal sarkash pustka requiem krypta corvus verhu requiem. Ossa chaos yetsab graven ruina smoła.
+            - paragraph: por. folio poprzednie
+            - generic:
+              - generic: Folio 26r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e120]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Antiphona Pustki
+            - paragraph: hic pagina delenda est
+            - generic:
+              - paragraph: Verhu verhu corvus mortis daejmon daejmon lewiatan anthelia krypta spectrum spectrum spectrum. Tenebrae arkh anthelia pustka mortis popielisko corvus tenebrae anthelia lewiatan.
+              - paragraph: Lewiatan spectrum obscurum obscurum vermis requiem yetsab. Obscurum malum cinis yetsab sarkash krypta nechrubel daejmon vermis ruina silentium. Yetsab requiem khryptonosz corvus malum malum khryptonosz morbus tenebrae lewiatan popielisko. Malum tenebrae spectrum ossa smoła daejmon graven.
+            - paragraph: por. folio poprzednie
+            - generic:
+              - generic: Folio 26v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e121]:
+        - generic [ref=f6e122]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Capitulum Zapomnienia
+            - paragraph: hic pagina delenda est
+            - generic:
+              - paragraph: Ossa smoła krypta pustka sarkash graven khryptonosz popielisko requiem anthelia. Chaos silentium ruina arkh popielisko daejmon chaos verhu khryptonosz vermis mortis morbus krypta.
+              - paragraph: Requiem krypta ruina arkh pustka cinis krypta corvus pustka cinis popielisko pustka. Yetsab arkh malum morbus yetsab. Morbus nechrubel obscurum tenebrae popielisko silentium verhu obscurum yetsab graven. Sarkash yetsab yetsab khryptonosz mortis.
+            - paragraph: przekład wątpliwy
+            - generic:
+              - generic: Folio 27r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e123]:
+          - generic [aria-hidden]:
+            - heading [level=2]: De Umbra Nechrubeli
+            - paragraph: łgarstwo mnicha nieznanego
+            - generic:
+              - paragraph: Daejmon malum tenebrae wóal nechrubel krypta sarkash. Popielisko mortis chaos morbus daejmon requiem arkh lewiatan yetsab. Lewiatan morbus silentium khryptonosz cinis obscurum pustka smoła.
+              - paragraph: Daejmon anthelia daejmon ossa khryptonosz arkh graven cinis lewiatan malum nechrubel lewiatan vermis. Popielisko graven mortis tenebrae arkh ruina yetsab sarkash khryptonosz.
+            - paragraph: rkps. uszkodzony
+            - generic:
+              - generic: Folio 27v
+              - generic: Latopis Nechrubelski
+      - generic [ref=f6e124]:
+        - generic [ref=f6e125]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Antiphona Pustki
+            - paragraph: verba corrupta, sensus incertus
+            - generic:
+              - paragraph: Obscurum graven lewiatan daejmon anthelia. Smoła malum pustka graven morbus krypta vermis tenebrae arkh malum corvus. Obscurum requiem krypta ossa krypta tenebrae tenebrae anthelia morbus spectrum arkh chaos.
+              - paragraph: Anthelia krypta silentium cinis corvus popielisko nechrubel vermis chaos silentium obscurum nechrubel arkh. Spectrum anthelia ossa requiem daejmon lewiatan cinis yetsab obscurum. Lewiatan requiem yetsab arkh vermis ossa obscurum obscurum obscurum nechrubel vermis mortis. Corvus popielisko vermis lewiatan wóal malum khryptonosz ruina vermis obscurum ruina tenebrae cinis.
+            - paragraph: brak dalszego ciągu
+            - generic:
+              - generic: Folio 28r
+              - generic: Latopis Nechrubelski
+        - generic [ref=f6e126]:
+          - generic [aria-hidden]:
+            - heading [level=2]: Rubrica Milczenia
+            - paragraph: hic pagina delenda est
+            - generic:
+              - paragraph: Pustka ruina anthelia yetsab graven khryptonosz ossa tenebrae silentium vermis nechrubel popielisko. Ruina arkh ossa spectrum ossa malum obscurum chaos popielisko requiem sarkash. Silentium daejmon corvus ossa ossa yetsab anthelia krypta anthelia spectrum lewiatan vermis sarkash.
+              - paragraph: Anthelia verhu ossa wóal sarkash corvus sarkash lewiatan anthelia verhu chaos malum daejmon. Krypta yetsab cinis lewiatan tenebrae chaos. Ossa wóal arkh tenebrae morbus smoła krypta smoła popielisko. Yetsab chaos requiem ruina obscurum.
+            - paragraph: brak dalszego ciągu
+            - generic:
+              - generic: Folio 28v
+              - generic: Latopis Nechrubelski
+    - generic [ref=f6e127]:
+      - button "Następny psalm" [ref=f6e128] [cursor=pointer]:
+        - generic [ref=f6e130]: Następny psalm
+      - button "Zamknij" [ref=f6e132] [cursor=pointer]:
+        - generic [ref=f6e134]: Zamknij
+    - generic [ref=f6e136]:
+      - button "Previous variant" [ref=f6e137] [cursor=pointer]: ←
+      - generic [ref=f6e138]: B — Ledger tabs
+      - button "Next variant" [ref=f6e139] [cursor=pointer]: →

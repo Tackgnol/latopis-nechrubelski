@@ -21,6 +21,7 @@ import { CoverFace } from "~/components/molecules/CoverFace/CoverFace";
 import { Leaf } from "~/components/molecules/Leaf/Leaf";
 import { VariantTabs } from "~/components/molecules/VariantTabs/VariantTabs";
 import { VolumeControl } from "~/components/molecules/VolumeControl/VolumeControl";
+import { TapHint } from "~/components/atoms/TapHint/TapHint";
 import { UserIndicator } from "~/components/organisms/UserIndicator/UserIndicator";
 import { PaperLeaf } from "~/components/organisms/PaperLeaf/PaperLeaf";
 import { BookTemplate } from "~/components/templates/BookTemplate/BookTemplate";
@@ -33,6 +34,7 @@ import {
   fitStage,
   flipBackward,
   flipForward,
+  hintCopyKey,
   leafFacesFor,
   leafZIndex,
   setLeafFlipped,
@@ -44,6 +46,38 @@ import {
 const VARIANT_KEY = "narration-variant";
 const VOLUME_KEY = "narration-volume";
 const LAST_VOLUME_KEY = "narration-last-volume";
+const DOUBLE_TAP_MS = 350;
+const HINT_MS = 2600;
+
+/** A lone tap on an open page shows the double-tap hint once the double-tap window has passed. */
+function useTapHint() {
+  const [visible, setVisible] = useState(false);
+  const timers = useRef({ tap: 0, hide: 0 });
+
+  useEffect(() => {
+    const t = timers.current;
+    return () => {
+      window.clearTimeout(t.tap);
+      window.clearTimeout(t.hide);
+    };
+  }, []);
+
+  function hide() {
+    window.clearTimeout(timers.current.tap);
+    window.clearTimeout(timers.current.hide);
+    setVisible(false);
+  }
+
+  function tap() {
+    hide();
+    timers.current.tap = window.setTimeout(() => {
+      setVisible(true);
+      timers.current.hide = window.setTimeout(() => setVisible(false), HINT_MS);
+    }, DOUBLE_TAP_MS);
+  }
+
+  return { visible, tap, hide };
+}
 
 /**
  * The page's one voice: narration and previews through Howler, the reader's variant and volume,
@@ -124,6 +158,8 @@ export function BookPage({ locale, current }: BookPageProps) {
   const queryClient = useQueryClient();
   const { cover, psalms } = psalmsByLocale[locale];
   const voice = useNarration(psalms);
+  const hint = useTapHint();
+  const canRoll = current?.num !== 7;
   const onSessionChanged = () => queryClient.invalidateQueries({ queryKey: ["revealed-psalms"] });
   const rollMutation = useMutation({ mutationFn: rollPsalm, onSuccess: onSessionChanged });
   const resetMutation = useMutation({ mutationFn: resetSession, onSuccess: onSessionChanged });
@@ -177,6 +213,7 @@ export function BookPage({ locale, current }: BookPageProps) {
 
   async function roll() {
     if (rollingRef.current) return;
+    hint.hide();
     voice.stop();
     rollingRef.current = true;
     setRolling(true);
@@ -250,12 +287,13 @@ export function BookPage({ locale, current }: BookPageProps) {
       bookRef={bookRef}
       closed={flippedCount === 0}
       error={error}
+      hint={hint.visible && <TapHint text={t(hintCopyKey())} />}
       userIndicator={<UserIndicator />}
       audioControl={<VolumeControl volume={voice.volume} onChange={voice.setVolume} />}
       controls={
         <BookControls
           isOpen={flippedCount > 0}
-          canRoll={current?.num !== 7}
+          canRoll={canRoll}
           isBusy={rolling}
           onRoll={roll}
           onClose={closeAndGoHome}
@@ -291,6 +329,8 @@ export function BookPage({ locale, current }: BookPageProps) {
             back={back}
             narration={voice.narration}
             onToggleReading={voice.toggle}
+            onTap={canRoll && !rolling ? hint.tap : undefined}
+            onDoubleTap={canRoll ? roll : undefined}
           />
         );
       })}

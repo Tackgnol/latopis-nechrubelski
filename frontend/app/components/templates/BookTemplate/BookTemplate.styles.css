@@ -66,12 +66,22 @@
 
 .cover-error {
   position: fixed;
-  left: 22px;
-  bottom: 84px;
+  left: calc(22px + env(safe-area-inset-left));
+  bottom: calc(84px + env(safe-area-inset-bottom));
   z-index: 60;
   color: var(--pink);
   font-style: italic;
   max-width: min(420px, calc(100vw - 44px));
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .cover-error {
+    left: auto;
+    bottom: auto;
+    top: calc(16px + env(safe-area-inset-top));
+    right: calc(16px + env(safe-area-inset-right));
+    max-width: 180px;
+  }
 }
 
 body.single .stage {
