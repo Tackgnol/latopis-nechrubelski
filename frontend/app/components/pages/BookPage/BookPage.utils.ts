@@ -31,36 +31,76 @@ export function setLeafFlipped(leaves: LeafElements, i: number, flipped: boolean
   el.style.zIndex = String(flipped ? 100 + i : NLEAVES - i);
 }
 
-export async function flipForward(leaves: LeafElements, from: number, to: number) {
+/** Moves the tabs' stacking order in step with a leaf turning, instead of waiting for React to catch up. */
+export function setTabsZIndex(tabs: HTMLElement | null, flippedCount: number) {
+  if (tabs) tabs.style.zIndex = String(tabsZIndex(flippedCount));
+}
+
+/** `onFlip` gets the number of flipped leaves right after each leaf is turned. */
+export async function flipForward(leaves: LeafElements, from: number, to: number, onFlip?: (flippedCount: number) => void) {
   for (let i = from; i < to; i++) {
     setLeafFlipped(leaves, i, true);
+    onFlip?.(i + 1);
     await delay(STAGGER);
   }
   await delay(Math.max(0, LEAF_MS - STAGGER));
 }
 
-export async function flipBackward(leaves: LeafElements, from: number, stagger = STAGGER) {
+export async function flipBackward(
+  leaves: LeafElements,
+  from: number,
+  stagger = STAGGER,
+  onFlip?: (flippedCount: number) => void,
+) {
   for (let i = from - 1; i >= 0; i--) {
     setLeafFlipped(leaves, i, false);
+    onFlip?.(i);
     await delay(stagger);
   }
   await delay(Math.max(0, LEAF_MS - stagger));
 }
 
+const NEAR_BEHIND = 3;
+const NEAR_AHEAD = 5;
+
+/**
+ * Hides the leaves far from the page turn. Same-size leaves lie fully covered by their neighbours,
+ * but each still holds two GPU layers and a filtered, masked paint, which stutters the flip on mobile Chrome.
+ * The cover stays: its board shows around the paper leaves.
+ */
+export function cullLeaves(leaves: LeafElements, flippedCount: number) {
+  leaves.forEach((el, i) => {
+    if (!el) return;
+    const near = i === 0 || (i >= flippedCount - NEAR_BEHIND && i <= flippedCount + NEAR_AHEAD);
+    el.style.visibility = near ? "" : "hidden";
+  });
+}
+
+/** Brings back every leaf a turn between `from` and `to` (in either direction) will pass or uncover. */
+export function revealLeaves(leaves: LeafElements, from: number, to: number) {
+  const low = Math.min(from, to) - NEAR_BEHIND;
+  const high = Math.max(from, to) + NEAR_AHEAD;
+  leaves.forEach((el, i) => {
+    if (el && i >= low && i <= high) el.style.visibility = "";
+  });
+}
+
+/**
+ * Shakes the stage during a riffle. Uses the individual `translate`/`rotate` properties rather than custom
+ * properties: a custom property set on the stage restyles every descendant on each tick.
+ */
 export function startJitter(stageEl: HTMLDivElement) {
   return window.setInterval(() => {
-    stageEl.style.setProperty("--jx", `${(Math.random() - 0.5) * 6}px`);
-    stageEl.style.setProperty("--jy", `${(Math.random() - 0.5) * 4}px`);
-    stageEl.style.setProperty("--jr", `${(Math.random() - 0.5) * 1.2}deg`);
+    stageEl.style.translate = `${(Math.random() - 0.5) * 6}px ${(Math.random() - 0.5) * 4}px`;
+    stageEl.style.rotate = `${(Math.random() - 0.5) * 1.2}deg`;
   }, 90);
 }
 
 export function settleJitter(stageEl: HTMLDivElement, intervalId: number) {
   clearInterval(intervalId);
   stageEl.classList.add("settle");
-  stageEl.style.setProperty("--jx", "0px");
-  stageEl.style.setProperty("--jy", "0px");
-  stageEl.style.setProperty("--jr", "0deg");
+  stageEl.style.translate = "0px 0px";
+  stageEl.style.rotate = "0deg";
   setTimeout(() => stageEl.classList.remove("settle"), 700);
 }
 

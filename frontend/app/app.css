@@ -7,9 +7,6 @@
   --pw: 340px;
   --ph: 520px;
   --s: 1; /* stage scale, set by JS */
-  --jx: 0px;
-  --jy: 0px;
-  --jr: 0deg; /* riffle jitter, set by JS */
 
   --display: "Pirata One", "Old English Text MT", Georgia, serif;
   --grot: "Anton", Impact, "Arial Narrow Bold", sans-serif;

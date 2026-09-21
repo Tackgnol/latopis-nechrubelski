@@ -32,13 +32,16 @@ import {
   FIXED_OPEN_TARGET,
   MAX_TARGET,
   NLEAVES,
+  cullLeaves,
   fitStage,
   flipBackward,
   flipForward,
   hintCopyKey,
   leafFacesFor,
   leafZIndex,
+  revealLeaves,
   setLeafFlipped,
+  setTabsZIndex,
   settleJitter,
   startJitter,
   tabsZIndex,
@@ -179,7 +182,9 @@ export function BookPage({ locale, current }: BookPageProps) {
   const pendingSelfNav = useRef(false);
   const stageRef = useRef<HTMLDivElement | null>(null);
   const bookRef = useRef<HTMLDivElement | null>(null);
+  const tabsRef = useRef<HTMLDivElement | null>(null);
   const leafRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const syncTabs = (count: number) => setTabsZIndex(tabsRef.current, count);
 
   async function animateRoll(num: number, reveal: number) {
     const stageEl = stageRef.current;
@@ -192,16 +197,19 @@ export function BookPage({ locale, current }: BookPageProps) {
       const k = 2 + Math.floor(Math.random() * 3);
       let target = from + k;
       if (target > MAX_TARGET) {
-        await flipBackward(leafRefs.current, from, CLOSE_STAGGER);
+        revealLeaves(leafRefs.current, 0, from);
+        await flipBackward(leafRefs.current, from, CLOSE_STAGGER, syncTabs);
         flippedCountRef.current = 0;
         from = 0;
         target = Math.min(k, MAX_TARGET);
       }
+      revealLeaves(leafRefs.current, from, target);
       setPrevSpread(spread);
       setSpread({ target, num, reveal });
       await new Promise(requestAnimationFrame);
-      await flipForward(leafRefs.current, from, target);
+      await flipForward(leafRefs.current, from, target, syncTabs);
       flippedCountRef.current = target;
+      cullLeaves(leafRefs.current, target);
       setFlippedCount(target);
       setPrevSpread(null);
       // The voice and its ink bleed start together, in the frame the flip settles.
@@ -239,9 +247,11 @@ export function BookPage({ locale, current }: BookPageProps) {
     const stageEl = stageRef.current;
     if (stageEl) {
       const jitterId = startJitter(stageEl);
-      await flipBackward(leafRefs.current, flippedCount, CLOSE_STAGGER);
+      revealLeaves(leafRefs.current, 0, flippedCount);
+      await flipBackward(leafRefs.current, flippedCount, CLOSE_STAGGER, syncTabs);
       settleJitter(stageEl, jitterId);
     }
+    cullLeaves(leafRefs.current, 0);
     bookRef.current?.classList.remove("flipping");
     flippedCountRef.current = 0;
     setFlippedCount(0);
@@ -265,6 +275,8 @@ export function BookPage({ locale, current }: BookPageProps) {
     voice.stop();
     const target = current ? FIXED_OPEN_TARGET : 0;
     for (let i = 0; i < NLEAVES; i++) setLeafFlipped(leafRefs.current, i, i < target);
+    cullLeaves(leafRefs.current, target);
+    syncTabs(target);
     flippedCountRef.current = target;
     setFlippedCount(target);
     setSpread(current ? { target, ...current } : null);
@@ -303,7 +315,7 @@ export function BookPage({ locale, current }: BookPageProps) {
         />
       }
     >
-      <VariantTabs selected={voice.variant} zIndex={tabsZIndex(flippedCount)} onChoose={voice.choose} />
+      <VariantTabs ref={tabsRef} selected={voice.variant} zIndex={tabsZIndex(flippedCount)} onChoose={voice.choose} />
       <Leaf
         ref={(el) => {
           leafRefs.current[0] = el;
