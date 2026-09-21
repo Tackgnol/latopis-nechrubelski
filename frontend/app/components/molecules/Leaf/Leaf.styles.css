@@ -8,6 +8,8 @@
   transform-style: preserve-3d;
   transform: rotateY(0deg);
   transition: transform var(--dur, 0.42s) var(--ease, cubic-bezier(0.55, 0, 0.35, 1));
+  /* A double tap turns the page, so it must not zoom. */
+  touch-action: manipulation;
 }
 
 .leaf.cover {
@@ -21,6 +23,8 @@
   top: 4px;
   height: calc(100% - 8px);
   width: calc(50% - 10px);
+  /* A double click would otherwise select a word of the psalm. */
+  user-select: none;
 }
 
 .leaf.flipped {

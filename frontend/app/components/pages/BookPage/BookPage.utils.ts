@@ -64,17 +64,26 @@ export function settleJitter(stageEl: HTMLDivElement, intervalId: number) {
   setTimeout(() => stageEl.classList.remove("settle"), 700);
 }
 
-/** Scales the stage to the viewport; returns whether the narrow (single-page) layout applies. */
+/** Touch readers are told to tap, mouse readers to click. */
+export function hintCopyKey(): "tapHint" | "clickHint" {
+  return window.matchMedia("(pointer: coarse)").matches ? "tapHint" : "clickHint";
+}
+
+/**
+ * Scales the stage to the viewport; returns whether the single-page layout applies.
+ * A phone on its side (short landscape, matching the CSS media query) parks the controls beside the
+ * book instead of under it, so the reserve moves from height to width and the book keeps its size.
+ */
 export function fitStage(stageEl: HTMLDivElement): boolean {
-  const narrow = window.innerWidth < 640;
-  const width = narrow ? PW : PW * 2;
-  const scale = Math.min(
-    1,
-    (window.innerWidth - 24) / (width + 44),
-    (window.innerHeight - (narrow ? 170 : 150)) / (PH + 44),
-  );
+  const { innerWidth: vw, innerHeight: vh } = window;
+  const landscape = vh <= 500 && vw > vh;
+  const single = landscape || vw < 640;
+  const width = single ? PW : PW * 2;
+  const reserveX = landscape ? 2 * 196 : 24;
+  const reserveY = landscape ? 60 : single ? 170 : 150;
+  const scale = Math.min(1, (vw - reserveX) / (width + 44), (vh - reserveY) / (PH + 44));
   stageEl.style.setProperty("--s", String(scale));
-  return narrow;
+  return single;
 }
 
 /**

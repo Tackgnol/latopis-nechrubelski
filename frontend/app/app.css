@@ -34,6 +34,13 @@ body {
   height: 100%;
 }
 
+html {
+  overscroll-behavior: none;
+  /* iOS inflates text in landscape unless told not to; the verses are fitted to the page by hand. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
 body {
   margin: 0;
   background: var(--yellow);
@@ -45,6 +52,11 @@ body {
 
 a {
   color: inherit;
+}
+
+button,
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
 }
 
 [hidden] {

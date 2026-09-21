@@ -57,7 +57,14 @@
   color: var(--black);
 }
 
-.btn:hover .flood,
+/* Touch has no hover: a tapped button would otherwise stay flooded until the next tap elsewhere. */
+@media (hover: hover) {
+  .btn:hover .flood {
+    -webkit-mask-position: 0 0;
+    mask-position: 0 0;
+  }
+}
+
 .btn:focus-visible .flood {
   -webkit-mask-position: 0 0;
   mask-position: 0 0;

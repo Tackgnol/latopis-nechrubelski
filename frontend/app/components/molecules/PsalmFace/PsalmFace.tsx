@@ -23,12 +23,15 @@ export function PsalmFace({ num, psalm, reading, readingVerse, onToggleReading }
 
     const observer = new ResizeObserver(fit);
     observer.observe(verses);
+    // The stage scale changes with the viewport without changing the box, so the observer misses it.
+    window.addEventListener("resize", fit);
     void document.fonts.ready.then(fit);
     fit();
 
     return () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
+      window.removeEventListener("resize", fit);
     };
   }, [psalm]);
 

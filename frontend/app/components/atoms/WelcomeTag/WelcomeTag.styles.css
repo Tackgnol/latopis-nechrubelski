@@ -21,8 +21,8 @@
     0% 34%
   );
   position: fixed;
-  top: 16px;
-  right: 18px;
+  top: calc(16px + env(safe-area-inset-top));
+  right: calc(18px + env(safe-area-inset-right));
   z-index: 60;
   display: flex;
   align-items: baseline;

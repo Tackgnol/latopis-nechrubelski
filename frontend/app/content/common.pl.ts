@@ -10,8 +10,10 @@ export interface CommonResource {
   welcome: string;
   read: string;
   silence: string;
-  voice: string;
+  variants: string;
   volume: string;
+  tapHint: string;
+  clickHint: string;
 }
 
 export const pl: CommonResource = {
@@ -26,6 +28,8 @@ export const pl: CommonResource = {
   welcome: "Witaj",
   read: "Czytaj",
   silence: "Cisza",
-  voice: "Głos lektora",
+  variants: "Warianty",
   volume: "Głośność",
+  tapHint: "Stuknij dwa razy, by odsłonić następny psalm",
+  clickHint: "Kliknij dwa razy, by odsłonić następny psalm",
 };
