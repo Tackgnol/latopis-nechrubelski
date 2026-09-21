@@ -53,7 +53,6 @@
   inset: 0;
   background-image: var(--grain);
   opacity: 0.22;
-  mix-blend-mode: multiply;
   pointer-events: none;
   z-index: 2;
 }

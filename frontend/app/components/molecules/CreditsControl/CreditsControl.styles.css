@@ -17,7 +17,8 @@ body.single .credits-control {
 
 body.single .credits-control .btn {
   flex: none;
-  padding: 11px 14px 10px;
+  padding: 11px 8px 10px;
+  font-size: 14px;
 }
 
 .credits-panel {
@@ -61,7 +62,6 @@ body.single .credits-control .btn {
   inset: 0;
   background-image: var(--grain);
   opacity: 0.22;
-  mix-blend-mode: multiply;
   pointer-events: none;
 }
 
