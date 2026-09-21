@@ -8,6 +8,7 @@ export function BookTemplate({
   controls,
   userIndicator,
   audioControl,
+  creditsControl,
   error,
   hint,
   children,
@@ -29,6 +30,8 @@ export function BookTemplate({
       {userIndicator}
 
       {audioControl}
+
+      {creditsControl}
 
       {error && (
         <p className="cover-error" role="alert">
