@@ -7,7 +7,14 @@ import type { PsalmFaceProps } from "./PsalmFace.models";
 import { fitFontSize } from "./PsalmFace.utils";
 import "./PsalmFace.styles.css";
 
-export function PsalmFace({ num, psalm, reading, readingVerse, onToggleReading }: PsalmFaceProps) {
+export function PsalmFace({
+  num,
+  psalm,
+  reading,
+  readingVerse,
+  onToggleReading,
+  action,
+}: PsalmFaceProps) {
   const { t } = useTranslation();
   const versesRef = useRef<HTMLOListElement | null>(null);
 
@@ -37,7 +44,10 @@ export function PsalmFace({ num, psalm, reading, readingVerse, onToggleReading }
 
   return (
     <div className="psalm">
-      <h1 className="psalm-title">Psalm {toRomanNumeral(num)}</h1>
+      <div className="psalm-heading">
+        <h1 className="psalm-title">Psalm {toRomanNumeral(num)}</h1>
+        {action}
+      </div>
       {num === 7 && <p className="psalm-label">KOŃCZĄCY</p>}
       <ReadAloudButton playing={reading} label={reading ? t("silence") : t("read")} onPress={onToggleReading} />
       <ol ref={versesRef} className="verses">

@@ -4,6 +4,7 @@ import type { PsalmSelection } from "~/components/models";
 export interface BookPageProps {
   locale: Locale;
   current: PsalmSelection | null;
+  shared: boolean;
 }
 
 export interface Spread extends PsalmSelection {

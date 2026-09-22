@@ -5,4 +5,5 @@ export interface BookControlsProps {
   onRoll: () => void;
   onClose: () => void;
   onReset: () => void;
+  shared: boolean;
 }

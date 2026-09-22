@@ -15,4 +15,5 @@ export interface PaperLeafProps {
   onToggleReading: (num: number) => void;
   onTap?: () => void;
   onDoubleTap?: () => void;
+  showShare: boolean;
 }

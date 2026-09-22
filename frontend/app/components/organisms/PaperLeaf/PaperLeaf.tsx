@@ -1,8 +1,10 @@
 import { psalmsByLocale } from "~/content";
+import { toRomanNumeral } from "~/content/roman-numerals";
 import { FillerFace } from "~/components/molecules/FillerFace/FillerFace";
 import { Leaf } from "~/components/molecules/Leaf/Leaf";
 import { NumeralFace } from "~/components/molecules/NumeralFace/NumeralFace";
 import { PsalmFace } from "~/components/molecules/PsalmFace/PsalmFace";
+import { ShareDialog } from "~/components/molecules/ShareDialog/ShareDialog";
 import type { PaperLeafProps } from "./PaperLeaf.models";
 
 export function PaperLeaf({
@@ -17,6 +19,7 @@ export function PaperLeaf({
   onToggleReading,
   onTap,
   onDoubleTap,
+  showShare,
 }: PaperLeafProps) {
   const { cover, psalms } = psalmsByLocale[locale];
   const reading = front.kind === "psalm" && narration?.mode === "narration" && narration.psalm === front.num;
@@ -37,6 +40,15 @@ export function PaperLeaf({
             reading={reading}
             readingVerse={reading ? (narration?.verse ?? null) : null}
             onToggleReading={() => onToggleReading(front.num)}
+            action={
+              showShare ? (
+                <ShareDialog
+                  locale={locale}
+                  num={front.num}
+                  title={`Psalm ${toRomanNumeral(front.num)} — ${cover.title}`}
+                />
+              ) : undefined
+            }
           />
         ) : (
           <FillerFace folio={folio} side="front" coverTitle={cover.title} />

@@ -1,0 +1,19 @@
+.campaign-reset-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+.campaign-reset-error {
+  margin: 14px 0 0;
+  color: #a20d51;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+@media (max-width: 620px) {
+  .campaign-reset-actions .btn {
+    width: 100%;
+  }
+}

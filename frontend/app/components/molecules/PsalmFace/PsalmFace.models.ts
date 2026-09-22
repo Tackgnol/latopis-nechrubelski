@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import type { Psalm } from "~/content";
 
 export interface PsalmFaceProps {
@@ -8,4 +9,5 @@ export interface PsalmFaceProps {
   /** The verse the voice is on, the only one inked yellow. */
   readingVerse: string | null;
   onToggleReading: () => void;
+  action?: ReactNode;
 }

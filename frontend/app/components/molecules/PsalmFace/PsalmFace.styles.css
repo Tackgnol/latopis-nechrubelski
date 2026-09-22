@@ -7,14 +7,22 @@
   flex-direction: column;
 }
 
+.psalm-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 0 0 6px;
+  border-bottom: 7px solid var(--black);
+}
+
 .psalm-title {
   font-family: var(--display);
   font-weight: 400;
   font-size: 40px;
   line-height: 1;
   margin: 0;
-  padding: 0 0 6px;
-  border-bottom: 7px solid var(--black);
+  padding: 0;
   letter-spacing: 0.01em;
   backface-visibility: hidden;
 }

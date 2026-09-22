@@ -1,4 +1,10 @@
-import { data, Outlet, useLoaderData, useMatches, type LoaderFunctionArgs } from "react-router";
+import {
+  data,
+  Outlet,
+  useLoaderData,
+  useMatches,
+  type LoaderFunctionArgs,
+} from "react-router";
 import { I18nextProvider } from "react-i18next";
 import { isLocale } from "~/content";
 import { createI18nInstance } from "~/i18n-instance";
@@ -16,13 +22,19 @@ export default function LocaleLayout() {
   const { locale } = useLoaderData<typeof loader>();
   const i18n = createI18nInstance(locale);
   const matches = useMatches();
-  const leafData = matches.at(-1)?.loaderData as { num?: number; reveal?: number } | undefined;
+  const leafData = matches.at(-1)?.loaderData as
+    | { num?: number; reveal?: number; origin?: "share" | null }
+    | undefined;
   const current = leafData?.num
     ? { num: leafData.num, reveal: leafData.reveal ?? leafData.num }
     : null;
   return (
     <I18nextProvider i18n={i18n}>
-      <BookPage locale={locale} current={current} />
+      <BookPage
+        locale={locale}
+        current={current}
+        shared={leafData?.origin === "share"}
+      />
       <Outlet />
     </I18nextProvider>
   );

@@ -64,6 +64,7 @@ services:
       dockerfile: frontend/Dockerfile
       args:
         VITE_GLITCHTIP_DSN: ${VITE_GLITCHTIP_DSN:-}
+        VITE_PUBLIC_ORIGIN: ${AUTH_BASE_URL:?AUTH_BASE_URL is required}
         SENTRY_RELEASE: ${SENTRY_RELEASE:-}
         SENTRY_URL: ${SENTRY_URL:-https://glitchtip.rpgtools.co}
         SENTRY_ORG: ${SENTRY_ORG:-tackgnols-rpg-tools}

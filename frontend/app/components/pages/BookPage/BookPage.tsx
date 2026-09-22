@@ -17,6 +17,7 @@ import {
 import { readStored, useStored, writeStored } from "~/lib/stored";
 import { psalmsByLocale, type PsalmsResource } from "~/content";
 import { BookControls } from "~/components/molecules/BookControls/BookControls";
+import { CampaignResetDialog } from "~/components/molecules/CampaignResetDialog/CampaignResetDialog";
 import { CoverFace } from "~/components/molecules/CoverFace/CoverFace";
 import { CreditsControl } from "~/components/molecules/CreditsControl/CreditsControl";
 import { Leaf } from "~/components/molecules/Leaf/Leaf";
@@ -156,7 +157,7 @@ function useNarration(psalms: PsalmsResource["psalms"]) {
   return { narration, variant, volume, setVolume, choose, toggle, autoplay, stop: narrator.stop };
 }
 
-export function BookPage({ locale, current }: BookPageProps) {
+export function BookPage({ locale, current, shared }: BookPageProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -168,7 +169,9 @@ export function BookPage({ locale, current }: BookPageProps) {
   const rollMutation = useMutation({ mutationFn: rollPsalm, onSuccess: onSessionChanged });
   const resetMutation = useMutation({ mutationFn: resetSession, onSuccess: onSessionChanged });
 
-  const [flippedCount, setFlippedCount] = useState(() => (current ? FIXED_OPEN_TARGET : 0));
+  const [flippedCount, setFlippedCount] = useState(() =>
+    current ? FIXED_OPEN_TARGET : 0,
+  );
   const [spread, setSpread] = useState<Spread | null>(() =>
     current ? { target: FIXED_OPEN_TARGET, ...current } : null,
   );
@@ -176,6 +179,8 @@ export function BookPage({ locale, current }: BookPageProps) {
   const [prevSpread, setPrevSpread] = useState<Spread | null>(null);
   const [rolling, setRolling] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [resetOpen, setResetOpen] = useState(false);
+  const [resetError, setResetError] = useState<string | null>(null);
 
   const flippedCountRef = useRef(flippedCount);
   const rollingRef = useRef(false);
@@ -261,9 +266,14 @@ export function BookPage({ locale, current }: BookPageProps) {
   }
 
   async function handleReset() {
-    if (!window.confirm(t("resetConfirm"))) return;
-    voice.stop();
-    await resetMutation.mutateAsync();
+    setResetError(null);
+    try {
+      voice.stop();
+      await resetMutation.mutateAsync();
+      setResetOpen(false);
+    } catch {
+      setResetError(t("resetFailed"));
+    }
   }
 
   // External navigation (browser back/forward, SEO nav link) snaps the book instantly instead of re-riffling.
@@ -295,59 +305,75 @@ export function BookPage({ locale, current }: BookPageProps) {
   }, []);
 
   return (
-    <BookTemplate
-      stageRef={stageRef}
-      bookRef={bookRef}
-      closed={flippedCount === 0}
-      error={error}
-      hint={hint.visible && <TapHint text={t(hintCopyKey())} />}
-      userIndicator={<UserIndicator />}
-      audioControl={<VolumeControl volume={voice.volume} onChange={voice.setVolume} />}
-      creditsControl={<CreditsControl />}
-      controls={
-        <BookControls
-          isOpen={flippedCount > 0}
-          canRoll={canRoll}
-          isBusy={rolling}
-          onRoll={roll}
-          onClose={closeAndGoHome}
-          onReset={handleReset}
-        />
-      }
-    >
-      <VariantTabs ref={tabsRef} selected={voice.variant} zIndex={tabsZIndex(flippedCount)} onChoose={voice.choose} />
-      <Leaf
-        ref={(el) => {
-          leafRefs.current[0] = el;
-        }}
-        variant="cover"
-        flipped={flippedCount > 0}
-        zIndex={leafZIndex(0, flippedCount)}
-        onActivate={flippedCount === 0 && !rolling ? roll : undefined}
-        front={<CoverFace side="front" cover={cover} />}
-        back={<CoverFace side="back" cover={cover} />}
-      />
-      {Array.from({ length: NLEAVES - 1 }, (_, k) => k + 1).map((i) => {
-        const { front, back } = leafFacesFor(i, spread, prevSpread);
-        return (
-          <PaperLeaf
-            key={i}
-            ref={(el) => {
-              leafRefs.current[i] = el;
-            }}
-            folio={i}
-            locale={locale}
-            flipped={i < flippedCount}
-            zIndex={leafZIndex(i, flippedCount)}
-            front={front}
-            back={back}
-            narration={voice.narration}
-            onToggleReading={voice.toggle}
-            onTap={canRoll && !rolling ? hint.tap : undefined}
-            onDoubleTap={canRoll ? roll : undefined}
+    <>
+      <BookTemplate
+        stageRef={stageRef}
+        bookRef={bookRef}
+        closed={flippedCount === 0}
+        error={error}
+        hint={hint.visible && <TapHint text={t(hintCopyKey())} />}
+        userIndicator={shared ? undefined : <UserIndicator />}
+        audioControl={<VolumeControl volume={voice.volume} onChange={voice.setVolume} />}
+        creditsControl={<CreditsControl />}
+        controls={
+          <BookControls
+            isOpen={flippedCount > 0}
+            canRoll={canRoll}
+            isBusy={rolling || resetMutation.isPending}
+            onRoll={roll}
+            onClose={closeAndGoHome}
+            onReset={() => setResetOpen(true)}
+            shared={shared}
           />
-        );
-      })}
-    </BookTemplate>
+        }
+      >
+        <VariantTabs ref={tabsRef} selected={voice.variant} zIndex={tabsZIndex(flippedCount)} onChoose={voice.choose} />
+        <Leaf
+          ref={(el) => {
+            leafRefs.current[0] = el;
+          }}
+          variant="cover"
+          flipped={flippedCount > 0}
+          zIndex={leafZIndex(0, flippedCount)}
+          onActivate={flippedCount === 0 && !rolling ? roll : undefined}
+          front={<CoverFace side="front" cover={cover} />}
+          back={<CoverFace side="back" cover={cover} />}
+        />
+        {Array.from({ length: NLEAVES - 1 }, (_, k) => k + 1).map((i) => {
+          const { front, back } = leafFacesFor(i, spread, prevSpread);
+          return (
+            <PaperLeaf
+              key={i}
+              ref={(el) => {
+                leafRefs.current[i] = el;
+              }}
+              folio={i}
+              locale={locale}
+              flipped={i < flippedCount}
+              zIndex={leafZIndex(i, flippedCount)}
+              front={front}
+              back={back}
+              narration={voice.narration}
+              onToggleReading={voice.toggle}
+              onTap={canRoll && !rolling ? hint.tap : undefined}
+              onDoubleTap={canRoll ? roll : undefined}
+              showShare={!shared}
+            />
+          );
+        })}
+      </BookTemplate>
+      {!shared && (
+        <CampaignResetDialog
+          isOpen={resetOpen}
+          isBusy={resetMutation.isPending}
+          error={resetError}
+          onOpenChange={(isOpen) => {
+            setResetOpen(isOpen);
+            if (!isOpen) setResetError(null);
+          }}
+          onConfirm={handleReset}
+        />
+      )}
+    </>
   );
 }

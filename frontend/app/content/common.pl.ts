@@ -3,7 +3,11 @@ export interface CommonResource {
   rollAgain: string;
   closeBook: string;
   reset: string;
+  resetTitle: string;
   resetConfirm: string;
+  resetAction: string;
+  resetting: string;
+  resetFailed: string;
   cancel: string;
   rollFailed: string;
   misery: string;
@@ -31,7 +35,12 @@ export const pl: CommonResource = {
   rollAgain: "Następny psalm",
   closeBook: "Zamknij",
   reset: "Nowa kampania",
-  resetConfirm: "To nieodwracalne — zaczynasz nową kampanię, a stara karta odczytów zamyka się na stałe. Kontynuować?",
+  resetTitle: "Nowa kampania?",
+  resetConfirm:
+    "Stara karta odczytów zostanie zamknięta na stałe. Tej decyzji nie można cofnąć.",
+  resetAction: "Rozpocznij nową kampanię",
+  resetting: "Rozpoczynam…",
+  resetFailed: "Nie udało się rozpocząć nowej kampanii. Spróbuj ponownie.",
   cancel: "Anuluj",
   rollFailed: "Rzut się nie powiódł — czy backend działa?",
   misery: "Nieszczęście",

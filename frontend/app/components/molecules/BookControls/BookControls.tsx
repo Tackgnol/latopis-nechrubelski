@@ -3,22 +3,35 @@ import { TornButton } from "~/components/atoms/TornButton/TornButton";
 import type { BookControlsProps } from "./BookControls.models";
 import "./BookControls.styles.css";
 
-export function BookControls({ isOpen, canRoll, isBusy, onRoll, onClose, onReset }: BookControlsProps) {
+export function BookControls({
+  isOpen,
+  canRoll,
+  isBusy,
+  onRoll,
+  onClose,
+  onReset,
+  shared,
+}: BookControlsProps) {
   const { t } = useTranslation();
 
   return (
     <div className="controls">
-      {canRoll && (
+      {shared && (
+        <TornButton onPress={onClose} isDisabled={isBusy}>
+          {t("closeBook")}
+        </TornButton>
+      )}
+      {!shared && canRoll && (
         <TornButton onPress={onRoll} isDisabled={isBusy}>
           {isOpen ? t("rollAgain") : t("openBook")}
         </TornButton>
       )}
-      {isOpen && (
+      {!shared && isOpen && (
         <TornButton quiet onPress={onClose} isDisabled={isBusy}>
           {t("closeBook")}
         </TornButton>
       )}
-      {!isOpen && (
+      {!shared && !isOpen && (
         <TornButton quiet onPress={onReset} isDisabled={isBusy}>
           {t("reset")}
         </TornButton>
