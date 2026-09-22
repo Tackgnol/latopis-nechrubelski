@@ -43,6 +43,10 @@
   transform: rotateY(180deg);
 }
 
+.face.front {
+  transform: rotateY(0deg);
+}
+
 .paper .face {
   background: var(--bone);
 }
