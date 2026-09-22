@@ -140,6 +140,12 @@ body.single .credits-control .btn {
   outline-offset: 2px;
 }
 
+.credits-privacy {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 2px solid var(--black);
+}
+
 @media (pointer: coarse) {
   .credits-list a {
     display: inline-block;

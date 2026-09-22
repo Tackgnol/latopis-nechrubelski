@@ -3,8 +3,10 @@ import { useNavigate } from "react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { Howl, Howler } from "howler";
+import { analyticsEnabled, resetConsent, track } from "~/lib/analytics";
 import { fetchRevealedPsalms, resetSession, rollPsalm } from "~/lib/api";
 import {
+  FINALE_PSALM,
   createNarrator,
   parseVariant,
   parseVolume,
@@ -164,7 +166,7 @@ export function BookPage({ locale, current, shared }: BookPageProps) {
   const { cover, psalms } = psalmsByLocale[locale];
   const voice = useNarration(psalms);
   const hint = useTapHint();
-  const canRoll = current?.num !== 7;
+  const canRoll = current?.num !== FINALE_PSALM;
   const onSessionChanged = () => queryClient.invalidateQueries({ queryKey: ["revealed-psalms"] });
   const rollMutation = useMutation({ mutationFn: rollPsalm, onSuccess: onSessionChanged });
   const resetMutation = useMutation({ mutationFn: resetSession, onSuccess: onSessionChanged });
@@ -232,8 +234,11 @@ export function BookPage({ locale, current, shared }: BookPageProps) {
     rollingRef.current = true;
     setRolling(true);
     setError(null);
+    const from = flippedCountRef.current === 0 ? "closed" : "open";
     try {
       const result = await rollMutation.mutateAsync();
+      track("book_roll", { from, psalm: result.psalm });
+      if (result.psalm === FINALE_PSALM) track("final_psalm_reached");
       await animateRoll(result.psalm, result.reveal);
       pendingSelfNav.current = true;
       navigate(`/${locale}/psalm/${result.psalm}?r=${result.reveal}`);
@@ -270,6 +275,7 @@ export function BookPage({ locale, current, shared }: BookPageProps) {
     try {
       voice.stop();
       await resetMutation.mutateAsync();
+      track("campaign_reset");
       setResetOpen(false);
     } catch {
       setResetError(t("resetFailed"));
@@ -314,7 +320,7 @@ export function BookPage({ locale, current, shared }: BookPageProps) {
         hint={hint.visible && <TapHint text={t(hintCopyKey())} />}
         userIndicator={shared ? undefined : <UserIndicator />}
         audioControl={<VolumeControl volume={voice.volume} onChange={voice.setVolume} />}
-        creditsControl={<CreditsControl />}
+        creditsControl={<CreditsControl onChangeConsent={analyticsEnabled ? resetConsent : undefined} />}
         controls={
           <BookControls
             isOpen={flippedCount > 0}
@@ -322,7 +328,10 @@ export function BookPage({ locale, current, shared }: BookPageProps) {
             isBusy={rolling || resetMutation.isPending}
             onRoll={roll}
             onClose={closeAndGoHome}
-            onReset={() => setResetOpen(true)}
+            onReset={() => {
+              track("campaign_reset_opened");
+              setResetOpen(true);
+            }}
             shared={shared}
           />
         }

@@ -35,11 +35,24 @@ export function writeStored(key: string, value: string) {
   listeners.forEach((listener) => listener());
 }
 
-/** A per-device preference as React state. Renders the default on the server and during hydration. */
-export function useStored<T>(key: string, parse: (raw: string | null) => T): T {
+export function clearStored(key: string) {
+  memory.delete(key);
+  try {
+    window.localStorage.removeItem(key);
+  } catch {
+    // Blocked storage never held it.
+  }
+  listeners.forEach((listener) => listener());
+}
+
+/**
+ * A per-device preference as React state. Renders `serverValue` (the default unless given)
+ * on the server and during hydration.
+ */
+export function useStored<T>(key: string, parse: (raw: string | null) => T, serverValue: T = parse(null)): T {
   return useSyncExternalStore(
     subscribe,
     () => readStored(key, parse),
-    () => parse(null),
+    () => serverValue,
   );
 }

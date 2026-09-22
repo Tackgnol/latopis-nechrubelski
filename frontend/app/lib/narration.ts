@@ -13,7 +13,7 @@ export function parseVolume(raw: string | null): number {
 
 const RANDOM_PSALMS = [1, 2, 3, 4, 5, 6];
 const VERSES_PER_PSALM = 6;
-const FINALE_PSALM = 7;
+export const FINALE_PSALM = 7;
 const FINALE_VERSE = "7";
 
 function audioSrc(variant: Variant, psalm: number, verse: string): string {

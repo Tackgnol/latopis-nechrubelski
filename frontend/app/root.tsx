@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
-import { Outlet } from "react-router";
+import { Outlet, useLocation } from "react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ConsentBanner } from "~/components/organisms/ConsentBanner/ConsentBanner";
+import { trackPage } from "~/lib/analytics";
 import { initErrorReporting } from "~/lib/error-reporting";
 import "./app.css";
 
@@ -9,12 +11,18 @@ export { ErrorScreen as ErrorBoundary } from "~/components/organisms/ErrorScreen
 
 export default function App() {
   const [queryClient] = useState(() => new QueryClient());
+  const { pathname, search } = useLocation();
 
   useEffect(initErrorReporting, []);
+
+  useEffect(() => {
+    trackPage();
+  }, [pathname, search]);
 
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
+      <ConsentBanner />
     </QueryClientProvider>
   );
 }

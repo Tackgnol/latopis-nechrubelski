@@ -13,6 +13,7 @@ depends_on:
 #   glitchtip_dsn        -> GLITCHTIP_DSN     (optional; error reporting is off without it)
 #   sentry_auth_token    -> SENTRY_AUTH_TOKEN (required once glitchtip_dsn is set; source map upload)
 #   sentry_project       -> SENTRY_PROJECT    (GlitchTip project slug the maps are uploaded to)
+#   ga_measurement_id    -> GA_MEASUREMENT_ID (optional; Google Analytics and its consent banner are off without it)
 #   logto_endpoint, logto_app_id, logto_app_secret, logto_redirect_uri
 #     -> optional; anonymous-only auth works without them (see ticket 05)
 #
@@ -42,6 +43,8 @@ steps:
         from_secret: sentry_auth_token
       SENTRY_PROJECT:
         from_secret: sentry_project
+      GA_MEASUREMENT_ID:
+        from_secret: ga_measurement_id
       LOGTO_ENDPOINT:
         from_secret: logto_endpoint
       LOGTO_APP_ID:
