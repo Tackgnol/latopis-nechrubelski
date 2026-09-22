@@ -113,17 +113,30 @@ export function hintCopyKey(): "tapHint" | "clickHint" {
  * Scales the stage to the viewport; returns whether the single-page layout applies.
  * A phone on its side (short landscape, matching the CSS media query) parks the controls beside the
  * book instead of under it, so the reserve moves from height to width and the book keeps its size.
+ * Big screens scale the book up past 1 and grow the fixed chrome by `--ui` (1-2) to match.
+ * The variant tabs keep their on-screen size above the book, so where they would hit the screen edge
+ * (short landscape) or reach under the Źródła button (narrow phones), the book drops by `--stage-dy`.
  */
 export function fitStage(stageEl: HTMLDivElement): boolean {
   const { innerWidth: vw, innerHeight: vh } = window;
   const landscape = vh <= 500 && vw > vh;
   const single = landscape || vw < 640;
+  const narrow = single && !landscape && vw < 360;
   const width = single ? PW : PW * 2;
-  const reserveX = landscape ? 2 * 196 : 24;
-  const reserveY = landscape ? 60 : single ? 170 : 150;
-  const scale = Math.min(1, (vw - reserveX) / (width + 44), (vh - reserveY) / (PH + 44));
+  const ui = uiScale(vw, vh);
+  const reserveX = (landscape ? 2 * 196 : 24) * ui;
+  const reserveY = (landscape ? 100 : narrow ? 215 : single ? 170 : 150) * ui;
+  const dy = landscape ? 30 : narrow ? 22 : 0;
+  const scale = Math.min((vw - reserveX) / (width + 44), (vh - reserveY) / (PH + 44));
   stageEl.style.setProperty("--s", String(scale));
+  stageEl.style.setProperty("--stage-dy", `${dy}px`);
+  document.documentElement.style.setProperty("--ui", String(ui));
   return single;
+}
+
+/** How much the fixed chrome grows on screens larger than a 1440x900 desktop, capped at 2x. */
+export function uiScale(vw: number, vh: number): number {
+  return Math.min(2, Math.max(1, Math.min(vw / 1440, vh / 900)));
 }
 
 /**

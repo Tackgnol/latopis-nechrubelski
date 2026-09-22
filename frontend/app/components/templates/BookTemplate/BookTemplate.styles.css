@@ -1,14 +1,18 @@
 .viewport {
   position: fixed;
   inset: 0;
-  display: grid;
-  place-items: center;
   overflow: hidden;
 }
 
+/* Centred by offsets, not grid: the unscaled stage is taller than a phone on its side, and grid
+   centring falls back to the top edge once the item overflows, dropping the book off-screen. */
 .stage {
+  position: absolute;
+  top: calc(50% + var(--stage-dy, 0px));
+  left: 50%;
   width: calc(var(--pw) * 2);
   height: var(--ph);
+  margin: calc(var(--ph) / -2) 0 0 calc(var(--pw) * -1);
   transform: scale(var(--s));
   transition:
     transform 0.16s ease-out,
@@ -75,6 +79,7 @@
   left: calc(22px + env(safe-area-inset-left));
   bottom: calc(84px + env(safe-area-inset-bottom));
   z-index: 60;
+  zoom: var(--ui);
   color: var(--pink);
   font-style: italic;
   max-width: min(420px, calc(100vw - 44px));
@@ -92,6 +97,7 @@
 
 body.single .stage {
   width: var(--pw);
+  margin-left: calc(var(--pw) / -2);
 }
 
 body.single .book {

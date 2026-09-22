@@ -28,7 +28,7 @@
   text-transform: uppercase;
   white-space: nowrap;
   color: var(--black);
-  transform: translateY(calc(-100% - 8px)) rotate(-1.5deg) scale(calc(1 / var(--s)));
+  transform: translateY(calc(-100% - 8px)) rotate(-1.5deg) scale(calc(var(--ui) / var(--s)));
   transform-origin: bottom left;
   pointer-events: none;
 }

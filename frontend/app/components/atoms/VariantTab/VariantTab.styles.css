@@ -2,20 +2,20 @@
    even after the per-tab offsets and the torn top. */
 .variant-tab {
   --tear: polygon(0% 9%, 16% 1%, 42% 7%, 68% 0%, 90% 6%, 100% 2%, 100% 100%, 0% 100%);
-  --exposed: calc(56px / var(--s));
+  --exposed: calc(56px * var(--ui) / var(--s));
   position: relative;
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  width: calc(46px / var(--s));
+  width: calc(46px * var(--ui) / var(--s));
   min-height: calc(var(--exposed) + 30px);
-  padding: calc(11px / var(--s)) 0 0;
+  padding: calc(11px * var(--ui) / var(--s)) 0 0;
   border: 0;
   cursor: pointer;
   background: var(--black);
   color: var(--bone);
   font-family: var(--grot);
-  font-size: calc(18px / var(--s));
+  font-size: calc(18px * var(--ui) / var(--s));
   letter-spacing: 0.04em;
   clip-path: var(--tear);
   transform: translateY(2px) rotate(-1.4deg);
@@ -53,12 +53,12 @@
 
 .variant-tab[data-selected],
 .variant-tab[data-selected]:nth-child(n) {
-  width: calc(54px / var(--s));
+  width: calc(54px * var(--ui) / var(--s));
   min-height: calc(var(--exposed) + 44px);
-  padding-top: calc(13px / var(--s));
+  padding-top: calc(13px * var(--ui) / var(--s));
   background: var(--bone);
   color: var(--black);
-  font-size: calc(24px / var(--s));
+  font-size: calc(24px * var(--ui) / var(--s));
   text-shadow: 2.5px 2.5px 0 var(--pink);
   transform: translateY(-8px) rotate(-0.5deg);
 }

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { Spread } from "./BookPage.models";
-import { cullLeaves, leafFacesFor, leafZIndex, NLEAVES, revealLeaves, tabsZIndex } from "./BookPage.utils";
+import { cullLeaves, leafFacesFor, leafZIndex, NLEAVES, revealLeaves, tabsZIndex, uiScale } from "./BookPage.utils";
 
 const spread = (target: number, num: number): Spread => ({ target, num, reveal: num });
 
@@ -60,5 +60,18 @@ describe("tabsZIndex", () => {
     expect(tabsZIndex(4)).toBe(leafZIndex(4, 4) - 1);
     expect(tabsZIndex(4)).toBeGreaterThanOrEqual(leafZIndex(5, 4));
     expect(tabsZIndex(4)).toBeLessThan(leafZIndex(3, 4));
+  });
+});
+
+describe("uiScale", () => {
+  it("keeps the chrome at 1x up to a 1440x900 desktop and on phones", () => {
+    expect(uiScale(1440, 900)).toBe(1);
+    expect(uiScale(390, 844)).toBe(1);
+  });
+
+  it("grows with the tighter axis on big screens, capped at 2x", () => {
+    expect(uiScale(2560, 1440)).toBeCloseTo(1.6);
+    expect(uiScale(3440, 1440)).toBeCloseTo(1.6);
+    expect(uiScale(3840, 2160)).toBe(2);
   });
 });

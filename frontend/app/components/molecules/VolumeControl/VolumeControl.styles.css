@@ -3,6 +3,7 @@
   right: calc(22px + env(safe-area-inset-right));
   bottom: calc(22px + env(safe-area-inset-bottom));
   z-index: 60;
+  zoom: var(--ui);
 }
 
 .volume-control .btn {
@@ -32,4 +33,5 @@ body.single .volume-control .btn {
 
 .volume-dialog {
   outline: none;
+  zoom: var(--ui); /* the popover itself is positioned by React Aria, so only its contents zoom */
 }

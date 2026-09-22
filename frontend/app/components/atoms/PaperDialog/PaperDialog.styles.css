@@ -11,6 +11,7 @@
 
 .paper-dialog-modal {
   width: min(570px, 100%);
+  zoom: var(--ui);
   color: var(--black);
   background: var(--bone);
   border: 5px solid var(--black);

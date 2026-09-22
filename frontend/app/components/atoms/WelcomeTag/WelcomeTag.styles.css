@@ -24,6 +24,7 @@
   top: calc(16px + env(safe-area-inset-top));
   right: calc(18px + env(safe-area-inset-right));
   z-index: 60;
+  zoom: var(--ui);
   display: flex;
   align-items: baseline;
   gap: 0.45em;

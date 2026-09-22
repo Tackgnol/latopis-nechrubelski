@@ -6,6 +6,7 @@
   flex-wrap: wrap;
   gap: 14px;
   z-index: 60;
+  zoom: var(--ui);
 }
 
 body.single .controls {

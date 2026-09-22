@@ -7,6 +7,7 @@
   --pw: 340px;
   --ph: 520px;
   --s: 1; /* stage scale, set by JS */
+  --ui: 1; /* fixed chrome scale on big screens, set by JS; applied with `zoom` */
 
   --display: "Pirata One", "Old English Text MT", Georgia, serif;
   --grot: "Anton", Impact, "Arial Narrow Bold", sans-serif;
