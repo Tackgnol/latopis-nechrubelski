@@ -65,6 +65,7 @@ services:
       args:
         VITE_GLITCHTIP_DSN: ${VITE_GLITCHTIP_DSN:-}
         VITE_PUBLIC_ORIGIN: ${AUTH_BASE_URL:?AUTH_BASE_URL is required}
+        VITE_GA_MEASUREMENT_ID: ${GA_MEASUREMENT_ID:-}
         SENTRY_RELEASE: ${SENTRY_RELEASE:-}
         SENTRY_URL: ${SENTRY_URL:-https://glitchtip.rpgtools.co}
         SENTRY_ORG: ${SENTRY_ORG:-tackgnols-rpg-tools}

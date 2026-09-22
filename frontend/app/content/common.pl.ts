@@ -28,6 +28,12 @@ export interface CommonResource {
   creditSplatTop: string;
   creditSplatBottom: string;
   creditSplatBackground: string;
+  consentLabel: string;
+  consentText: string;
+  consentAccept: string;
+  consentReject: string;
+  analyticsNote: string;
+  changeConsent: string;
 }
 
 export const pl: CommonResource = {
@@ -61,4 +67,11 @@ export const pl: CommonResource = {
   creditSplatTop: "Plama (prawy górny róg)",
   creditSplatBottom: "Plama (lewy dolny róg)",
   creditSplatBackground: "Plama (tło)",
+  consentLabel: "Zgoda na analitykę",
+  consentText: "Używamy Google Analytics, by wiedzieć, ile osób czyta Latopis. Zgadzasz się?",
+  consentAccept: "Akceptuję",
+  consentReject: "Odrzucam",
+  analyticsNote:
+    "Za Twoją zgodą Google Analytics (Google Ireland Ltd.) liczy odwiedziny i kilka kliknięć (otwarcie księgi, kolejne psalmy, nowa kampania) i zapisuje w tym celu pliki cookie _ga. Bez zgody nic nie trafia do Google.",
+  changeConsent: "Zmień zgodę na analitykę",
 };
