@@ -38,6 +38,15 @@
   transform-origin: left;
 }
 
+.psalm-progress {
+  display: none;
+}
+
+body.single .psalm-progress {
+  display: block;
+  margin-top: 6px;
+}
+
 .verses {
   flex: 1;
   min-height: 0;

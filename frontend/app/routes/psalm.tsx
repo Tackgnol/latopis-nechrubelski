@@ -1,6 +1,7 @@
 import { data, type LoaderFunctionArgs, type MetaFunction } from "react-router";
 import { psalmsByLocale, type Locale } from "~/content";
 import { toRomanNumeral } from "~/content/roman-numerals";
+import { revealNumber } from "~/lib/reveal";
 
 export function loader({ params, request }: LoaderFunctionArgs) {
   const locale = params.locale as Locale;
@@ -8,11 +9,7 @@ export function loader({ params, request }: LoaderFunctionArgs) {
   const psalm = psalmsByLocale[locale].psalms[num];
   if (!psalm) throw data("Psalm not found", { status: 404 });
   const url = new URL(request.url);
-  const revealParam = Number(url.searchParams.get("r"));
-  const reveal =
-    Number.isInteger(revealParam) && revealParam >= 1 && revealParam <= 7
-      ? revealParam
-      : num;
+  const reveal = revealNumber(num, url.search);
   const origin = url.searchParams.get("origin") === "share" ? "share" : null;
   const publicOrigin = import.meta.env.VITE_PUBLIC_ORIGIN || url.origin;
   const shareUrl = new URL(`/${locale}/psalm/${num}`, publicOrigin);

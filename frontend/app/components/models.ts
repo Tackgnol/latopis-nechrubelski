@@ -7,9 +7,8 @@ export interface FillerFaceSpec {
   kind: "filler";
 }
 
-export interface PsalmFaceSpec {
+export interface PsalmFaceSpec extends PsalmSelection {
   kind: "psalm";
-  num: number;
 }
 
 export interface NumeralFaceSpec {

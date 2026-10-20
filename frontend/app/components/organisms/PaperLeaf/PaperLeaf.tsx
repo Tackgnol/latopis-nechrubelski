@@ -36,6 +36,7 @@ export function PaperLeaf({
         front.kind === "psalm" ? (
           <PsalmFace
             num={front.num}
+            reveal={front.reveal}
             psalm={psalms[front.num]}
             reading={reading}
             readingVerse={reading ? (narration?.verse ?? null) : null}
