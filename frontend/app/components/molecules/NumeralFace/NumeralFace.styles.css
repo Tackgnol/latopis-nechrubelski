@@ -36,16 +36,9 @@
   position: absolute;
   left: 32px;
   bottom: 34px;
-  font-style: italic;
-  font-size: 17px;
   z-index: 1;
 }
 
-.num-page .misery b {
-  font-style: normal;
-  font-family: var(--grot);
-  font-weight: 400;
-  font-size: 19px;
-  color: var(--pink);
-  letter-spacing: 0.03em;
+body.single .num-page .misery {
+  display: none;
 }

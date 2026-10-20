@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { toRomanNumeral } from "~/content/roman-numerals";
 import { useTranslation } from "react-i18next";
 import { ReadAloudButton } from "~/components/atoms/ReadAloudButton/ReadAloudButton";
+import { MiseryCount } from "~/components/atoms/MiseryCount/MiseryCount";
 import { Verse } from "~/components/atoms/Verse/Verse";
 import type { PsalmFaceProps } from "./PsalmFace.models";
 import { fitFontSize } from "./PsalmFace.utils";
@@ -9,6 +10,7 @@ import "./PsalmFace.styles.css";
 
 export function PsalmFace({
   num,
+  reveal,
   psalm,
   reading,
   readingVerse,
@@ -48,6 +50,7 @@ export function PsalmFace({
         <h1 className="psalm-title">Psalm {toRomanNumeral(num)}</h1>
         {action}
       </div>
+      <MiseryCount className="psalm-progress" reveal={reveal} />
       {num === 7 && <p className="psalm-label">KOŃCZĄCY</p>}
       <ReadAloudButton playing={reading} label={reading ? t("silence") : t("read")} onPress={onToggleReading} />
       <ol ref={versesRef} className="verses">

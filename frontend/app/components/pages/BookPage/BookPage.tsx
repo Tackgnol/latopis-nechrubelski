@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { Howl, Howler } from "howler";
@@ -17,6 +17,7 @@ import {
   type Variant,
 } from "~/lib/narration";
 import { readStored, useStored, writeStored } from "~/lib/stored";
+import { revealNumber } from "~/lib/reveal";
 import { psalmsByLocale, type PsalmsResource } from "~/content";
 import { BookControls } from "~/components/molecules/BookControls/BookControls";
 import { CampaignResetDialog } from "~/components/molecules/CampaignResetDialog/CampaignResetDialog";
@@ -162,11 +163,13 @@ function useNarration(psalms: PsalmsResource["psalms"]) {
 export function BookPage({ locale, current, shared }: BookPageProps) {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { search } = useLocation();
   const queryClient = useQueryClient();
   const { cover, psalms } = psalmsByLocale[locale];
   const voice = useNarration(psalms);
   const hint = useTapHint();
   const canRoll = current?.num !== FINALE_PSALM;
+  const reveal = current ? revealNumber(current.num, search) : null;
   const onSessionChanged = () => queryClient.invalidateQueries({ queryKey: ["revealed-psalms"] });
   const rollMutation = useMutation({ mutationFn: rollPsalm, onSuccess: onSessionChanged });
   const resetMutation = useMutation({ mutationFn: resetSession, onSuccess: onSessionChanged });
@@ -295,10 +298,11 @@ export function BookPage({ locale, current, shared }: BookPageProps) {
     syncTabs(target);
     flippedCountRef.current = target;
     setFlippedCount(target);
-    setSpread(current ? { target, ...current } : null);
+    // Prerendered loader data cannot contain the current request's query string.
+    setSpread(current ? { target, num: current.num, reveal: reveal ?? current.num } : null);
     // Deps track the route's selection only; `current` is a fresh object on every render.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [current?.num, current?.reveal]);
+  }, [current?.num, reveal]);
 
   useEffect(() => {
     function layout() {

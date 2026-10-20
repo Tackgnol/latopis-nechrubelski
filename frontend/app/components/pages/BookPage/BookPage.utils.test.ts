@@ -11,7 +11,7 @@ describe("leafFacesFor", () => {
 
   it("puts the psalm on the target leaf's front and its numeral on the previous leaf's back", () => {
     const s = spread(6, 2);
-    expect(leafFacesFor(6, s, null).front).toEqual({ kind: "psalm", num: 2 });
+    expect(leafFacesFor(6, s, null).front).toEqual({ kind: "psalm", num: 2, reveal: 2 });
     expect(leafFacesFor(5, s, null).back).toEqual({ kind: "numeral", num: 2, reveal: 2 });
     expect(leafFacesFor(7, s, null)).toEqual({ front: { kind: "filler" }, back: { kind: "filler" } });
   });
@@ -21,6 +21,12 @@ describe("leafFacesFor", () => {
     const next = spread(4, 5);
     expect(leafFacesFor(4, next, prev).front).toMatchObject({ num: 1 });
     expect(leafFacesFor(9, spread(9, 5), prev).front).toMatchObject({ num: 5 });
+  });
+
+  it("carries the draw ordinal to both pages independently of the psalm number", () => {
+    const current = { target: 6, num: 5, reveal: 1 };
+    expect(leafFacesFor(6, current, null).front).toEqual({ kind: "psalm", num: 5, reveal: 1 });
+    expect(leafFacesFor(5, current, null).back).toEqual({ kind: "numeral", num: 5, reveal: 1 });
   });
 });
 

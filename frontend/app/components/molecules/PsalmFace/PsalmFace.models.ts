@@ -3,6 +3,7 @@ import type { Psalm } from "~/content";
 
 export interface PsalmFaceProps {
   num: number;
+  reveal: number;
   psalm: Psalm;
   /** This psalm is being narrated; the bar reads CISZA. */
   reading: boolean;

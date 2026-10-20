@@ -151,6 +151,6 @@ export function leafFacesFor(
   const filler: FillerFaceSpec = { kind: "filler" };
   const anchor = [prevSpread, spread].find((s) => s && (i === s.target || i === s.target - 1));
   if (!anchor) return { front: filler, back: filler };
-  if (i === anchor.target) return { front: { kind: "psalm", num: anchor.num }, back: filler };
+  if (i === anchor.target) return { front: { kind: "psalm", num: anchor.num, reveal: anchor.reveal }, back: filler };
   return { front: filler, back: { kind: "numeral", num: anchor.num, reveal: anchor.reveal } };
 }
