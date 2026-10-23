@@ -1,4 +1,4 @@
-FROM node:22-alpine AS builder
+FROM node:22.23.4-alpine AS builder
 
 WORKDIR /workspace/frontend
 
@@ -24,7 +24,7 @@ ENV SENTRY_PROJECT=$SENTRY_PROJECT
 # The upload token is a BuildKit secret: it exists only for this RUN and never enters an image layer or build arg.
 RUN --mount=type=secret,id=sentry_auth_token,required=false     export SENTRY_AUTH_TOKEN="$(sed -n '1p' /run/secrets/sentry_auth_token 2>/dev/null || true)" &&     npm run build && npm run check:monitoring
 
-FROM node:22-alpine
+FROM node:22.23.4-alpine
 
 WORKDIR /app
 
