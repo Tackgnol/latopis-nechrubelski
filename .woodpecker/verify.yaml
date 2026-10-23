@@ -3,7 +3,7 @@ when:
 
 steps:
   verify:
-    image: node:22-alpine
+    image: node:22.23.4-alpine
     environment:
       NPMRC_CONTENT:
         from_secret: npmrc_content
@@ -32,7 +32,7 @@ steps:
         npm --prefix frontend run build
 
   react-doctor:
-    image: node:22-alpine
+    image: node:22.23.4-alpine
     depends_on: [verify]
     commands:
       - |
